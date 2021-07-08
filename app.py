@@ -23,9 +23,6 @@ def links():
 @app.route('/shutdowntimer')
 def shutdowntimer():
     return render_template("shutdowntimer.html")
-@app.route('/test')
-def test():
-    return render_template("test.html")
 
 @app.errorhandler(404)
 def page_not_found(e):
