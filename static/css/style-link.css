@@ -53,7 +53,7 @@ a {
                 margin-top: 8rem;
         }
 }
-@media (min-width:769px) and (max-width:1025px) and (min-height:600px) and (max-height:768) {
+@media (min-height:600px) and (max-height:768) {
         a{
                 width : 40%;
         }
