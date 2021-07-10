@@ -26,7 +26,7 @@ a {
                 width : 50%;
         }
         body{
-                margin-top: 2rem;
+                margin-top: 3rem;
         }
 }
 @media (max-width:541px) and (min-width:362px) {
@@ -34,7 +34,7 @@ a {
                 width : 50%;
         }
         body{
-                margin-top: 5rem;
+                margin-top: 6rem;
         }
 }
 @media (max-width:768px) and (min-width:542px){
