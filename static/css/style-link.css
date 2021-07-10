@@ -55,11 +55,12 @@ a {
                 margin-top: 8rem;
         }
 }
+/* wtf */
 a:hover{
         color: black;
         background-color: #fff;
 }
-/* DUDE WTF */
+
 body{
         background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
         
