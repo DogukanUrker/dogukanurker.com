@@ -17,7 +17,7 @@ a {
         display: block;
         cursor: pointer;
         text-decoration: none;
-        width: 20%;
+        width: 18%;
         margin-top:1.5rem;
 }
 /* I REALY DONT KNOW WHAT I AM DOING */
@@ -67,8 +67,8 @@ body{
 }
 .box {
         position: relative;
-        width: 100%; /* here u must set depending on your layout width*/
-        height: 100%; /* set your values for height */
+        width: 100%; 
+        height: 100%; 
         margin: 0 auto;
         padding: 0;
         text-align: left;
