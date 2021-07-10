@@ -1,17 +1,4 @@
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600&display=swap');
-html,
-body {
-  height: 100%;
-  background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
-}
-.box{
-  width: 350px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
 a {
         transition: all .5s ease;
         color: #fff;
@@ -29,10 +16,51 @@ a {
         margin: auto;
         display: block;
         cursor: pointer;
-        width: 12rem;
+        text-decoration: none;
+        width: 20%;
         margin-top:1.5rem;
+}
+/* I REALY DONT KNOW WHAT I AM DOING */
+@media (max-width:361px) {
+        a{
+                width : 50%;
+        }
+        body{
+                margin-top: 3rem;
+        }
+}
+@media (max-width:541px) and (min-width:362px) {
+        a{
+                width : 50%;
+        }
+        body{
+                margin-top: 6rem;
+        }
+}
+@media (max-width:768px) and (min-width:542px){
+        a{
+                width : 40%;
+                
+        }
+        body{
+                margin-top: 9rem;
+        }
+}
+@media (min-width:769px) and (max-width:1025px){
+        a{
+                width : 40%;
+                
+        }
+        body{
+                margin-top: 8rem;
+        }
 }
 a:hover{
         color: black;
         background-color: #fff;
+}
+/* DUDE WTF */
+body{
+        background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
+        
 }
