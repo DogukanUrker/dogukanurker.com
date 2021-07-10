@@ -65,3 +65,11 @@ body{
         background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
         
 }
+.box {
+        position: relative;
+        width: 100%; /* here u must set depending on your layout width*/
+        height: 100%; /* set your values for height */
+        margin: 0 auto;
+        padding: 0;
+        text-align: left;
+}
