@@ -40,7 +40,6 @@ a {
 @media (max-width:768px) and (min-width:542px){
         a{
                 width : 40%;
-                
         }
         body{
                 margin-top: 9rem;
@@ -49,7 +48,6 @@ a {
 @media (min-width:769px) and (max-width:1025px){
         a{
                 width : 40%;
-                
         }
         body{
                 margin-top: 8rem;
@@ -58,7 +56,6 @@ a {
 @media (min-width:769px) and (max-width:1025px) and (min-height:600px) and (max-height:768) {
         a{
                 width : 40%;
-                
         }
         body{
                 margin-top: 4rem;
@@ -69,10 +66,8 @@ a:hover{
         color: black;
         background-color: #fff;
 }
-
 body{
         background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
-        
 }
 .box {
         position: relative;
