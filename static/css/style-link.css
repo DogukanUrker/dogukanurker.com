@@ -8,51 +8,20 @@ a {
         line-height: 2.5;
         font-size: 100%;
         background-color : transparent;
-        padding: 2%;
         outline: none;
         border-radius: 10px;
-        height: auto;
         font-family: 'Libre Franklin', sans-serif;
         margin: auto;
         display: block;
         cursor: pointer;
         text-decoration: none;
-        width: 18%;
+        padding:10px;
+        height: 60px;
+        width: 150px;
         margin-top:1.5rem;
 }
 /* I REALY DONT KNOW WHAT I AM DOING */
-@media (max-width:361px) {
-        a{
-                width : 50%;
-        }
-        body{
-                margin-top: 3rem;
-        }
-}
-@media (max-width:541px) and (min-width:362px) {
-        a{
-                width : 50%;
-        }
-        body{
-                margin-top: 6rem;
-        }
-}
-@media (max-width:768px) and (min-width:542px){
-        a{
-                width : 40%;
-        }
-        body{
-                margin-top: 9rem;
-        }
-}
-@media (min-width:769px) and (max-width:1025px){
-        a{
-                width : 40%;
-        }
-        body{
-                margin-top: 8rem;
-        }
-}
+
 /* wtf */
 a:hover{
         color: black;
@@ -60,6 +29,7 @@ a:hover{
 }
 body{
         background: linear-gradient(0.25turn, rgb(85, 85, 85),  rgb(65, 64, 64));
+        margin-top:10%;
 }
 .box {
         position: relative;
