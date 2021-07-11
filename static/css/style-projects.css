@@ -1,29 +1,36 @@
 .blur {
     background: rgba( 255, 255, 255, 0.25 );
-    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.137);
-    backdrop-filter: blur( 20.0px );
-    -webkit-backdrop-filter: blur( 20.0px );
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.199);
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
     border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );  
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
-
 .container {
     margin-top:8%;
     margin-left:auto;
     margin-right:auto;
     padding:auto;
+    width: 350px;
+    padding: 20px;
+    position: absolute;
+    top: 15%;
+    left: 51%;
+    transform: translate(-50%,-50%);
+    background: transparent;
+    text-align: center;
 }
-
+h1{
+    margin-top: 2rem;
+}
 card {
     display: table-cell;
     vertical-align: middle;
     margin-top:10px;
 }
-
 #shutdowntimer-img {
     border-radius: 20px;
     padding:10px;
-    
 }
 h1{
     margin-top:10px;
