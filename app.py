@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return redirect("https://dogukanurker.com/links")
+    return redirect(url_for("links"))
 
 @app.route('/links')
 def links():
