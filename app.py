@@ -1,7 +1,7 @@
 from flask import Flask,render_template,flash,redirect,url_for,session,logging,request,g
-
+from flask_sslify import SSLify
 app = Flask(__name__)
-
+sslify = SSLify(app)
 @app.route('/')
 def index():
     return redirect(url_for("links"))
