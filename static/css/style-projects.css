@@ -25,7 +25,9 @@ card {
     padding:10px;
     
 }
-
+h1{
+    margin-top:5px;
+}
 @media (max-width:500px){
     .container{
         width: 350px;
