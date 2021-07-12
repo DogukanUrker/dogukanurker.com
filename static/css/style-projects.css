@@ -7,18 +7,10 @@
     border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 .container {
-    margin-top:8%;
-    margin-left:auto;
-    margin-right:auto;
-    padding:auto;
-    width: 350px;
-    padding: 20px;
-    position: absolute;
-    top: 15%;
-    left: 51%;
-    transform: translate(-50%,-50%);
-    background: transparent;
-    text-align: center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top: 3rem;
 }
 h1{
     margin-top: 2rem;
@@ -36,16 +28,4 @@ card {
 }
 h1{
     margin-top:10px;
-}
-@media (max-width:500px){
-    .container{
-        width: 350px;
-        padding: 20px;
-        position: absolute;
-        top: 30%;
-        left: 52%;
-        transform: translate(-50%,-50%);
-        background: transparent;
-        text-align: center;
-      }
 }
