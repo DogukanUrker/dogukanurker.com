@@ -1,6 +1,6 @@
 .blur {
     background: rgba( 255, 255, 255, 0.25 );
-    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.199);
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.123);
     backdrop-filter: blur( 4px );
     -webkit-backdrop-filter: blur( 4px );
     border-radius: 10px;
@@ -17,13 +17,8 @@ h1{
     margin-bottom: 2rem;
     
 }
-card {
-    display: table-cell;
-    vertical-align: middle;
-    margin-top:10px;
-}
 #shutdowntimer-img {
-    border-radius: 20px;
+    border-radius: 1rem;
     padding:10px;
 }
 h1{
