@@ -4,10 +4,24 @@
     align-items:center;
     padding-top: 2rem;
   }
-
 p{
   font-size:1.25rem;
 }
 h1{
   font-size:2.5rem;
+}
+.btn_duo{
+  height:3.5rem;
+  width:6rem; 
+}
+.btn_solo{
+  height:3.5rem;
+  width:13.5rem; 
+  margin-top: 10px;
+}
+.btn-outline-warning{
+  margin-right: 1rem;
+}
+.btn{
+  padding-top: 0.6rem;
 }
