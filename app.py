@@ -14,6 +14,9 @@ def shutdowntimer():
 @app.route('/projects')
 def projects():
     return render_template("projects.html")
+@app.route('/all')
+def all():
+    return render_template("all.html")
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
