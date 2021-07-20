@@ -9,7 +9,7 @@ def index():
 def main():
     return render_template("main.html")
 @app.route('/socials')
-def links():
+def socials():
     return render_template("socials.html")
 @app.route('/shutdowntimer')
 def shutdowntimer():
