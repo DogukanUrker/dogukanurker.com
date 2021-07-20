@@ -2,15 +2,15 @@ from flask import Flask,render_template,flash,redirect,url_for,session,logging,r
 from flask_sslify import SSLify
 app = Flask(__name__)
 sslify = SSLify(app)
+@app.route('/')
+def index():
+    return redirect(url_for("socials"))
 @app.route('/main')
 def main():
     return render_template("main.html")
-@app.route('/')
-def index():
-    return redirect(url_for("links"))
-@app.route('/links')
+@app.route('/socials')
 def links():
-    return render_template("links.html")
+    return render_template("socials.html")
 @app.route('/shutdowntimer')
 def shutdowntimer():
     return render_template("shutdowntimer.html")
