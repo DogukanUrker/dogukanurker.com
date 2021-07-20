@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .container {
     display:flex;
     flex-direction:column;
@@ -7,6 +8,7 @@
 a{
     margin-top: 1.5rem;
     width: 12rem;
+    font-family: 'Roboto', sans-serif;
 }
 p{
     margin-top: 0.5rem;
