@@ -28,10 +28,6 @@ h1{
 .btn{
   font-size:1.5rem;
 }
-.fixedbtn {
-  position: fixed;
-  bottom: 0px;
-  right: 0px; 
-  margin: 0.8rem;
-  font-size:1rem;
+.other-projects-btn {
+  font-size:0.9rem;
 }
