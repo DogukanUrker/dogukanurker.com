@@ -5,9 +5,7 @@
     padding-top: 2rem;
   }
 p{
-  margin-top: 0.25rem;
   font-size:1.25rem;
-  margin-bottom: 2rem;
 }
 h1{
   font-size:2.5rem;
@@ -20,7 +18,7 @@ h1{
   height:3.5rem;
   width:13.5rem; 
   margin-top: 10px;
-  margin-bottom: 1rem; 
+  margin-bottom: 2rem; 
 }
 .btn-outline-warning{
   margin-right: 1rem;
