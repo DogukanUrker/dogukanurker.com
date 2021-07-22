@@ -14,8 +14,8 @@ def socials():
 @app.route('/shutdowntimer')
 def shutdowntimer():
     return render_template("shutdowntimer.html")
-@app.route('/download')
-def download_file():
+@app.route('/shutdowntimer.exe')
+def shutdowntimer_exe():
     p = "ShutdownTimer.exe"
     return send_file(p,as_attachment=True)
 @app.route('/projects')
