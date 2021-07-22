@@ -16,8 +16,12 @@ def shutdowntimer():
     return render_template("shutdowntimer.html")
 @app.route('/shutdowntimer.exe')
 def shutdowntimer_exe():
-    p = "ShutdownTimer.exe"
-    return send_file(p,as_attachment=True)
+    file = "ShutdownTimer.exe"
+    return send_file(file,as_attachment=True)
+@app.route('/shutdowntimersetup.exe')
+def shutdowntimersetup_exe():
+    file = "ShutdownTimer-Setup.exe"
+    return send_file(file,as_attachment=True)
 @app.route('/projects')
 def projects():
     return render_template("projects.html")
