@@ -7,7 +7,7 @@ def index():
     return redirect(url_for("socials"))
 @app.route('/main')
 def main():
-    return render_template("main.html")
+    return render_template("mainpage.html")
 @app.route('/socials')
 def socials():
     return render_template("socials.html")
