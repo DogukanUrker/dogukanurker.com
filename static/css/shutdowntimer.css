@@ -1,75 +1,33 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 2rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+}
 p{
-  font-size: 1.25rem;
+font-size: 1.25rem;
 }
 h1{
-  font-size: 2.5rem;
+font-size: 2.5rem;
 }
 .btn-duo{
-  height: 3.5rem;
-  width: 6rem; 
+height: 3.5rem;
+width: 6rem; 
 }
 .btn-solo{
-  height: 3.5rem;
-  width: 6rem; 
-  margin-top: 10px;
-  margin-bottom: 2rem; 
-}
-.btn-outline-danger,.btn-outline-primary{
-  margin-right: 1rem;
-}
-.btn{
-  font-size: 1.5rem;
-}
-.other-projects-btn {
-  margin-top: 2rem;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
+height: 3.5rem;
+width: 13rem; 
+margin-top: 10px;
+margin-bottom: 2rem; 
 }
 .btn-outline-warning{
-  color: #ffba00;
-  border-color: #ffba00;
-  padding-top: 0rem;
-  padding-bottom: 1rem;
-  padding-left: 0.5rem;
-  font-size: 1.10rem;
+margin-right: 1rem;
 }
-.btn-outline-warning:hover{
-  border-color: #ffba00;
-  background-color: #ffba00;
+.btn{
+font-size: 1.5rem;
 }
-.btn-outline-danger{
-  color: #f24f1c;
-  border-color: #f24f1c;
-}
-.btn-outline-danger:hover{
-  border-color: #f24f1c;
-  background-color: #f24f1c;
-}
-.btn-outline-success{
-  color: #80bb00;
-  border-color: #80bb00;
-}
-.btn-outline-success:hover{
-  border-color: #80bb00;
-  background-color: #80bb00;
-}
-.btn-outline-primary{
-  color: #00a5f0;
-  border-color: #00a5f0;
-}
-.btn-outline-primary:hover{
-  border-color: #00a5f0;
-  background-color: #00a5f0;
-}
-.btn:hover{
-  color: white;
-}
-.btn-outline-light:hover{
-  color: black;
+.other-projects-btn {
+margin-top: 2rem;
+font-size: 1rem;
+margin-bottom: 0.5rem;
 }
