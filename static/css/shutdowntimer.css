@@ -70,3 +70,6 @@ h1{
 .btn:hover{
   color: white;
 }
+.btn-outline-light:hover{
+  color: black;
+}
