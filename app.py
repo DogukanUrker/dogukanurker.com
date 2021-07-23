@@ -14,6 +14,15 @@ def socials():
 @app.route('/shutdowntimer')
 def shutdowntimer():
     return render_template("shutdowntimer.html")
+@app.route('/projects')
+def projects():
+    return render_template("projects.html")
+@app.route('/all')
+def all():
+    return render_template("all.html")
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 @app.route('/shutdowntimer.exe')
 def shutdowntimer_exe():
     file = "ShutdownTimer.exe"
@@ -22,15 +31,5 @@ def shutdowntimer_exe():
 def shutdowntimersetup_exe():
     file = "ShutdownTimer-Setup.exe"
     return send_file(file,as_attachment=True)
-@app.route('/projects')
-def projects():
-    return render_template("projects.html")
-@app.route('/all')
-def all():
-    return render_template("all.html")
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
 if __name__ == '__main__':
     app.run(debug=True)
