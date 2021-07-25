@@ -21,10 +21,13 @@ margin-top: 10px;
 margin-bottom: 2rem; 
 }
 .btn-outline-warning{
-margin-right: 1rem;
+  padding-right:2rem;
+  padding-left:2rem;
+  margin-right: 1rem;
 }
 .btn{
-font-size: 1.5rem;
+  margin-bottom:0.5rem;
+  font-size: 1.5rem;
 }
 .other-projects-btn {
 margin-top: 2rem;
@@ -33,4 +36,7 @@ margin-bottom: 0.5rem;
 }
 #microsoft{
   margin-bottom: 1rem;
+}
+.btn-outline-success{
+  margin-right: 1rem;
 }

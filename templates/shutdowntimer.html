@@ -4,6 +4,7 @@
 <head>
     <title>Shutdown Timer</title>
     <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/shutdowntimer.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-dark text-light text-center user-select-none ">
   <div class="container ">
@@ -12,12 +13,12 @@
     <p>Simple app to shutdown or restart your computer whenever you want.</p>
     <br>
     <div >
-      <a type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="Github" href="https://github.com/DogukanUrker/ShutdownTimer"  target="_blank"  class="border-2 btn btn-outline-warning btn-lg btn_duo" >Code</a>
+      <a type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="Github" href="https://github.com/DogukanUrker/ShutdownTimer"  target="_blank"  class="border-2 btn btn-outline-warning btn-lg btn_duo" ><i class="fab fa-github"></i></a>
       <a  type="button" href="{{url_for('shutdowntimer_exe')}}" target="_blank" class="border-2  btn btn-outline-primary btn-lg btn-duo ">Exe</a>
       <br>
-      <a  type="button" href="{{url_for('shutdowntimersetup_exe')}}"  target="_blank"  class="border-2  btn btn-outline-success btn-lg btn-solo " >Setup</a>
+      <a  type="button" href="{{url_for('shutdowntimersetup_exe')}}"  target="_blank"  class="border-2  btn btn-outline-success btn-lg btn-duo " ><i class="fab fa-linux"></i></a>
+      <a  type="button" href="{{url_for('shutdowntimersetup_exe')}}"  target="_blank"  class="border-2  btn btn-outline-secondary btn-lg btn-duo " ><i class="fab fa-windows"></i></a>
       <br>
-      <a href='//www.microsoft.com/store/apps/9ncbcszsjrsb?cid=storebadge&ocid=badge' target="_blank"><img id="microsoft" src='https://developer.microsoft.com/store/badges/images/English_get_L.png' alt='English badge' style='width: 127px; height: 52px;'/></a>
       <img src="static/images/img1.png"   alt="shutdowntimer-ui" class="d-block">
       <a href="projects" type="button" class="btn btn-outline-light other-projects-btn">other projects</a>
     </div>
