@@ -2,3 +2,13 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+body::-webkit-scrollbar {
+    width: 0.3rem;
+}
+body::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: #666; 
+}
+body::-webkit-scrollbar-track , body::-webkit-scrollbar-button {
+    background: transparent;
+}
