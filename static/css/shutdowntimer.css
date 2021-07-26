@@ -10,25 +10,35 @@ font-size: 1.25rem;
 h1{
 font-size: 2.5rem;
 }
-.btn-solo{
-height: 3.5rem;
-width: 13.2rem; 
-margin-top: 10px;
-margin-bottom: 2rem; 
-}
 .btn-outline-warning{
-  width: 6rem;
   margin-right: 1rem;
 }
 .btn{
 font-size: 1.5rem;
 }
-.other-projects-btn {
-margin-top: 2rem;
-font-size: 1rem;
-margin-bottom: 0.5rem;
+.btn-outline-secondary {
+  margin-top: 2rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
-.btn-duo{
+.btn-outline-warning,.btn-outline-primary{
   height: 3.5rem;
   width: 6rem; 
+}
+.btn-outline-light{
+  height: 3.5rem;
+  width: 13.3rem; 
+  margin-top: 10px;
+  margin-bottom: 2rem; 
+}
+@media screen and (min-width:1025px) {
+  html{
+    font-size:19px;
+  }
+  .btn-outline-secondary{
+    font-size:0.8rem
+  }
+  p{
+    font-size: 1.15rem;
+  }
 }
