@@ -10,21 +10,6 @@ font-size: 1.25rem;
 h1{
 font-size: 2.5rem;
 }
-.btn-duo{
-height: 3.5rem;
-width: 6rem; 
-}
-.btn-solo{
-height: 3.5rem;
-width: 13rem; 
-margin-top: 10px;
-margin-bottom: 2rem; 
-}
-.btn-outline-warning{
-  padding-right:2rem;
-  padding-left:2rem;
-  margin-right: 1rem;
-}
 .btn{
   margin-bottom:0.5rem;
   font-size: 1.5rem;
@@ -34,9 +19,18 @@ margin-top: 2rem;
 font-size: 1rem;
 margin-bottom: 0.5rem;
 }
-#microsoft{
-  margin-bottom: 1rem;
-}
 .btn-outline-success{
   margin-right: 1rem;
 }
+.btn-outline-success, .btn-outline-primary{
+  height: 3.5rem;
+  width: 6rem; 
+  }
+  .btn-outline-warning{
+    height: 3.5rem;
+    width: 13rem; 
+    margin-left: 1rem;
+    margin-top: 10px;
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+  }
