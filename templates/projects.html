@@ -1,10 +1,9 @@
-{% include 'layout.html'%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'layout.html'%}
+{% block head %}
     <title>Projects</title>
     <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/projects.css') }}">
-</head>
+{% endblock head %}
+{% block body %}
 <body class="bg-dark user-select-none">
     <div class="container">
     <h1 class="text-light text-center">Projects</h1>
@@ -20,4 +19,4 @@
     </div>
     </div>
 </body>
-</html>
+{% endblock body %}

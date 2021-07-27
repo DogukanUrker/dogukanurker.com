@@ -1,10 +1,9 @@
-{% include 'layout.html'%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <title>All Pages</title>
-   <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/all.css') }}">
-</head>
+{% extends 'layout.html'%}
+{% block head %}
+    <title>All Pages</title>
+    <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/all.css') }}">
+{% endblock head %}
+{% block body %}
 <body class="bg-dark user-select-none text-light">
     <div class="container">
         <a type="button" class="btn btn-outline-light btn-lg border-2 rounded-pill" href="http://dogukanurker.com/links" target="_blank" rel="noopener noreferrer">Socials</a>
@@ -14,4 +13,4 @@
         <p class="text-muted">Work in progress</p>
     </div>
 </body>
-</html>
+{% endblock body %}

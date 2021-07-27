@@ -1,10 +1,9 @@
-{% include 'layout.html'%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'layout.html'%}
+{% block head %}
     <title>Doğukan Ürker</title>
     <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/mainpage.css') }}">
-</head>
+{% endblock head %}
+{% block body %}
 <body class="bg-dark user-select-none text-light">
 </body>
-</html>
+{% endblock body %}

@@ -1,10 +1,9 @@
-{% include 'layout.html'%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'layout.html'%}
+{% block head %}
     <title>Page Not Found</title>
     <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/404.css') }}">
-</head>
+{% endblock head %}
+{% block body %}
 <body class="bg-dark user-select-none">
     <div class="container text-center">
         <h1 class="text-danger">404</h1>
@@ -12,4 +11,4 @@
         <a  href="http://dogukanurker.com" type="button" class="go-home-btn btn btn-outline-success   border border-2 border-success">GO HOME</a>
     </div>
 </body>
-</html>
+{% endblock body %}
