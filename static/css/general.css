@@ -2,6 +2,12 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+}
 body::-webkit-scrollbar {
     width: 0.3rem;
 }
