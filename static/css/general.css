@@ -2,6 +2,9 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+body{
+    color:#f8f8f2;
+}
 .container {
     display: flex;
     flex-direction: column;
@@ -13,8 +16,11 @@ body::-webkit-scrollbar {
 }
 body::-webkit-scrollbar-thumb {
     border-radius: 1rem;
-    background: #666; 
+    background: #44475a; 
 }
 body::-webkit-scrollbar-track , body::-webkit-scrollbar-button {
     background: transparent;
+}
+.bg-dark{
+    background-color:#282a36!important;
 }
