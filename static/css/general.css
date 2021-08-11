@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@font-face {
+    font-family: 'YourFontName'; /*a name to be used later*/
+    src: url('http://dogukanurker.com/font/ChirpRegular.woff'); /*URL to font*/
+}
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'YourFontName', sans-serif;
 }
 body{
     color:#f8f8f2;
