@@ -2,7 +2,6 @@
 {% block head %}
     <title>Shutdown Timer</title>
     <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/shutdowntimer.css') }}">
-    <script src="{{url_for('static', filename='js/shutdowntimer.js') }}"></script>
 {% endblock head %}
 {% block body %}
 <body class="bg-dark text-center user-select-none ">
@@ -20,6 +19,7 @@
       <img src="static/images/img1.png"   alt="shutdowntimer-ui" class="d-block">
       <a href="projects" type="button" class="btn btn-outline-secondary">other projects</a>
     </div>
+    <script src="{{url_for('static', filename='js/shutdowntimer.js') }}"></script>
 </body>
 {% endblock body %}
 <!-- <i class="fas fa-arrow-down"></i> -->
