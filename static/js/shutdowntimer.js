@@ -1,4 +1,3 @@
-console.log("deneme")
 const windows = document.querySelector(".fa-windows")
 const linux = document.querySelector(".fa-linux")
 const windows_btn = document.querySelector(".btn-outline-primary")
@@ -11,4 +10,3 @@ window.onload = function(){
 windows_btn.onclick = function(){
     windows.className = "fas fa-arrow-down"
 }
-console.log("deneme")
