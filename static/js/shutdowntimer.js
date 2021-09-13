@@ -6,5 +6,5 @@ linux_btn.onclick = function(){
     linux.className = "fas fa-arrow-down";
 }
 windows_btn.onclick = function(){
-    windows.className = "fas fa-arrow-down"
+    windows.className = "fas fa-arrow-down";
 }
