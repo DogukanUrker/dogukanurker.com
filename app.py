@@ -25,7 +25,11 @@ def page_not_found(e):
     return render_template('404.html'), 404
 @app.route('/shutdowntimer.exe')
 def shutdowntimer_exe():
-    file = "ShutdownTimer.exe"
+    file = "app/ShutdownTimer.exe"
+    return send_file(file,as_attachment=True)
+@app.route('/shutdowntimer-linux')
+def shutdowntimer_linux():
+    file = "app/ShutdownTimer"
     return send_file(file,as_attachment=True)
 @app.route('/shutdowntimersetup.exe')
 def shutdowntimersetup_exe():
