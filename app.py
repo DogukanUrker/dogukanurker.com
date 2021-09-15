@@ -27,6 +27,10 @@ def page_not_found(e):
 def shutdowntimer_exe():
     file = "ShutdownTimer.exe"
     return send_file(file,as_attachment=True)
+@app.route('/shutdowntimer')
+def shutdowntimer_exe():
+    file = "ShutdownTimer"
+    return send_file(file,as_attachment=True)
 @app.route('/shutdowntimersetup.exe')
 def shutdowntimersetup_exe():
     file = "ShutdownTimer-Setup.exe"
