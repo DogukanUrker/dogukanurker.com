@@ -1,0 +1,19 @@
+{% extends 'layout.html'%}
+{% block head %}
+  <title>Bomba Sözler.com</title>
+  <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/bombasozler.css') }}">
+{% endblock head %}
+{% block body %}
+<body class="bg-dark text-light">
+    
+
+<div class="container">
+  <i class="fas fa-bomb"></i>
+  <p class="text-center"></p>
+</div>
+
+
+
+<script type="text/javascript" src="{{url_for('static', filename='js/bombasozler.js') }}"></script>
+</body>
+{% endblock body %}

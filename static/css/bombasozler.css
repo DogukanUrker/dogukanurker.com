@@ -1,0 +1,15 @@
+i {
+    margin-bottom: 2rem;
+    font-size : 4000%;
+}
+p{
+    font-size : 2rem;
+}
+@media screen and (max-width:600px) {
+    i {
+        font-size : 2000%;
+    }
+    p{
+      font-size: 1.5rem;
+    }
+  }
