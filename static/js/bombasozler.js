@@ -22,7 +22,6 @@ function bombColor(e) {
     }
     else if (clickCount == 3){
         text.innerHTML = sozler.split(".")[Math.floor((Math.random() *sozler.split(".").length))];
-        text.innerHTML = "近前看其詳上寫着 秦香蓮那三十二歲 那狀告當朝驸馬郎 他欺君王啊瞞皇上 那悔婚男兒招東床 近前看其詳上寫着 秦香蓮那三十二歲 那狀告當朝驸馬郎 他欺君王啊瞞皇上 那悔婚男兒招東床"
         clickCount = 0
     if (text.innerHTML === "Pablo"){
         Pablo.style.display = "block";
