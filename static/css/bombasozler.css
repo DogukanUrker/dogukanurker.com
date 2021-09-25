@@ -1,11 +1,18 @@
+iframe{
+    margin-bottom: 2rem;
+}
 i {
     margin-bottom: 2rem;
     font-size : 4000%;
+    transition: all 0.275s ease;
 }
 p{
     font-size : 2rem;
 }
 @media screen and (max-width:600px) {
+    .container {
+        margin-top: 2rem;
+    }
     i {
         font-size : 2000%;
     }

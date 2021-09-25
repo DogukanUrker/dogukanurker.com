@@ -2,18 +2,16 @@
 {% block head %}
   <title>Bomba Sözler.com</title>
   <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/bombasozler.css') }}">
+  <link rel="icon" href="http://example.com/favicon.png">
 {% endblock head %}
 {% block body %}
 <body class="bg-dark text-light">
-    
-
 <div class="container">
+  <iframe id="pablo" width="1280" height="720" src="https://www.youtube.com/embed/1oAOY6PG460" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <iframe id="asian" width="1280" height="720" src="https://www.youtube.com/embed/BXmPsxpCYNE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <i class="fas fa-bomb"></i>
   <p class="text-center"></p>
 </div>
-
-
-
 <script type="text/javascript" src="{{url_for('static', filename='js/bombasozler.js') }}"></script>
 </body>
 {% endblock body %}
