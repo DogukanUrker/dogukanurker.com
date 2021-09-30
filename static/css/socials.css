@@ -28,3 +28,11 @@ a:hover{
         color: black;
         background-color: #fff;
 }
+@media screen and (max-width:600px) {
+        .container {
+                padding-top: 1rem;
+        }
+        a{
+                margin-top: 1rem;
+        }
+      }
