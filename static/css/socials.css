@@ -19,9 +19,9 @@ a {
         display: block;
         cursor: pointer;
         text-decoration: none;
-        padding:0.5rem;
-        height: 60px;
-        width: 150px;
+        padding:0.6rem;
+        height: 4rem;
+        width: 9.5rem;
         margin-top:1.5rem;
 }
 a:hover{
@@ -34,5 +34,7 @@ a:hover{
         }
         a{
                 margin-top: 1rem;
+                padding:0.5rem;
+                height: 3.8rem;
         }
       }
