@@ -35,8 +35,5 @@ def shutdowntimer_linux():
 def shutdowntimersetup_exe():
     file = "ShutdownTimer-Setup.exe"
     return send_file(file,as_attachment=True)
-@app.route('/bombasozler')
-def bombasozler():
-    return render_template("bombasozler.html")
 if __name__ == '__main__':
     app.run(debug=True)
