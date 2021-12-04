@@ -11,6 +11,12 @@ body{
     align-items: center;
     padding-top: 2rem;
 }
+.center-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 body::-webkit-scrollbar {
     width: 0.3rem;
 }
@@ -20,4 +26,7 @@ body::-webkit-scrollbar-thumb {
 }
 body::-webkit-scrollbar-track , body::-webkit-scrollbar-button {
     background: transparent;
+}
+.bg-dark{
+    background-color: #181A1B!important;
 }

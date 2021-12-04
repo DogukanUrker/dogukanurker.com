@@ -14,9 +14,9 @@ def socials():
 @app.route('/shutdowntimer')
 def shutdowntimer():
     return render_template("shutdowntimer.html")
-@app.route('/projects')
+@app.route('/apps')
 def projects():
-    return render_template("projects.html")
+    return render_template("apps.html")
 @app.route('/all')
 def all():
     return render_template("all.html")
