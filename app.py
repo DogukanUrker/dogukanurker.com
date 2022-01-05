@@ -23,6 +23,9 @@ def all():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+@app.route('/fiverr')
+def fiverr():
+    return render_template("fiverr.html")
 @app.route('/shutdowntimer.exe')
 def shutdowntimer_exe():
     file = "ShutdownTimer/ShutdownTimer.exe"
