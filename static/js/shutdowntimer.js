@@ -1,3 +1,4 @@
+console.log("shutdowntimer.js loaded");
 const windows = document.querySelector(".fa-windows");
 const linux = document.querySelector(".fa-linux");
 const windows_btn = document.querySelector(".btn-outline-primary");

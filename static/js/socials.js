@@ -1,1 +1,1 @@
-console.log("socials");
+console.log("socials.js loaded");

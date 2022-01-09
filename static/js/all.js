@@ -1,1 +1,1 @@
-console.log("all");
+console.log("all.js loaded");
