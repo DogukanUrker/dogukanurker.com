@@ -5,5 +5,10 @@
   href="{{ url_for('static', filename='css/mainpage.css') }}"
 />
 {% endblock head %} {% block body %}
-<body class="bg-dark user-select-none"></body>
+<body class="bg-dark user-select-none">
+  <script
+    type="text/javascript"
+    src="{{url_for('static', filename='js/mainpage.js') }}"
+  ></script>
+</body>
 {% endblock body %}
