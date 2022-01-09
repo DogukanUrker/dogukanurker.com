@@ -1,22 +1,32 @@
-{% extends 'layout.html'%}
-{% block head %}
-  <title>Apps</title>
-  <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/apps.css') }}">
-{% endblock head %}
-{% block body %}
+{% extends 'layout.html'%} {% block head %}
+<title>Apps</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/apps.css') }}"
+/>
+{% endblock head %} {% block body %}
 <body class="bg-dark user-select-none">
-    <div class="container">
+  <div class="container">
     <h1 class="text-center">Apps</h1>
-    <div class="card blur" style="width: 18rem;">
-        <img id="shutdowntimer-img"src="static/images/img1.png"  class="card-img-top" alt="shutdowntimer-ui">
-        <div class="card-body text-center ">
-            <h5 class="card-title ">Shutdown Timer</h5>
-            <p class="card-text">A simple app to shutdown or restart your computer whenever you want.</p>
-            <div class="d-grid gap-2">
-                <a href="shutdowntimer" target="_blank" class="btn btn-primary">Go to App</a>
-            </div>
+    <div class="card blur" style="width: 18rem">
+      <img
+        id="shutdowntimer-img"
+        src="static/images/img1.png"
+        class="card-img-top"
+        alt="shutdowntimer-ui"
+      />
+      <div class="card-body text-center">
+        <h5 class="card-title">Shutdown Timer</h5>
+        <p class="card-text">
+          A simple app to shutdown or restart your computer whenever you want.
+        </p>
+        <div class="d-grid gap-2">
+          <a href="shutdowntimer" target="_blank" class="btn btn-primary"
+            >Go to App</a
+          >
         </div>
+      </div>
     </div>
-    </div>
+  </div>
 </body>
 {% endblock body %}

@@ -1,17 +1,17 @@
 .container {
   padding-top: 10rem;
 }
-h1{
-  font-size:8rem;
+h1 {
+  font-size: 8rem;
 }
-h2{
-  font-size:1.6rem;
+h2 {
+  font-size: 1.6rem;
 }
-.go-home-btn{
-  margin-top:0.8rem; 
-  font-size: 1.25rem; 
-  font-weight: 500; 
+.go-home-btn {
+  margin-top: 0.8rem;
+  font-size: 1.25rem;
+  font-weight: 500;
   line-height: 1.7;
-  padding-top:0.25rem;
-  padding-bottom:0.30rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.3rem;
 }
