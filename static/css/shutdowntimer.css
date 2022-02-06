@@ -4,36 +4,25 @@ p {
 h1 {
   font-size: 2.5rem;
 }
-.btn-outline-warning {
-  margin-left: 1rem;
-}
-.btn {
-  font-size: 1.5rem;
-}
-.btn-outline-secondary {
-  margin-top: 2rem;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-.btn-outline-warning,
-.btn-outline-primary {
+.btn-lg {
+  font-size: 1.5rem !important;
   height: 3.5rem;
   width: 6rem;
-}
-.btn-outline-light {
-  height: 3.5rem;
-  width: 13.3rem;
-  margin-top: 10px;
-  margin-bottom: 2rem;
+  margin: 0.5rem 0.5rem 1.5rem 0.5rem;
 }
 .app-img {
   border-radius: 0.5rem;
+}
+.btn-outline-secondary {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 @media screen and (min-width: 1025px) {
   html {
     font-size: 19px;
   }
-  .btn-outline-secondary {
+  .btn-lg {
     font-size: 0.8rem;
   }
   p {
