@@ -45,23 +45,5 @@ def fiverr():
     return render_template("fiverr.html")
 
 
-@app.route("/shutdowntimer.exe")
-def shutdowntimer_exe():
-    file = "ShutdownTimer/ShutdownTimer.exe"
-    return send_file(file, as_attachment=True)
-
-
-@app.route("/shutdowntimer-linux")
-def shutdowntimer_linux():
-    file = "ShutdownTimer/ShutdownTimer"
-    return send_file(file, as_attachment=True)
-
-
-@app.route("/shutdowntimersetup.exe")
-def shutdowntimersetup_exe():
-    file = "ShutdownTimer-Setup.exe"
-    return send_file(file, as_attachment=True)
-
-
 if __name__ == "__main__":
     app.run(debug=True)
