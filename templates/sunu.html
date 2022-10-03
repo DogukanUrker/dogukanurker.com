@@ -1,0 +1,20 @@
+{% extends 'layout.html'%} {% block head %}
+<title>Page Not Found</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/sunu.css') }}"
+/>
+{% endblock head %} {% block body %}
+<div class="full-screen-container">
+  <img src="static/images/sunu/1.png" />
+  <img src="static/images/sunu/2.png" />
+  <img src="static/images/sunu/3.png" />
+  <img src="static/images/sunu/4.png" />
+  <img src="static/images/sunu/5.png" />
+  <img src="static/images/sunu/6.png" />
+</div>
+<script
+  type="text/javascript"
+  src="{{url_for('static', filename='js/sunu.js') }}"
+></script>
+{% endblock body %}
