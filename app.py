@@ -24,10 +24,6 @@ def shutdowntimer():
 def projects():
     return render_template("apps.html")
 
-@app.route("/sunu")
-def sunu():
-    return render_template("sunu.html")
-
 
 @app.errorhandler(404)
 def page_not_found(e):
