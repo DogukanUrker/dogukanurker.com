@@ -1,23 +1,17 @@
 a {
   transition: all 0.5s ease;
   color: #fff;
-  border: 2px solid white;
-  text-transform: uppercase;
   text-align: center;
-  line-height: 2.5;
-  font-size: 1rem;
-  background-color: transparent;
+  font-size: 2rem;
   outline: none;
-  border-radius: 10px;
   margin: auto;
   display: block;
   cursor: pointer;
   text-decoration: none;
-  padding: 0.6rem;
-  height: 4rem;
-  width: 9.5rem;
   margin-bottom: 1.5rem;
-  font-weight: 500;
+  border-radius: 100rem;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 a:hover {
   color: black;
@@ -25,6 +19,7 @@ a:hover {
 }
 @media screen and (max-width: 600px) {
   a {
+    font-size: 2.5rem;
     margin-bottom: 1rem;
     padding: 0.5rem;
     height: 3.8rem;
