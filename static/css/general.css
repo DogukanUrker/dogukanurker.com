@@ -1,9 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-* {
-  font-family: "Roboto", sans-serif;
-}
 body {
-  color: #f8f8f2;
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+  background-color: #000;
 }
 .container {
   display: flex;
@@ -27,7 +26,4 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track,
 body::-webkit-scrollbar-button {
   background: transparent;
-}
-.bg-dark {
-  background-color: #181a1b !important;
 }
