@@ -4,12 +4,14 @@ p {
 h1 {
   font-size: 3rem;
 }
-.border-2 {
+.btn-outline-light,
+.btn-outline-primary {
   font-size: 2rem;
   height: 4rem;
   width: 7rem;
   margin: 0.5rem 0.5rem 1.5rem 0.5rem;
   padding: 0.4rem;
+  border: 0.15rem solid;
   border-radius: 0.5rem;
 }
 .app-img {
