@@ -1,25 +1,45 @@
-{% extends 'layout.html'%}
-{% block head %}
-  <title>Shutdown Timer</title>
-  <link rel= "stylesheet"  href= "{{ url_for('static', filename='css/shutdowntimer.css') }}">
-{% endblock head %}
-{% block body %}
-<body class="text-center user-select-none ">
-  <div class="container">
-    <h1 >Shutdown Timer</h1>
-    <br>
-    <p>Simple app to shutdown or restart your computer whenever you want.</p>
-    <br>
-    <div>
-      <a  type="button" title="Windows" href="https://github.com/DogukanUrker/shutdowntimer/releases/download/v1/ShutdownTimer.exe" target="_blank" class="border-2  btn btn-outline-primary btn-lg "><i class="fab fa-windows"></i></a>
-      <a  type="button" title="Github" href="https://github.com/DogukanUrker/ShutdownTimer"  target="_blank"  class="border-2  btn btn-outline-light btn-lg "><i class="fab fa-github"></i></a>
-      <br>
-      <img src="static/images/shutdowntimer.png"   alt="shutdowntimer-ui" class="d-block app-img">
-      <a href="apps" type="button" class="btn btn-outline-secondary">other apps</a>
-    </div>
-    <script
+{% extends 'layout.html'%} {% block head %}
+<title>Shutdown Timer</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/shutdowntimer.css') }}"
+/>
+{% endblock head %} {% block body %}
+<div class="container">
+  <h1>Shutdown Timer</h1>
+  <br />
+  <p>Simple app to shutdown or restart your computer whenever you want.</p>
+  <br />
+  <div>
+    <a
+      type="button"
+      title="Windows"
+      href="https://github.com/DogukanUrker/shutdowntimer/releases/download/v1/ShutdownTimer.exe"
+      target="_blank"
+      class="border-2 btn btn-outline-primary"
+      ><i class="fab fa-windows"></i
+    ></a>
+    <a
+      type="button"
+      title="Github"
+      href="https://github.com/DogukanUrker/ShutdownTimer"
+      target="_blank"
+      class="border-2 btn btn-outline-light"
+      ><i class="fab fa-github"></i
+    ></a>
+    <br />
+    <img
+      src="static/images/shutdowntimer.png"
+      alt="shutdowntimer-ui"
+      class="d-block app-img"
+    />
+    <a href="apps" type="button" class="btn btn-outline-secondary"
+      >other apps</a
+    >
+  </div>
+  <script
     type="text/javascript"
     src="{{url_for('static', filename='js/shutdowntimer.js') }}"
   ></script>
-</body>
-{% endblock body %}
+  {% endblock body %}
+</div>
