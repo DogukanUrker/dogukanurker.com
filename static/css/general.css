@@ -3,6 +3,8 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   color: #fff;
   background-color: #000;
+  text-align: center;
+  user-select: none;
 }
 .container {
   display: flex;
