@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from flask_sslify import SSLify
 
 app = Flask(__name__)
@@ -7,11 +7,6 @@ sslify = SSLify(app)
 
 @app.route("/")
 def index():
-    return redirect(url_for("socials"))
-
-
-@app.route("/socials")
-def socials():
     return render_template("socials.html")
 
 
