@@ -12,7 +12,7 @@ body {
   align-items: center;
   padding-top: 2rem;
 }
-.center-box {
+.centeredBox {
   position: absolute;
   top: 50%;
   left: 50%;
