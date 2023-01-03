@@ -1,6 +1,1 @@
-console.log("shutdowntimer.js loaded");
-const windows = document.querySelector(".fa-windows");
-const windows_btn = document.querySelector(".btn-outline-primary");
-windows_btn.onclick = function () {
-  windows.className = "fas fa-arrow-down";
-};
+console.log("i will use this js file later for button icons change when user click it");
