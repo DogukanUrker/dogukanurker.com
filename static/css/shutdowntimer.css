@@ -13,7 +13,7 @@ p {
 .btnWin,
 .btnGithub {
   padding: 0.5rem 2rem;
-  border: 2px solid !important;
+  border: 2px solid;
   border-radius: 0.5rem;
   font-size: 2rem;
   margin: 0 0.5rem 1rem 0.5rem;
@@ -21,8 +21,7 @@ p {
   transition: 0.5s;
 }
 .btnGithub {
-  filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(303deg)
-    brightness(103%) contrast(101%);
+  color: #fff;
   border-color: #fff;
 }
 .btnGithub:hover {
@@ -30,13 +29,11 @@ p {
   background-color: #fff;
 }
 .btnWin {
-  filter: invert(27%) sepia(99%) saturate(1712%) hue-rotate(204deg)
-    brightness(103%) contrast(98%);
+  color: #0d6efd;
   border-color: #0d6efd;
 }
 .btnWin:hover {
-  filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(303deg)
-    brightness(103%) contrast(101%);
+  color: #fff;
   background-color: #0d6efd;
 }
 .btnApps {
@@ -50,9 +47,4 @@ p {
 }
 .btnApps:hover {
   color: #fff;
-}
-svg {
-  margin: 0.5rem;
-  height: 2.5rem;
-  width: 2.5rem;
 }
