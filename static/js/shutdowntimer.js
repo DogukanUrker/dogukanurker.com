@@ -1,1 +1,5 @@
-console.log("i will use this js file later for button icons change when user click it");
+const iconWin = document.querySelector(".fa-windows");
+const btnWin = document.querySelector(".btnWin");
+btnWin.onclick = function () {
+  iconWin.className = "fas fa-arrow-down";
+};
