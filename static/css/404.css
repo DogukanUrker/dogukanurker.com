@@ -1,21 +1,25 @@
 .container {
   padding-top: 15%;
 }
+
 h1 {
   color: #dc143c;
   font-size: 8rem;
   margin: 0rem;
 }
+
 h2 {
   font-size: 1.6rem;
   margin: 0rem 0rem 1rem 0rem;
 }
+
 .btnHome {
   font-size: 1.5rem;
   color: #6c757d;
   text-decoration: none;
   transition: 0.5s;
 }
+
 .btnHome:hover {
   color: #fff;
 }

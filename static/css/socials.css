@@ -8,11 +8,13 @@ a {
   width: 3rem;
   height: 3rem;
 }
+
 @media screen and (min-width: 600px) {
   a:hover {
     color: black;
     background-color: #fff;
   }
+
   i {
     margin-top: 0.38rem;
   }

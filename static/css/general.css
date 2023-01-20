@@ -7,28 +7,34 @@ body {
   text-align: center;
   user-select: none;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 2rem;
 }
+
 .centeredBox {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .textCenter {
   text-align: center;
 }
+
 body::-webkit-scrollbar {
   width: 0.3rem;
 }
+
 body::-webkit-scrollbar-thumb {
   border-radius: 1rem;
   background: #666;
 }
+
 body::-webkit-scrollbar-track,
 body::-webkit-scrollbar-button {
   background: transparent;
