@@ -2,14 +2,16 @@ h1 {
   font-size: 3rem;
   margin: 0 0 0.5rem 0;
 }
+
 p {
   font-size: 1.5rem;
   margin: 0.5rem;
 }
+
 .app-img {
   margin: 1rem 0;
-  border-radius: 0.5rem;
 }
+
 .btnWin,
 .btnGithub {
   padding: 0.5rem 2rem;
@@ -20,22 +22,27 @@ p {
   display: inline-block;
   transition: 0.5s;
 }
+
 .btnGithub {
   color: #fff;
   border-color: #fff;
 }
+
 .btnGithub:hover {
   color: #000;
   background-color: #fff;
 }
+
 .btnWin {
   color: #0d6efd;
   border-color: #0d6efd;
 }
+
 .btnWin:hover {
   color: #fff;
   background-color: #0d6efd;
 }
+
 .btnApps {
   margin-top: 0.5rem;
   margin-left: 6rem;
@@ -45,6 +52,7 @@ p {
   color: #676767;
   transition: 0.5s;
 }
+
 .btnApps:hover {
   color: #fff;
 }
