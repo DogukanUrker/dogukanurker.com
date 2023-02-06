@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+import socket
 from flask_sslify import SSLify
+from flask import Flask, render_template
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -21,4 +22,4 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host=socket.gethostbyname(socket.gethostname()))
