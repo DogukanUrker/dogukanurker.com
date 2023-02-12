@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    color: #333745;
+    background-color: #fff;
+}
+
+h1 {
+    margin: 0;
+    font-size: 4rem;
+    height: fit-content;
+    margin: 0 auto 0 auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+a {
+    color: #333745;
+    text-decoration: none;
+    font-size: 2rem;
+    margin: 2rem 0.5rem;
+    transition: 0.2s;
+}
+
+p {
+    font-size: 1.3rem;
+    margin: 1rem;
+    width: fit-content;
+}
+
+h3 {
+    margin: 0;
+}
+
+a:hover {
+    color: #000;
+}
+
+#desktop, #mobile {
+    border: 1px solid #33374513;
+    border-radius: 0.5rem;
+}
+
+#mobile {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
+
+.body {
+    margin-top: 1rem;
+}
+
+.install {
+    text-align: left;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.code {
+    display: block;
+    font-family: CascadiaCode;
+    background-color: azure;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    user-select: text;
+}
+
+.buttons {
+    height: fit-content;
+    display: block;
+    margin: 0 auto 0 auto;
+}
+
+.images {
+    display: none;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 12.5rem;
+    padding: 0.5rem;
+}
+
+.footer {
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+
+.footer a {
+    margin: 0;
+    font-size: 1rem;
+}
+
+#💖 {
+    margin-top: 0.5rem;
+}
+
+.header, .footer {
+    background: rgb(198, 246, 233);
+    background: -moz-linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: -webkit-linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+}
+
+@media screen and (max-width: 600px) {
+    .install {
+        width: auto;
+    }
+
+    .code p {
+        font-size: 0.75rem;
+    }
+
+    #desktop {
+        display: none;
+    }
+
+    #mobile {
+        display: block;
+    }
+}

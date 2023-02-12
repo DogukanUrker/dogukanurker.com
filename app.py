@@ -16,6 +16,11 @@ def shutdowntimer():
     return render_template("shutdowntimer.html")
 
 
+@app.route("/flasktodo")
+def flaskToDo():
+    return render_template("flaskToDo.html")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404

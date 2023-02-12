@@ -1,0 +1,65 @@
+{% extends 'layout.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/flaskToDo.css') }}"
+/>
+<title>flaskToDo</title>
+<link
+  rel="icon"
+  href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>"
+/>
+{% endblock %} {% block body %}
+<div class="header">
+  <div>
+    <h1>flaskToDo</h1>
+    <h3>Simple todo app built with Flask.✅</h3>
+  </div>
+  <div class="buttons">
+    <a href="https://github.com/DogukanUrker/flaskToDo" target="_blank"
+      ><i class="fa-brands fa-github" title="repository"></i
+    ></a>
+  </div>
+</div>
+<div class="body">
+  <img
+    src="/static/images/flasktodo/desktop.png"
+    alt="desktop"
+    width="960"
+    id="desktop"
+  />
+  <img
+    src="/static/images/flasktodo/mobile.jpeg"
+    alt="mobile"
+    width="310.5"
+    id="mobile"
+  />
+  <div class="install">
+    <h2>How to install</h2>
+    <p>download source code from github</p>
+    <div class="code">
+      <p>git clone https://github.com/DogukanUrker/flaskToDo.git</p>
+    </div>
+    <p>open folder</p>
+    <div class="code">
+      <p>cd flaskToDo</p>
+    </div>
+    <p>install requirements.txt</p>
+    <div class="code">
+      <p>pip install -r requirements.txt</p>
+    </div>
+    <p>its ready to run 🎉</p>
+    <div class="code">
+      <p>python app.py</p>
+    </div>
+    <p>or</p>
+    <div class="code">
+      <p>python desktop.py</p>
+    </div>
+    <p>for run flaskToDo as a desktop app</p>
+  </div>
+</div>
+<div class="footer">
+  <div><a href="/projects">my other works</a></div>
+  <div id="💖">made with 💖 by <a href="/">DogukanUrker</a></div>
+</div>
+{% endblock %}
