@@ -115,7 +115,7 @@ a:hover {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 912px) {
     .install {
         width: auto;
     }
