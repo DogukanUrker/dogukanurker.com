@@ -22,10 +22,20 @@ body {
 }
 
 body {
-  color: #fff;
-  background-color: #000;
+  color: #333745;
+  background-color: #fff;
   text-align: center;
   user-select: none;
+}
+
+a {
+  color: #333745;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+a:hover {
+  color: #000;
 }
 
 .container {
