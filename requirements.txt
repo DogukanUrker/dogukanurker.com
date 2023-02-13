@@ -1,2 +1,2 @@
-flask
-flask_sslify
+Flask==2.2.2
+Flask_SSLify==0.1.5
