@@ -34,10 +34,6 @@ a {
   transition: 0.25s;
 }
 
-a:hover {
-  color: #000;
-}
-
 .container {
   display: flex;
   flex-direction: column;
