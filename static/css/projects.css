@@ -9,6 +9,12 @@ h1 {
 
 a {
     font-weight: 500;
+    display: block;
+    padding: 0.5rem;
+    margin: 0 auto 0 auto;
+    border: 1.5px solid #333745;
+    width: 75%;
+    border-radius: 0.5rem;
 }
 
 a:hover {
@@ -50,16 +56,6 @@ small {
 
 .cards h1 {
     margin: 0;
-}
-
-.goToPostBtn {
-    text-decoration: none;
-    display: block;
-    padding: 0.5rem;
-    margin: 0 auto 0 auto;
-    border: 1.5px solid #333745;
-    width: 75%;
-    border-radius: 0.6rem;
 }
 
 .shutdownTimerCard {
