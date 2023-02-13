@@ -26,6 +26,11 @@ def flaskBlog():
     return render_template("flaskBlog.html")
 
 
+@app.route("/projects")
+def projects():
+    return render_template("projects.html")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
