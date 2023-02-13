@@ -1,4 +1,8 @@
-{% extends 'layout.html'%} {% block head %}
+{% extends 'layout.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/openSource.css') }}"
+/>
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/shutdowntimer.css') }}"
@@ -8,40 +12,53 @@
   rel="icon"
   href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💤</text></svg>"
 />
-{% endblock head %} {% block body %}
-<div class="container">
-  <h1>Shutdown Timer</h1>
-  <br />
-  <p>Simple app to shutdown or restart your computer whenever you want.</p>
-  <br />
+{% endblock %} {% block body %}
+<div class="header">
   <div>
+    <h1>ShutdownTimer</h1>
+    <h3>
+      Simple app to shutdown or restart your computer whenever you want.💤
+    </h3>
+  </div>
+  <div class="buttons">
     <a
-      type="button"
-      title="Windows"
+      title="download .exe"
       href="https://github.com/DogukanUrker/shutdowntimer/releases/download/v1/ShutdownTimer.exe"
       target="_blank"
-      class="btnWin"
       ><i class="fa-brands fa-windows"></i
     ></a>
     <a
-      type="button"
-      title="Github"
+      title="repository"
       href="https://github.com/DogukanUrker/ShutdownTimer"
       target="_blank"
-      class="btnGithub"
       ><i class="fa-brands fa-github"></i>
     </a>
-    <br />
-    <img
-      src="https://raw.githubusercontent.com/DogukanUrker/ShutdownTimer/main/shutdowntimer.png"
-      alt="shutdowntimer-ui"
-      class="d-block app-img"
-    />
-    <a href="apps" type="button" class="btnApps">other apps</a>
   </div>
-  <script
-    type="text/javascript"
-    src="{{url_for('static', filename='js/shutdowntimer.js') }}"
-  ></script>
-  {% endblock body %}
 </div>
+<div class="body">
+  <img
+    src="https://raw.githubusercontent.com/DogukanUrker/ShutdownTimer/main/shutdowntimer.png"
+    alt="desktop"
+  />
+  <div class="install">
+    <h2>How to install</h2>
+    <p>download source code from github 💾</p>
+    <div class="code">
+      <p>git clone https://github.com/DogukanUrker/ShutdownTimer.git</p>
+    </div>
+    <p>go to directory 📁</p>
+    <div class="code">
+      <p>cd ShutdownTimer</p>
+    </div>
+    <p>install requirements.txt 🔽</p>
+    <div class="code">
+      <p>pip install -r requirements.txt</p>
+    </div>
+    <p>its ready to run 🎉</p>
+    <div class="code">
+      <p>python ShutdownTimer.py</p>
+    </div>
+    <p id="💯">💯</p>
+  </div>
+</div>
+{% include 'footer.html' %} {% endblock %}
