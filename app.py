@@ -21,6 +21,11 @@ def flaskToDo():
     return render_template("flaskToDo.html")
 
 
+@app.route("/flaskblog")
+def flaskBlog():
+    return render_template("flaskBlog.html")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
