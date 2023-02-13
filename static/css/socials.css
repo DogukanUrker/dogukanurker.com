@@ -8,7 +8,7 @@ a {
   color: #fff;
   font-size: 2.25rem;
   display: block;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
   border-radius: 100%;
   width: 3rem;
   height: 3rem;
@@ -21,6 +21,6 @@ a {
   }
 
   i {
-    margin-top: 0.38rem;
+    margin-top: 0.4rem;
   }
 }
