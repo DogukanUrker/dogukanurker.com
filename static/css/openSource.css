@@ -19,10 +19,6 @@ a {
     margin: 2rem 0.5rem;
 }
 
-a:hover {
-    color: #000;
-}
-
 p {
     font-size: 1.3rem;
     margin: 1rem;
