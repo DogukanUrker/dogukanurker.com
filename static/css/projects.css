@@ -76,8 +76,8 @@ small {
 
 .flaskToDoCard {
     background: rgb(198, 246, 233);
-    background: -moz-linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
-    background: -webkit-linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
-    background: linear-gradient(145deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: -moz-linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: -webkit-linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }
