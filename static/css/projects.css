@@ -32,15 +32,15 @@ small {
 }
 
 .shutdownTimerBtn:hover {
-    color: hsla(277, 79%, 84%, 1);
+    color: #deb6f6;
 }
 
 .flaskBlogBtn:hover {
-    color: hsla(46, 95%, 56%, 1);
+    color: #f9c824;
 }
 
 .flaskToDoBtn:hover {
-    color: rgb(198, 246, 233);
+    color: #c6f6e9;
 }
 
 .flaskWeatherBtn:hover {
@@ -63,33 +63,33 @@ small {
 }
 
 .shutdownTimerCard {
-    background: hsla(277, 79%, 84%, 1);
-    background: linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
-    background: -moz-linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
-    background: -webkit-linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
+    background: #deb6f6;
+    background: linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+    background: -moz-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+    background: -webkit-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#DDB4F6", endColorstr="#8DD0FC", GradientType=1);
 }
 
 .flaskBlogCard {
-    background: hsla(46, 95%, 56%, 1);
-    background: linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
-    background: -moz-linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
-    background: -webkit-linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
+    background: #f9c824;
+    background: linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+    background: -moz-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+    background: -webkit-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9C823", endColorstr="#FC506E", GradientType=1);
 }
 
 .flaskToDoCard {
-    background: rgb(198, 246, 233);
-    background: -moz-linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
-    background: -webkit-linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
-    background: linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
+    background: #c6f6e9;
+    background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+    background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+    background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }
 
 .flaskWeatherCard {
-    background: hsla(221, 59%, 75%, 1);
-    background: linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
-    background: -moz-linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
-    background: -webkit-linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
+    background: #9ab1e5;
+    background: linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
+    background: -moz-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
+    background: -webkit-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
 }

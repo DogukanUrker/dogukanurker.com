@@ -25,9 +25,9 @@ table {
 }
 
 .header, .footer {
-    background: hsla(46, 95%, 56%, 1);
-    background: linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
-    background: -moz-linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
-    background: -webkit-linear-gradient(135deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%);
+    background: #f9c824;
+    background: linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+    background: -moz-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+    background: -webkit-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9C823", endColorstr="#FC506E", GradientType=1);
 }

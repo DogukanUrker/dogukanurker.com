@@ -3,10 +3,10 @@
 }
 
 .header, .footer {
-  background: hsla(277, 79%, 84%, 1);
-  background: linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
-  background: -moz-linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
-  background: -webkit-linear-gradient(135deg, hsla(277, 79%, 84%, 1) 0%, hsla(204, 95%, 77%, 1) 100%);
+  background: #deb6f6;
+  background: linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+  background: -moz-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+  background: -webkit-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#DDB4F6", endColorstr="#8DD0FC", GradientType=1);
 }
 
