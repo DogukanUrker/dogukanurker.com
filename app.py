@@ -26,6 +26,11 @@ def flaskBlog():
     return render_template("flaskBlog.html")
 
 
+@app.route("/flaskweather")
+def flaskWeather():
+    return render_template("flaskWeather.html")
+
+
 @app.route("/projects")
 def projects():
     return render_template("projects.html")

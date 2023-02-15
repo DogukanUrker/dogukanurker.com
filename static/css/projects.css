@@ -43,6 +43,10 @@ small {
     color: rgb(198, 246, 233);
 }
 
+.flaskWeatherBtn:hover {
+    color: #829ed3;
+}
+
 .card {
     height: 22rem;
     width: 20rem;
@@ -80,4 +84,12 @@ small {
     background: -webkit-linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
     background: linear-gradient(135deg, rgba(198, 246, 233, 1) 0%, rgba(199, 202, 245, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+}
+
+.flaskWeatherCard {
+    background: hsla(221, 59%, 75%, 1);
+    background: linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
+    background: -moz-linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
+    background: -webkit-linear-gradient(135deg, hsla(221, 59%, 75%, 1) 0%, hsla(216, 40%, 58%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
 }
