@@ -65,7 +65,7 @@ input:focus, textarea:focus {
     text-align: left;
     margin: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     height: 100vh;
 }
 
