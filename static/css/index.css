@@ -106,40 +106,6 @@ input:focus, textarea:focus {
     height: fit-content;
 }
 
-@keyframes hand-animation {
-    0% {
-        transform: rotate(0.0deg)
-    }
-
-    10% {
-        transform: rotate(14.0deg)
-    }
-
-    20% {
-        transform: rotate(-8.0deg)
-    }
-
-    30% {
-        transform: rotate(14.0deg)
-    }
-
-    40% {
-        transform: rotate(-4.0deg)
-    }
-
-    50% {
-        transform: rotate(10.0deg)
-    }
-
-    60% {
-        transform: rotate(0.0deg)
-    }
-
-    100% {
-        transform: rotate(0.0deg)
-    }
-}
-
 .projectsLink {
     padding: 0;
     margin: 45rem 0 0 0;
@@ -153,20 +119,6 @@ input:focus, textarea:focus {
     overflow: hidden;
     transform: translatey(0px);
     animation: float 1s ease-in-out infinite;
-}
-
-@keyframes float {
-    0% {
-        transform: translate(0, 0px);
-    }
-
-    50% {
-        transform: translate(0, 15px);
-    }
-
-    100% {
-        transform: translate(0, -0px);
-    }
 }
 
 .contact {
@@ -204,6 +156,54 @@ input:focus, textarea:focus {
     padding-top: 1.5rem;
 }
 
+@keyframes float {
+    0% {
+        transform: translate(0, 0px);
+    }
+
+    50% {
+        transform: translate(0, 15px);
+    }
+
+    100% {
+        transform: translate(0, -0px);
+    }
+}
+
+@keyframes hand-animation {
+    0% {
+        transform: rotate(0.0deg)
+    }
+
+    10% {
+        transform: rotate(14.0deg)
+    }
+
+    20% {
+        transform: rotate(-8.0deg)
+    }
+
+    30% {
+        transform: rotate(14.0deg)
+    }
+
+    40% {
+        transform: rotate(-4.0deg)
+    }
+
+    50% {
+        transform: rotate(10.0deg)
+    }
+
+    60% {
+        transform: rotate(0.0deg)
+    }
+
+    100% {
+        transform: rotate(0.0deg)
+    }
+}
+
 @media screen and (max-width: 1390px) {
     .projectsContainer {
         height: fit-content;
@@ -226,8 +226,20 @@ input:focus, textarea:focus {
     }
 
     .knowledge, .greeting {
-        margin-top: 1.5rem;
         text-align: center;
+    }
+
+    .greeting h1 {
+        font-size: 5rem;
+    }
+
+    .knowledge {
+        margin-top: 1rem;
+    }
+
+    .greeting {
+        margin: 0;
+        padding: 0;
     }
 
     .welcome {
