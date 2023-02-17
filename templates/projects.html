@@ -11,7 +11,7 @@
 {% endblock head %} {% block body %}
 <h1 class="title">Projects</h1>
 <div class="cards">
-  <div class="card shutdownTimerCard">
+  <div class="card shutdownTimerCard"">
     <div>
       <h1>ShutdownTimer</h1>
       <p>
@@ -19,8 +19,12 @@
       </p>
     </div>
     <div>
-      <small>PyQt5</small>
-      <a href="/shutdowntimer" class="shutdownTimerBtn">go to project</a>
+      <div class="techs">
+        <div class="tech">PyQt5</div>
+      </div>
+      <a href="/shutdowntimer" class="shutdownTimerBtn projectBtn" target="_blank"
+        >go to project</a
+      >
     </div>
   </div>
   <div class="card flaskBlogCard">
@@ -29,8 +33,13 @@
       <p>Simple blog app built with Flask.📜</p>
     </div>
     <div>
-      <small>Flask, SQLite3, Passlib, WTForms</small>
-      <a href="/flaskblog" class="flaskBlogBtn">go to project</a>
+      <div class="techs">
+        <div class="tech">Flask</div>
+        <div class="tech">SQLite3</div>
+        <div class="tech">Passlib</div>
+        <div class="tech">WTForms</div>
+      </div>
+      <a href="/flaskblog" class="flaskBlogBtn projectBtn" target="_blank">go to project</a>
     </div>
   </div>
   <div class="card flaskToDoCard">
@@ -39,8 +48,11 @@
       <p>Simple todo app built with Flask.✅</p>
     </div>
     <div>
-      <small>Flask, SQLite3</small>
-      <a href="/flasktodo" class="flaskToDoBtn">go to project</a>
+      <div class="techs">
+        <div class="tech">Flask</div>
+        <div class="tech">SQLite3</div>
+      </div>
+      <a href="/flasktodo" class="flaskToDoBtn projectBtn" target="_blank">go to project</a>
     </div>
   </div>
   <div class="card flaskWeatherCard">
@@ -49,8 +61,13 @@
       <p>Simple weather built with Flask.🌤️</p>
     </div>
     <div>
-      <small>Flask, Weather Api</small>
-      <a href="/flaskweather" class="flaskWeatherBtn">go to project</a>
+      <div class="techs">
+        <div class="tech">Flask</div>
+        <div class="tech">Weather Api</div>
+      </div>
+      <a href="/flaskweather" class="flaskWeatherBtn projectBtn" target="_blank"
+        >go to project</a
+      >
     </div>
   </div>
 </div>
