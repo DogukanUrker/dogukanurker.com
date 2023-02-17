@@ -1,6 +1,8 @@
 import socket
 from flask_sslify import SSLify
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
+import smtplib, ssl
+import unicodedata
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -8,6 +10,11 @@ sslify = SSLify(app)
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+
+@app.route("/socials")
+def socials():
     return render_template("socials.html")
 
 
@@ -34,6 +41,34 @@ def flaskWeather():
 @app.route("/projects")
 def projects():
     return render_template("projects.html")
+
+
+@app.route(
+    "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
+)
+def send(senderName, senderMail, content, direct):
+    content = content.replace("%20", " ")
+    senderName = senderName.replace("%20", " ")
+    message = f"Sender Name: {senderName}\n \nSender Mail: {senderMail} \n \nMessage:\n {content}"
+    port = 587
+    smtp_server = "smtp.gmail.com"
+    context = ssl.create_default_context()
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()
+        server.starttls(context=context)
+        server.ehlo()
+        server.login("dogukanurker.com@gmail.com", "zmlpagnpbzjjapvs")
+        server.sendmail(
+            "dogukanurker.com@gmail.com",
+            "dogukanurker@icloud.com",
+            unicodedata.normalize("NFKD", message).encode("ascii", "ignore"),
+        )
+    except Exception as exception:
+        print(exception)
+    finally:
+        server.quit()
+    return redirect(direct.replace("&", "/"))
 
 
 @app.errorhandler(404)

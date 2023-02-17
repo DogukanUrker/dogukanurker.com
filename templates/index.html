@@ -1,0 +1,67 @@
+<meta name="theme-color" content="#17181f" />
+{% extends 'layout.html'%} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/projects.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+<title>Doğukan.</title>
+<link
+  rel="icon"
+  href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑🏻</text></svg>"
+/>
+{% endblock head %} {% block body %}
+<div class="welcome">
+  <div class="greeting">
+    <h1>Hi<span class="hello">👋🏻</span> I'm</h1>
+    <h1>Doğukan</h1>
+    <div class="socials">
+      <a href="https://github.com/dogukanurker" target="_blank"
+        ><i class="fa-brands fa-github"></i
+      ></a>
+      <a href="#contact"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <a href="#projects" class="projectsLink"
+    ><i class="fa-solid fa-arrow-down"></i
+  ></a>
+  <div class="knowledge">
+    <h1>Full Stack Developer</h1>
+    <div class="stack">
+      <br />
+      <h3>Front-end</h3>
+      <div class="stacks">
+        <i class="fa-brands fa-html5"></i>
+        <i class="fa-brands fa-css3-alt"></i>
+        <i class="fa-brands fa-square-js"></i>
+      </div>
+      <h3>Back-end</h3>
+      <div class="stacks">
+        <i class="fa-brands fa-python"></i>
+        <img src="/static/images/flask.png" height="96px" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="projectsContainer" id="projects">
+  <br /><br /><br /><br /><br /><br />
+  {% include 'projects.html' %}
+  <a href="#contact" class="projectsLink"
+    ><i class="fa-solid fa-arrow-down"></i
+  ></a>
+</div>
+<div class="contact">
+  <div class="fields">
+    <h1 id="contact">Contact</h1>
+    <input type="text" class="senderName" placeholder="name" />
+    <input type="text" class="senderMail" placeholder="email" />
+    <textarea type="text" class="message" placeholder="message"></textarea>
+    <button onclick="send()" class="sendBtn">Send</button>
+  </div>
+</div>
+<script src="/static/js/index.js"></script>
+{% endblock body %}
