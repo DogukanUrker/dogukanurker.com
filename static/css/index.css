@@ -40,6 +40,7 @@ input, textarea {
     margin: 0.5rem;
     font-size: 1.5rem;
     width: 30rem;
+    resize: none;
 }
 
 input:focus, textarea:focus {
