@@ -12,6 +12,11 @@
     scrollbar-width: none;
 }
 
+body {
+    background-color: #17181f !important;
+    color: #fff !important;
+}
+
 i {
     font-size: 4rem;
 }
@@ -22,9 +27,23 @@ a i {
     margin: 0.5rem;
 }
 
-body {
-    background-color: #17181f !important;
-    color: #fff !important;
+img {
+    padding-top: 16px;
+}
+
+input, textarea {
+    padding: 0.5rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 0;
+    display: block;
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    width: 30rem;
+}
+
+input:focus, textarea:focus {
+    outline: 1px solid #fff;
 }
 
 .projectsContainer {
@@ -169,21 +188,6 @@ body {
     color: #17181f;
 }
 
-input, textarea {
-    padding: 0.5rem;
-    height: 3rem;
-    border-radius: 0.5rem;
-    border: 0;
-    display: block;
-    margin: 0.5rem;
-    font-size: 1.5rem;
-    width: 30rem;
-}
-
-input:focus, textarea:focus {
-    outline: 1px solid #fff;
-}
-
 .message {
     padding: 1rem 1rem 10rem 0.5rem;
     text-align: left;
@@ -212,6 +216,10 @@ input:focus, textarea:focus {
 }
 
 @media screen and (max-width: 700px) {
+    input, textarea {
+        width: 98%;
+    }
+
     .projectsContainer {
         height: fit-content;
         padding-bottom: 2rem;
@@ -236,9 +244,5 @@ input:focus, textarea:focus {
 
     .fields {
         padding-top: 10rem;
-    }
-
-    input, textarea {
-        width: 98%;
     }
 }
