@@ -56,11 +56,15 @@ small {
 }
 
 .flaskToDoBtn:hover {
-    color: #c6f6e9;
+    color: #93ecaf;
 }
 
 .flaskWeatherBtn:hover {
     color: #829ed3;
+}
+
+.flaskNotesBtn:hover {
+    color: #c6f6e9;
 }
 
 .card {
@@ -95,11 +99,11 @@ small {
 }
 
 .flaskToDoCard {
-    background: #c6f6e9;
-    background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+    background: #93ecaf;
+    background: linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+    background: -moz-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+    background: -webkit-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#95ECB0", endColorstr="#F3F98A", GradientType=1);
 }
 
 .flaskWeatherCard {
@@ -108,4 +112,12 @@ small {
     background: -moz-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
     background: -webkit-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
+}
+
+.flaskNotesCard {
+    background: #c6f6e9;
+    background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+    background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+    background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }

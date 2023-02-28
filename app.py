@@ -38,6 +38,11 @@ def flaskWeather():
     return render_template("flaskWeather.html")
 
 
+@app.route("/flasknotes")
+def flaskNotes():
+    return render_template("flaskNotes.html")
+
+
 @app.route("/projects")
 def projects():
     return render_template("projects.html")
