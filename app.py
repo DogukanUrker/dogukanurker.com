@@ -18,6 +18,11 @@ def socials():
     return render_template("socials.html")
 
 
+@app.route("/projects")
+def projects():
+    return render_template("projects.html")
+
+
 @app.route("/shutdowntimer")
 def shutdowntimer():
     return render_template("shutdowntimer.html")
@@ -41,11 +46,6 @@ def flaskWeather():
 @app.route("/flasknotes")
 def flaskNotes():
     return render_template("flaskNotes.html")
-
-
-@app.route("/projects")
-def projects():
-    return render_template("projects.html")
 
 
 @app.route(
