@@ -67,6 +67,10 @@ small {
     color: #c6f6e9;
 }
 
+.getImagesFromURLBtn:hover {
+    color: #DBE6EE;
+}
+
 .card {
     height: 22rem;
     width: 20rem;
@@ -120,4 +124,16 @@ small {
     background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
     background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+}
+
+.getImagesFromURLCard {
+    background: #ebf4f5;
+    background: linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+    background: -moz-linear-gradient(135deg, hwb(186 92% 4%) 0%, #b3c5df 100%);
+    background: -webkit-linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1);
+}
+
+.getImagesFromURLCard h1 {
+    font-size: 2rem;
 }

@@ -48,6 +48,11 @@ def flaskNotes():
     return render_template("flaskNotes.html")
 
 
+@app.route("/getimagesfromurl")
+def getImagesFromURL():
+    return render_template("getImagesFromURL.html")
+
+
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
 )
