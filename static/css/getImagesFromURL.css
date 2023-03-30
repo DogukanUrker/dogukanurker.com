@@ -29,3 +29,14 @@ img {
     margin-left: auto;
     margin-right: auto;
 }
+
+@media screen and (max-width: 600px) {
+    html {
+        font-size: 70% !important;
+    }
+
+    img {
+        display: none !important;
+    }
+
+}
