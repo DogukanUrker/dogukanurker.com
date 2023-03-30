@@ -48,9 +48,10 @@ input:focus, textarea:focus {
 }
 
 .projectsContainer {
-    height: 100vh;
+    height: fit-content;
     background-color: #fff;
     color: #17181f;
+    padding-bottom: 1rem;
 }
 
 .projectsContainer .cards {
