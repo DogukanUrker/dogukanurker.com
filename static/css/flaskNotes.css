@@ -1,3 +1,7 @@
+*::-webkit-scrollbar-thumb {
+    background: #c7ccf4;
+}
+
 .code {
     background-color: #f0ffff;
 }

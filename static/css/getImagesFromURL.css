@@ -1,3 +1,7 @@
+*::-webkit-scrollbar-thumb {
+    background: #e8f1f4;
+}
+
 h3 {
     font-size: 1.4rem;
     padding-left: 1rem;

@@ -1,3 +1,7 @@
+*::-webkit-scrollbar-thumb {
+    background: #fac228;
+}
+
 #seeMore {
     display: block;
     font-size: 1rem;
