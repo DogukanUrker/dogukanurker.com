@@ -53,6 +53,11 @@ def getImagesFromURL():
     return render_template("getImagesFromURL.html")
 
 
+@app.route("/passwordgenerator")
+def passwordGenerator():
+    return render_template("passwordGenerator.html")
+
+
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
 )
