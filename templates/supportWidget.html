@@ -1,12 +1,50 @@
 <script
-  data-name="BMC-Widget"
-  data-cfasync="false"
-  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-  data-id="dogukanurker"
-  data-description="Support me on Buy me a coffee!"
-  data-message=""
-  data-color="#FF5F5F"
-  data-position="Right"
-  data-x_margin="18"
-  data-y_margin="18"
+data-name="BMC-Widget"
+data-cfasync="false"
+src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+data-id="dogukanurker"
+data-description="Support me on Buy me a coffee!"
+{%
+if
+request.path == "/shutdowntimer"
+%}
+data-color="#d9b7f6"
+{%
+elif
+request.path == "/flaskblog"
+%}
+data-color="#fac228"
+{%
+elif
+request.path == "/flasktodo"
+%}
+data-color="#99edad"
+{%
+elif
+request.path == "/flaskweather"
+%}
+data-color="#97aee2"
+{%
+elif
+request.path == "/flasknotes"
+%}
+data-color="#c7ccf4"
+{%
+elif
+request.path == "/getimagesfromurl"
+%}
+data-color="#e8f1f4"
+{%
+elif
+request.path == "/passwordgenerator"
+%}
+data-color="#889da5"
+{%else%} data-color="#FF5F5F"
+{%
+endif
+%}
+data-message=""
+data-position="Right"
+data-x_margin="18"
+data-y_margin="18"
 ></script>
