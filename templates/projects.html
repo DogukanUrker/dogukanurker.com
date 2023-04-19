@@ -118,4 +118,7 @@
     </div>
   </div>
 </div>
+{%if request.path == "/projects"%}
+{% include "supportWidget.html"%}
+{% endif %}
 {% endblock body %}
