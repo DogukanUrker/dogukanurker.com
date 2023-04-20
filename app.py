@@ -58,6 +58,11 @@ def passwordGenerator():
     return render_template("passwordGenerator.html")
 
 
+@app.route("/flaskecommerce")
+def flaskecommerce():
+    return render_template("flaskecommerce.html")
+
+
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
 )

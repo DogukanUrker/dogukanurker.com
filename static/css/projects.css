@@ -75,6 +75,10 @@ small {
     color: #a1b2b9;
 }
 
+.flaskEcommerceBtn:hover {
+    color: #1CFAAA;
+}
+
 .card {
     height: 22rem;
     width: 20rem;
@@ -144,6 +148,14 @@ small {
     background: -moz-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
     background: -webkit-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#8399A2", endColorstr="#EEF2F3", GradientType=1);
+}
+
+.flaskEcommerceCard {
+    background: #00ff88;
+    background: linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+    background: -moz-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+    background: -webkit-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#00ff87", endColorstr="#60efff", GradientType=1);
 }
 
 .getImagesFromURLCard h1, .passwordGeneratorCard h1 {

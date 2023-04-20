@@ -1,0 +1,64 @@
+{% extends 'layout.html' %} {% block head %}
+<link
+   rel="stylesheet"
+   href="{{ url_for('static', filename='css/openSource.css') }}"
+   />
+<link
+   rel="stylesheet"
+   href="{{ url_for('static', filename='css/flaskEcommerce.css') }}"
+   />
+<title>flaskEcommerce</title>
+<link
+   rel="icon"
+   href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍️</text></svg>"
+   />
+{% endblock %} {% block body %}
+<div class="header">
+   <div>
+      <h1>flaskEcommerce</h1>
+      <h3>Online shopping app built with Flask.🛍️</h3>
+      <h2>Work in progress...🫥</h2>
+   </div>
+   <div class="buttons">
+      <a href="https://github.com/DogukanUrker/flaskEcommerce" target="_blank"
+         ><i class="fa-brands fa-github" title="repository"></i
+         ></a>
+   </div>
+</div>
+<div class="body">
+   <img
+      src="https://raw.githubusercontent.com/DogukanUrker/flaskEcommerce/master/images/desktop/light.png"
+      alt="desktop"
+      width="960"
+      id="desktop"
+      />
+   <img
+      src="https://raw.githubusercontent.com/DogukanUrker/flaskEcommerce/master/images/mobile/light.jpeg"
+      alt="mobile"
+      width="310.5"
+      id="mobile"
+      />
+   <a href="https://github.com/DogukanUrker/flaskEcommerce/tree/master/images" id="seeMore" target="_blank">see more</a>
+   <div class="install">
+      <h2>Installation ⬇️</h2>
+      <p>download source code from Github 💾</p>
+      <div class="code">
+         <p>git clone https://github.com/DogukanUrker/flaskEcommerce.git</p>
+      </div>
+      <p>go to directory 📁</p>
+      <div class="code">
+         <p>cd flaskEcommerce</p>
+      </div>
+      <p>install requirements.txt 🔽</p>
+      <div class="code">
+         <p>pip install -r requirements.txt</p>
+      </div>
+      <p>it's ready to run 🎉</p>
+      <div class="code">
+         <p>python app.py</p>
+      </div>
+      <p id="💯">💯</p>
+   </div>
+</div>
+</div>
+{% include 'footer.html' %} {% endblock %} {% include "supportWidget.html"%}
