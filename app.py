@@ -13,6 +13,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/donate")
+def donate():
+    return redirect("https://www.buymeacoffee.com/dogukanurker")
+
+
 @app.route("/socials")
 def socials():
     return render_template("socials.html")
