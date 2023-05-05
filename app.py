@@ -1,11 +1,25 @@
 import socket
+import requests
+import unicodedata
+import smtplib, ssl
+from bs4 import BeautifulSoup
 from flask_sslify import SSLify
 from flask import Flask, render_template, redirect
-import smtplib, ssl
-import unicodedata
+
 
 app = Flask(__name__)
 sslify = SSLify(app)
+
+
+def getGitHubStats(repo):
+    stats = []
+    repoHTML = BeautifulSoup(
+        requests.get(f"https://github.com/DogukanUrker/{repo}").text, "html.parser"
+    )
+    for data in repoHTML.find_all("div", class_="mt-2"):
+        if None is not data.strong:
+            stats.append(data.strong.string)
+    return stats
 
 
 @app.route("/")
@@ -30,42 +44,52 @@ def projects():
 
 @app.route("/shutdowntimer")
 def shutdowntimer():
-    return render_template("shutdowntimer.html")
+    return render_template(
+        "shutdowntimer.html", repoStats=getGitHubStats("ShutdownTimer")
+    )
 
 
 @app.route("/flasktodo")
 def flaskToDo():
-    return render_template("flaskToDo.html")
+    return render_template("flaskToDo.html", repoStats=getGitHubStats("flaskToDo"))
 
 
 @app.route("/flaskblog")
 def flaskBlog():
-    return render_template("flaskBlog.html")
+    return render_template("flaskBlog.html", repoStats=getGitHubStats("flaskBlog"))
 
 
 @app.route("/flaskweather")
 def flaskWeather():
-    return render_template("flaskWeather.html")
+    return render_template(
+        "flaskWeather.html", repoStats=getGitHubStats("flaskWeather")
+    )
 
 
 @app.route("/flasknotes")
 def flaskNotes():
-    return render_template("flaskNotes.html")
+    return render_template("flaskNotes.html", repoStats=getGitHubStats("flaskNotes"))
 
 
 @app.route("/getimagesfromurl")
 def getImagesFromURL():
-    return render_template("getImagesFromURL.html")
+    return render_template(
+        "getImagesFromURL.html", repoStats=getGitHubStats("getImagesFromURL")
+    )
 
 
 @app.route("/passwordgenerator")
 def passwordGenerator():
-    return render_template("passwordGenerator.html")
+    return render_template(
+        "passwordGenerator.html", repoStats=getGitHubStats("passwordGenerator")
+    )
 
 
 @app.route("/flaskecommerce")
 def flaskecommerce():
-    return render_template("flaskecommerce.html")
+    return render_template(
+        "flaskecommerce.html", repoStats=getGitHubStats("flaskEcommerce")
+    )
 
 
 @app.route(
