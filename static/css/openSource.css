@@ -1,112 +1,121 @@
 body {
-    margin: 0;
-    background-color: #fff;
+  margin: 0;
+  background-color: #fff;
 }
 
 h1 {
-    margin: 0;
-    font-size: 4rem;
-    height: fit-content;
-    margin: 0 auto 0 auto;
+  margin: 0;
+  font-size: 4rem;
+  height: fit-content;
+  margin: 0 auto 0 auto;
 }
 
 h2 {
-    text-align: center;
+  text-align: center;
 }
 
 a {
-    font-size: 2rem;
-    margin: 2rem 0.5rem;
+  font-size: 2rem;
+  margin: 2rem 0.5rem;
 }
 
 p {
-    font-size: 1.3rem;
-    margin: 1rem;
-    width: fit-content;
+  font-size: 1.3rem;
+  margin: 1rem;
+  width: fit-content;
 }
 
 h3 {
-    margin: 0;
+  margin: 0;
 }
 
-#desktop, #mobile {
-    border: 1px solid #33374513;
-    border-radius: 0.5rem;
+#desktop,
+#mobile {
+  border: 1px solid #33374513;
+  border-radius: 0.5rem;
 }
 
 #mobile {
-    margin-left: auto;
-    margin-right: auto;
-    display: none;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
 }
 
 .body {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .install {
-    text-align: left;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+  text-align: left;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .code {
-    display: block;
-    font-family: CascadiaCode;
-    padding: 1rem;
-    border-radius: 1rem;
-    user-select: text;
-    margin: 0.5rem;
+  display: block;
+  font-family: CascadiaCode;
+  padding: 1rem;
+  border-radius: 1rem;
+  user-select: text;
+  margin: 0.5rem;
+}
+
+.githubStats {
+  margin: 0.5rem;
+}
+
+.githubStats .fa-code-fork {
+  margin-left: 0.25rem;
 }
 
 .buttons {
-    height: fit-content;
-    display: block;
-    margin: 0 auto 0 auto;
+  height: fit-content;
+  display: block;
+  margin: 0 auto 0 auto;
 }
 
 .images {
-    display: none;
-    align-items: center;
-    text-align: center;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+  display: none;
+  align-items: center;
+  text-align: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 12.5rem;
-    padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 12.5rem;
+  padding: 0.5rem;
 }
 
 #💖 {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 #💯 {
-    margin: 0 auto 0 auto;
+  margin: 0 auto 0 auto;
 }
 
 @media screen and (max-width: 912px) {
-    .install {
-        width: auto;
-    }
+  .install {
+    width: auto;
+  }
 
-    .code p {
-        font-size: 0.75rem;
-    }
+  .code p {
+    font-size: 0.75rem;
+  }
 
-    #desktop {
-        display: none;
-    }
+  #desktop {
+    display: none;
+  }
 
-    #mobile {
-        display: block;
-    }
+  #mobile {
+    display: block;
+  }
 }
