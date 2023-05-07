@@ -12,14 +12,13 @@ sslify = SSLify(app)
 
 
 def getGitHubStats(repo):
-    stats = []
+    stats = [repo]
     repoHTML = BeautifulSoup(
         requests.get(f"https://github.com/DogukanUrker/{repo}").text, "html.parser"
     )
     for data in repoHTML.find_all("div", class_="mt-2"):
         if None is not data.strong:
             stats.append(data.strong.string)
-    stats.append(repo)
     return stats
 
 
