@@ -1,4 +1,15 @@
+<link rel="stylesheet" href="/static/css/githubStats.css" />
 <div class="githubStats">
-  <i class="fa-regular fa-star"></i> {{ repoStats[0] }}
-  <i class="fa-solid fa-code-fork"></i> {{ repoStats[2] }}
+  <a
+    href="https://github.com/DogukanUrker/{{ repoStats[3] }}/stargazers"
+    target="_blank"
+    class="repoStatLink"
+    ><i class="fa-regular fa-star"></i>{{ repoStats[0] }}</a
+  >
+  <a
+    href="https://github.com/DogukanUrker/{{ repoStats[3] }}/forks"
+    target="_blank"
+    class="repoStatLink"
+    ><i class="fa-solid fa-code-fork"></i>{{ repoStats[2] }}</a
+  >
 </div>
