@@ -1,27 +1,15 @@
 import socket
-import requests
 import unicodedata
 import smtplib, ssl
-from bs4 import BeautifulSoup
 from flask_sslify import SSLify
+from githubStats import getGitHubStats
 from flask import Flask, render_template, redirect
 
 
 app = Flask(__name__)
 sslify = SSLify(app)
 
-
-def getGitHubStats(repo):
-    stats = [repo]
-    repoHTML = BeautifulSoup(
-        requests.get(f"https://github.com/DogukanUrker/{repo}").text, "html.parser"
-    )
-    for data in repoHTML.find_all("div", class_="mt-2"):
-        if None is not data.strong:
-            stats.append(data.strong.string)
-    return stats
-
-
+print(getGitHubStats('flaskBlog'))
 @app.route("/")
 def index():
     return render_template("index.html")
