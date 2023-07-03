@@ -9,7 +9,6 @@ from flask import Flask, render_template, redirect
 app = Flask(__name__)
 sslify = SSLify(app)
 
-print(getGitHubStats('flaskBlog'))
 @app.route("/")
 def index():
     return render_template("index.html")
