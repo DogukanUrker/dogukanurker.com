@@ -97,8 +97,9 @@ textarea:focus {
   margin: 0.5rem auto;
 }
 
-.stacks i {
-  margin: 1.5rem;
+.stacks {
+  margin: auto;
+  width: fit-content;
 }
 
 .greeting h1 {
