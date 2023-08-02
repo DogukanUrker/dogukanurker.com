@@ -79,6 +79,13 @@ def flaskecommerce():
     )
 
 
+@app.route("/linktreeclone")
+def LinktreeClone():
+    return render_template(
+        "LinktreeClone.html", repoStats=getGitHubStats("LinktreeClone")
+    )
+
+
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
 )

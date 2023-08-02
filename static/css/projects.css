@@ -1,164 +1,177 @@
 p {
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
 }
 
 h1 {
-    font-size: 2.3rem;
+  font-size: 2.3rem;
 }
 
 .projectBtn {
-    font-weight: 500;
-    display: block;
-    padding: 0.5rem;
-    margin: 0 auto 0 auto;
-    border: 1.5px solid #333745;
-    width: 75%;
-    border-radius: 0.5rem;
+  font-weight: 500;
+  display: block;
+  padding: 0.5rem;
+  margin: 0 auto 0 auto;
+  border: 1.5px solid #333745;
+  width: 75%;
+  border-radius: 0.5rem;
 }
 
 .projectBtn:hover {
-    background-color: #333745;
+  background-color: #333745;
 }
 
 .techs {
-    display: flex;
-    width: fit-content;
-    margin: 0.5rem auto;
+  display: flex;
+  width: fit-content;
+  margin: 0.5rem auto;
 }
 
 .tech {
-    font-size: 0.75rem;
-    color: #ffffffe7;
-    background-color: #17181fc2;
-    padding: 0.25rem;
-    border-radius: 0.3rem;
-    font-weight: 500;
-    margin: 0.1rem;
+  font-size: 0.75rem;
+  color: #ffffffe7;
+  background-color: #17181fc2;
+  padding: 0.25rem;
+  border-radius: 0.3rem;
+  font-weight: 500;
+  margin: 0.1rem;
 }
 
 small {
-    display: block;
-    margin-bottom: 0.6rem;
+  display: block;
+  margin-bottom: 0.6rem;
 }
 
 .title {
-    font-size: 3.25rem;
-    margin: 1rem;
+  font-size: 3.25rem;
+  margin: 1rem;
 }
 
 .shutdownTimerBtn:hover {
-    color: #deb6f6;
+  color: #deb6f6;
 }
 
 .flaskBlogBtn:hover {
-    color: #f9c824;
+  color: #f9c824;
 }
 
 .flaskToDoBtn:hover {
-    color: #93ecaf;
+  color: #93ecaf;
 }
 
 .flaskWeatherBtn:hover {
-    color: #829ed3;
+  color: #829ed3;
 }
 
 .flaskNotesBtn:hover {
-    color: #c6f6e9;
+  color: #c6f6e9;
 }
 
 .getImagesFromURLBtn:hover {
-    color: #DBE6EE;
+  color: #dbe6ee;
 }
 
 .passwordGeneratorBtn:hover {
-    color: #a1b2b9;
+  color: #a1b2b9;
 }
 
 .flaskEcommerceBtn:hover {
-    color: #1CFAAA;
+  color: #1cfaaa;
+}
+
+.LinktreeCloneBtn:hover {
+  color: #8653cd;
 }
 
 .card {
-    height: 22rem;
-    width: 20rem;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.5rem 0.25rem;
-    border-radius: 0.75rem;
-    margin: 1rem 0.5rem;
+  height: 22rem;
+  width: 20rem;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 0.25rem;
+  border-radius: 0.75rem;
+  margin: 1rem 0.5rem;
 }
 
 .cards h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .shutdownTimerCard {
-    background: #deb6f6;
-    background: linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
-    background: -moz-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
-    background: -webkit-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#DDB4F6", endColorstr="#8DD0FC", GradientType=1);
+  background: #deb6f6;
+  background: linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+  background: -moz-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+  background: -webkit-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#DDB4F6", endColorstr="#8DD0FC", GradientType=1);
 }
 
 .flaskBlogCard {
-    background: #f9c824;
-    background: linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
-    background: -moz-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
-    background: -webkit-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9C823", endColorstr="#FC506E", GradientType=1);
+  background: #f9c824;
+  background: linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+  background: -moz-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+  background: -webkit-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9C823", endColorstr="#FC506E", GradientType=1);
 }
 
 .flaskToDoCard {
-    background: #93ecaf;
-    background: linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
-    background: -moz-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
-    background: -webkit-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#95ECB0", endColorstr="#F3F98A", GradientType=1);
+  background: #93ecaf;
+  background: linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+  background: -moz-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+  background: -webkit-linear-gradient(135deg, #93ecaf 0%, #f3f98b 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#95ECB0", endColorstr="#F3F98A", GradientType=1);
 }
 
 .flaskWeatherCard {
-    background: #9ab1e5;
-    background: linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
-    background: -moz-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
-    background: -webkit-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
+  background: #9ab1e5;
+  background: linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
+  background: -moz-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
+  background: -webkit-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
 }
 
 .flaskNotesCard {
-    background: #c6f6e9;
-    background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+  background: #c6f6e9;
+  background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }
 
 .getImagesFromURLCard {
-    background: #ebf4f5;
-    background: linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
-    background: -moz-linear-gradient(135deg, hwb(186 92% 4%) 0%, #b3c5df 100%);
-    background: -webkit-linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1);
+  background: #ebf4f5;
+  background: linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+  background: -moz-linear-gradient(135deg, hwb(186 92% 4%) 0%, #b3c5df 100%);
+  background: -webkit-linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1);
 }
 
 .passwordGeneratorCard {
-    background: #8298a1;
-    background: linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
-    background: -moz-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
-    background: -webkit-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#8399A2", endColorstr="#EEF2F3", GradientType=1);
+  background: #8298a1;
+  background: linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
+  background: -moz-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
+  background: -webkit-linear-gradient(135deg, #8298a1 0%, #edf1f2 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#8399A2", endColorstr="#EEF2F3", GradientType=1);
 }
 
 .flaskEcommerceCard {
-    display: none;
-    background: #00ff88;
-    background: linear-gradient(135deg, #00ff88 0%, #61efff 100%);
-    background: -moz-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
-    background: -webkit-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#00ff87", endColorstr="#60efff", GradientType=1);
+  display: none;
+  background: #00ff88;
+  background: linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+  background: -moz-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+  background: -webkit-linear-gradient(135deg, #00ff88 0%, #61efff 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#00ff87", endColorstr="#60efff", GradientType=1);
 }
 
-.getImagesFromURLCard h1, .passwordGeneratorCard h1 {
-    font-size: 2rem;
+.LinktreeCloneCard {
+  background: #6366f1;
+  background: linear-gradient(135deg, #6366f1 0%, #db2777 100%);
+  background: -moz-linear-gradient(135deg, #6366f1 0%, #db2777 100%);
+  background: -webkit-linear-gradient(135deg, #6366f1 0%, #db2777 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#6366F1", endColorstr="#DB2777", GradientType=1);
+}
+
+.getImagesFromURLCard h1,
+.passwordGeneratorCard h1 {
+  font-size: 2rem;
 }

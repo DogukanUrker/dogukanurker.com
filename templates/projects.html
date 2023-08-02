@@ -11,7 +11,7 @@
 {% endblock head %} {% block body %}
 <h1 class="title">Projects</h1>
 <div class="cards">
-  <div class="card shutdownTimerCard"">
+  <div class="card shutdownTimerCard">
     <div>
       <h1>ShutdownTimer</h1>
       <p>
@@ -22,7 +22,30 @@
       <div class="techs">
         <div class="tech">PyQt5</div>
       </div>
-      <a href="/shutdowntimer" class="shutdownTimerBtn projectBtn" target="_blank"
+      <a
+        href="/shutdowntimer"
+        class="shutdownTimerBtn projectBtn"
+        target="_blank"
+        >go to project</a
+      >
+    </div>
+  </div>
+  <div class="card LinktreeCloneCard">
+    <div>
+      <h1>LinktreeClone</h1>
+      <p>Link in bio tool built with FastAPI & React.🔗</p>
+    </div>
+    <div>
+      <div class="techs">
+        <div class="tech">FastAPI</div>
+        <div class="tech">MongoDB</div>
+        <div class="tech">React</div>
+        <div class="tech">Tailwind</div>
+      </div>
+      <a
+        href="/linktreeclone"
+        class="LinktreeCloneBtn projectBtn"
+        target="_blank"
         >go to project</a
       >
     </div>
@@ -39,14 +62,16 @@
         <div class="tech">Passlib</div>
         <div class="tech">WTForms</div>
       </div>
-      <a href="/flaskblog" class="flaskBlogBtn projectBtn" target="_blank">go to project</a>
+      <a href="/flaskblog" class="flaskBlogBtn projectBtn" target="_blank"
+        >go to project</a
+      >
     </div>
   </div>
   <div class="card flaskEcommerceCard">
     <div>
       <h1>flaskEcommerce</h1>
       <p>Online shopping app built with Flask.🛍️</p>
-      <br>
+      <br />
       <h3>in development...🫥</h3>
     </div>
     <div>
@@ -56,7 +81,12 @@
         <div class="tech">Passlib</div>
         <div class="tech">WTForms</div>
       </div>
-      <a href="/flaskecommerce" class="flaskEcommerceBtn projectBtn" target="_blank">go to project</a>
+      <a
+        href="/flaskecommerce"
+        class="flaskEcommerceBtn projectBtn"
+        target="_blank"
+        >go to project</a
+      >
     </div>
   </div>
   <div class="card flaskToDoCard">
@@ -69,7 +99,9 @@
         <div class="tech">Flask</div>
         <div class="tech">SQLite3</div>
       </div>
-      <a href="/flasktodo" class="flaskToDoBtn projectBtn" target="_blank">go to project</a>
+      <a href="/flasktodo" class="flaskToDoBtn projectBtn" target="_blank"
+        >go to project</a
+      >
     </div>
   </div>
   <div class="card flaskWeatherCard">
@@ -114,7 +146,10 @@
         <div class="tech">Requests</div>
         <div class="tech">BeautifulSoup4</div>
       </div>
-      <a href="/getimagesfromurl" class="getImagesFromURLBtn projectBtn" target="_blank"
+      <a
+        href="/getimagesfromurl"
+        class="getImagesFromURLBtn projectBtn"
+        target="_blank"
         >go to project</a
       >
     </div>
@@ -129,13 +164,14 @@
         <div class="tech">Typer</div>
         <div class="tech">PySide6</div>
       </div>
-      <a href="/passwordgenerator" class="passwordGeneratorBtn projectBtn" target="_blank"
+      <a
+        href="/passwordgenerator"
+        class="passwordGeneratorBtn projectBtn"
+        target="_blank"
         >go to project</a
       >
     </div>
   </div>
 </div>
-{%if request.path == "/projects"%}
-{% include "supportWidget.html"%}
-{% endif %}
+{%if request.path == "/projects"%} {% include "supportWidget.html"%} {% endif %}
 {% endblock body %}

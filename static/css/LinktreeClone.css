@@ -1,0 +1,22 @@
+*::-webkit-scrollbar-thumb {
+  background: #d22b7f;
+}
+
+#seeMore {
+  display: block;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.code {
+  background-color: #9c40b859;
+}
+
+.header,
+.footer {
+  background: #6366f1;
+  background: linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  background: -moz-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  background: -webkit-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#db2777", endColorstr="#6366f1", GradientType=1);
+}
