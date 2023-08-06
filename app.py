@@ -3,7 +3,7 @@ import unicodedata
 import smtplib, ssl
 from flask_sslify import SSLify
 from githubStats import getGitHubStats
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect,send_file
 
 
 app = Flask(__name__)
@@ -85,6 +85,9 @@ def LinktreeClone():
         "LinktreeClone.html", repoStats=getGitHubStats("LinktreeClone")
     )
 
+@app.route("/cv")
+def cv():
+    return send_file("static/cv.pdf")
 
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
