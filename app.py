@@ -95,7 +95,7 @@ def cv():
 def send(senderName, senderMail, content, direct):
     content = content.replace("%20", " ")
     senderName = senderName.replace("%20", " ")
-    message = f"Sender Name: {senderName}\n \nSender Mail: {senderMail} \n \nMessage:\n {content}"
+    message = f"Subject: Message from {senderName}\n\n {content} \n\n{senderName}\n {senderMail}"
     port = 587
     smtp_server = "smtp.gmail.com"
     context = ssl.create_default_context()
