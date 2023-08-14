@@ -1,6 +1,6 @@
 p {
   font-size: 1.1rem;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 h1 {
@@ -84,12 +84,12 @@ small {
 }
 
 .card {
-  height: 22rem;
-  width: 20rem;
+  height: 26rem;
+  width: 22rem;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5rem 0.25rem;
+  padding: 0.5rem 0.5rem 1.5rem 0.5rem;
   border-radius: 0.75rem;
   margin: 1rem 0.5rem;
 }
@@ -165,13 +165,31 @@ small {
 
 .LinktreeCloneCard {
   background: #6366f1;
-  background: linear-gradient(135deg, #6366f1 0%, #db2777 100%);
-  background: -moz-linear-gradient(135deg, #6366f1 0%, #db2777 100%);
-  background: -webkit-linear-gradient(135deg, #6366f1 0%, #db2777 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#6366F1", endColorstr="#DB2777", GradientType=1);
+  background: linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  background: -moz-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  background: -webkit-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#db2777", endColorstr="#6366f1", GradientType=1);
 }
 
 .getImagesFromURLCard h1,
 .passwordGeneratorCard h1 {
   font-size: 2rem;
+}
+
+.cardImages {
+  width: fit-content;
+  margin: 1rem auto;
+  height: 10rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  transition: 0.5s;
+  border: 1px solid #33374513;
+}
+
+.cardImages:hover {
+  -webkit-transform: scale(1.75);
+  -moz-transform: scale(1.75);
+  -o-transform: scale(1.75);
+  -ms-transform: scale(1.75);
+  transform: scale(1.75);
 }
