@@ -193,3 +193,14 @@ small {
   -ms-transform: scale(1.75);
   transform: scale(1.75);
 }
+
+@media screen and (max-width: 912px) {
+  .cardImagesBox {
+    display: none;
+  }
+  .card {
+    padding-top: 1rem;
+    height: 23rem;
+    width: 19rem;
+  }
+}
