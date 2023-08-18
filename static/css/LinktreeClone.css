@@ -1,5 +1,5 @@
 *::-webkit-scrollbar-thumb {
-  background: #d22b7f;
+  background: #d52a7d;
 }
 
 #mobile {
@@ -13,7 +13,7 @@
 }
 
 .code {
-  background-color: #9c40b859;
+  background: rgba(162, 69, 176, 0.5);
 }
 
 .header,
