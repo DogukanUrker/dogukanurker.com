@@ -1,46 +1,47 @@
 *::-webkit-scrollbar-thumb {
-    background: #ebf4f5;
+  background: #ebf4f5;
 }
 
 h3 {
-    font-size: 1.4rem;
-    padding-left: 1rem;
+  font-size: 1.4rem;
+  padding-left: 1rem;
 }
 
 img {
-    margin: 0.5rem;
+  margin: 0.5rem;
 }
 
 .code {
-    background-color: #ebf4f5b0;
+  background-color: rgba(209, 222, 235, 0.35);
 }
 
-.header, .footer {
-    background: #ebf4f5;
-    background: linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
-    background: -moz-linear-gradient(135deg, hwb(186 92% 4%) 0%, #b3c5df 100%);
-    background: -webkit-linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1);
+.header,
+.footer {
+  background: #ebf4f5;
+  background: linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+  background: -moz-linear-gradient(135deg, hwb(186 92% 4%) 0%, #b3c5df 100%);
+  background: -webkit-linear-gradient(135deg, #ebf4f5 0%, #b3c5df 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1);
 }
 
 #cli2 {
-    height: 480px;
-    width: 852px;
+  height: 480px;
+  width: 852px;
 }
 
-#cli1, #gui {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+#cli1,
+#gui {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (max-width: 600px) {
-    html {
-        font-size: 70% !important;
-    }
+  html {
+    font-size: 70% !important;
+  }
 
-    img {
-        display: none !important;
-    }
-
+  img {
+    display: none !important;
+  }
 }

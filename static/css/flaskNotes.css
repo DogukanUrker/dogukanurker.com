@@ -1,15 +1,16 @@
 *::-webkit-scrollbar-thumb {
-    background: #c7caf5;
+  background: #c7caf5;
 }
 
 .code {
-    background-color: #f0ffff;
+  background-color: rgba(199, 223, 240, 0.35);
 }
 
-.header, .footer {
-    background: #c6f6e9;
-    background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
+.header,
+.footer {
+  background: #c6f6e9;
+  background: -moz-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  background: -webkit-linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  background: linear-gradient(135deg, #c6f6e9 0%, #c7caf5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c6f6e9", endColorstr="#c7caf5", GradientType=1);
 }

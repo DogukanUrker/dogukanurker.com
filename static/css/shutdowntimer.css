@@ -3,10 +3,11 @@
 }
 
 .code {
-  background-color: #EBEEFD;
+  background-color: rgba(184, 193, 249, 0.35);
 }
 
-.header, .footer {
+.header,
+.footer {
   background: #deb6f6;
   background: linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
   background: -moz-linear-gradient(135deg, #deb6f6 0%, #8dcffc 100%);
