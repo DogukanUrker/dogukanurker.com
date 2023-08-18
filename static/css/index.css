@@ -163,13 +163,18 @@ textarea:focus {
   color: #fff;
   cursor: pointer;
   padding-top: 1.5rem;
+  transition: 0.25s;
 }
+
 .social {
   transition: 0.2s;
 }
-.social:hover {
-  color: #d4d4d4;
+
+.social:hover,
+.sendBtn:hover {
+  color: #bebfc5;
 }
+
 @keyframes float {
   0% {
     transform: translate(0, 0px);
