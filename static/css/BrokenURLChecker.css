@@ -1,0 +1,26 @@
+*::-webkit-scrollbar-thumb {
+  background: #9d80cb;
+}
+
+#mobile {
+  border: none;
+}
+
+#seeMore {
+  display: block;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.code {
+  background: rgba(130, 116, 221, 0.35);
+}
+
+.header,
+.footer {
+  background: #9d80cb;
+  background: linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  background: -moz-linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  background: -webkit-linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9D80CB", endColorstr="#6366F1", GradientType=1 );
+}

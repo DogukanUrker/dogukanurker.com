@@ -85,6 +85,12 @@ def LinktreeClone():
         "LinktreeClone.html", repoStats=getGitHubStats("LinktreeClone")
     )
 
+@app.route("/brokenurlchecker")
+def BrokenURLChecker():
+    return render_template(
+        "BrokenURLChecker.html", repoStats=getGitHubStats("BrokenURLChecker")
+    )
+
 @app.route("/cv")
 def cv():
     return send_file("static/cv.pdf")

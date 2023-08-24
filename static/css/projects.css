@@ -83,6 +83,10 @@ small {
   color: #8653cd;
 }
 
+.BrokenURLCheckerBtn:hover {
+  color: #8d79d6;
+}
+
 .card {
   height: 26rem;
   width: 22rem;
@@ -169,6 +173,14 @@ small {
   background: -moz-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
   background: -webkit-linear-gradient(135deg, #db2777 0%, #6366f1 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#db2777", endColorstr="#6366f1", GradientType=1);
+}
+
+.BrokenURLCheckerCard {
+  background: #9d80cb;
+  background: linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  background: -moz-linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  background: -webkit-linear-gradient(135deg, #9d80cb, #6467f2 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9D80CB", endColorstr="#6366F1", GradientType=1 );
 }
 
 .getImagesFromURLCard h1,
