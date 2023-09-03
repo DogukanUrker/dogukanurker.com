@@ -14,3 +14,13 @@
   background: -webkit-linear-gradient(135deg, #9ab1e5 0%, #698bbf 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#9BB2E5", endColorstr="#698CBF", GradientType=1);
 }
+
+@media screen and (max-width: 600px) {
+  .header {
+    background: #9ab1e5;
+    background: linear-gradient(90deg, #9ab1e5, #698bbf 100%);
+    background: -moz-linear-gradient(90deg, #9ab1e5, #698bbf 100%);
+    background: -webkit-linear-gradient(90deg, #9ab1e5, #698bbf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9ab1e5", endColorstr="#6366F1", GradientType=1 );
+  }
+}

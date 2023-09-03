@@ -36,3 +36,13 @@ table {
   background: -webkit-linear-gradient(135deg, #f9c824 0%, #fc4f6c 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9C823", endColorstr="#FC506E", GradientType=1);
 }
+
+@media screen and (max-width: 600px) {
+  .header {
+    background: #f9c824;
+    background: linear-gradient(90deg, #f9c824, #fc4f6c 100%);
+    background: -moz-linear-gradient(90deg, #f9c824, #fc4f6c 100%);
+    background: -webkit-linear-gradient(90deg, #f9c824, #fc4f6c 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#f9c824", endColorstr="#6366F1", GradientType=1 );
+  }
+}

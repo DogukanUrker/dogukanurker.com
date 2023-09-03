@@ -184,7 +184,8 @@ small {
 }
 
 .getImagesFromURLCard h1,
-.passwordGeneratorCard h1 {
+.passwordGeneratorCard h1,
+.BrokenURLCheckerCard h1 {
   font-size: 2rem;
 }
 

@@ -16,7 +16,17 @@
 }
 
 @media screen and (max-width: 600px) {
-  html {
-    font-size: 0.75rem;
+  .header div h1 {
+    font-size: 2.75rem;
+  }
+  .code p {
+    font-size: 0.65rem;
+  }
+  .header {
+    background: #deb6f6;
+    background: linear-gradient(90deg, #deb6f6, #8dcffc 100%);
+    background: -moz-linear-gradient(90deg, #deb6f6, #8dcffc 100%);
+    background: -webkit-linear-gradient(90deg, #deb6f6, #8dcffc 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#deb6f6", endColorstr="#6366F1", GradientType=1 );
   }
 }

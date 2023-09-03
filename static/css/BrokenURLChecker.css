@@ -24,3 +24,19 @@
   background: -webkit-linear-gradient(135deg, #9d80cb, #6467f2 100%);
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9D80CB", endColorstr="#6366F1", GradientType=1 );
 }
+
+@media screen and (max-width: 600px) {
+  .header div h1 {
+    font-size: 2.5rem;
+  }
+  .code p {
+    font-size: 0.65rem;
+  }
+  .header {
+    background: #9d80cb;
+    background: linear-gradient(90deg, #9d80cb, #6467f2 100%);
+    background: -moz-linear-gradient(90deg, #9d80cb, #6467f2 100%);
+    background: -webkit-linear-gradient(90deg, #9d80cb, #6467f2 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9D80CB", endColorstr="#6366F1", GradientType=1 );
+  }
+}

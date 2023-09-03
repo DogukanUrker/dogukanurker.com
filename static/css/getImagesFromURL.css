@@ -37,11 +37,25 @@ img {
 }
 
 @media screen and (max-width: 600px) {
-  html {
-    font-size: 70% !important;
+  .header div h1 {
+    font-size: 2.5rem;
   }
 
-  img {
+  .code p {
+    font-size: 0.65rem;
+  }
+
+  #gui,
+  #cli1,
+  #cli2 {
     display: none !important;
+  }
+
+  .header {
+    background: #ebf4f5;
+    background: linear-gradient(90deg, #ebf4f5, #b3c5df 100%);
+    background: -moz-linear-gradient(90deg, #ebf4f5, #b3c5df 100%);
+    background: -webkit-linear-gradient(90deg, #ebf4f5, #b3c5df 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ebf4f5", endColorstr="#6366F1", GradientType=1 );
   }
 }
