@@ -69,17 +69,19 @@ textarea:focus {
 }
 
 .welcome {
-  text-align: left;
+  text-align: center;
   margin: 0;
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
 }
 
 .greeting,
 .knowledge {
-  margin-top: 17.5rem;
   height: fit-content;
+  width: fit-content;
+  margin: auto;
 }
 
 .greeting {
