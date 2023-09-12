@@ -87,6 +87,9 @@ small {
   color: #8c78d6;
 }
 
+.AstronomicalDistanceConverterBtn:hover {
+  color: #6561f1;
+}
 .card {
   height: 26rem;
   width: 22rem;
@@ -181,6 +184,14 @@ small {
   background: -moz-linear-gradient(135deg, #9d80cb, #6467f2 100%);
   background: -webkit-linear-gradient(135deg, #9d80cb, #6467f2 100%);
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#9D80CB", endColorstr="#6366F1", GradientType=1 );
+}
+
+.AstronomicalDistanceConverterCard {
+  background: #895af6;
+  background: linear-gradient(135deg, #895af6 0%, #0c74e4 100%);
+  background: -moz-linear-gradient(135deg, #895af6 0%, #0c74e4 100%);
+  background: -webkit-linear-gradient(135deg, #895af6 0%, #0c74e4 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#8B5CF6", endColorstr="#0C75E6", GradientType=1 );
 }
 
 .getImagesFromURLCard h1,

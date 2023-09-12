@@ -91,6 +91,12 @@ def BrokenURLChecker():
         "BrokenURLChecker.html", repoStats=getGitHubStats("BrokenURLChecker")
     )
 
+@app.route("/astronomicaldistanceconverter")
+def AstronomicalDistanceConverter():
+    return render_template(
+        "AstronomicalDistanceConverter.html", repoStats=getGitHubStats("AstronomicalDistanceConverter")
+    )
+
 @app.route("/cv")
 def cv():
     return send_file("static/cv.pdf")
