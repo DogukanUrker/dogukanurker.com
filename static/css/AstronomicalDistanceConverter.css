@@ -22,6 +22,12 @@
 }
 
 @media screen and (max-width: 600px) {
+  .header div h1 {
+    font-size: 1.5rem;
+  }
+  .code p {
+    font-size: 0.5rem;
+  }
   .header {
     background: #895af6;
     background: linear-gradient(90deg, #895af6, #0c74e4 100%);
