@@ -260,11 +260,6 @@ textarea:focus {
     margin-top: 1rem;
   }
 
-  .greeting {
-    margin: 0;
-    padding: 0;
-  }
-
   .welcome {
     display: block;
   }
