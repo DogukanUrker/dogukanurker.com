@@ -197,7 +197,8 @@ small {
 
 .getImagesFromURLCard h1,
 .passwordGeneratorCard h1,
-.BrokenURLCheckerCard h1 {
+.BrokenURLCheckerCard h1,
+.AstronomicalDistanceConverterCard h1 {
   font-size: 2rem;
 }
 
