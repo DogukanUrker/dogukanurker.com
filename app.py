@@ -91,6 +91,12 @@ def BrokenURLChecker():
         "BrokenURLChecker.html", repoStats=getGitHubStats("BrokenURLChecker")
     )
 
+@app.route("/blackholes")
+def BlackHoles():
+    return render_template(
+        "BlackHoles.html", repoStats=getGitHubStats("BlackHoles")
+    )
+
 @app.route("/astronomicaldistanceconverter")
 def AstronomicalDistanceConverter():
     return render_template(
