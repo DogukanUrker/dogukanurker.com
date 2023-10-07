@@ -93,7 +93,15 @@ h3 {
   height: 12.5rem;
   padding: 0.5rem;
 }
+.apiDocBtn {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #121212;
+}
 
+.apiDocBtn:hover {
+  color: #121212be;
+}
 #💖 {
   margin-top: 0.5rem;
 }
