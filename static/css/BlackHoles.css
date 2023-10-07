@@ -1,5 +1,5 @@
 *::-webkit-scrollbar-thumb {
-  background: #9d80cb;
+  background: #060606;
 }
 
 #mobile {
@@ -24,6 +24,12 @@
   background: -moz-linear-gradient(135deg, #000000 0%, #404040 100%);
   background: -webkit-linear-gradient(135deg, #000000 0%, #404040 100%);
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#404040", GradientType=1 );
+}
+a {
+  color: #fff;
+}
+a:hover {
+  color: #bebebe;
 }
 
 @media screen and (max-width: 600px) {
