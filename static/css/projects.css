@@ -221,7 +221,7 @@ small {
 }
 
 .cardImages {
-  width: fit-content;
+  width: max-content;
   margin: 1rem auto;
   height: 10rem;
   padding: 0;
