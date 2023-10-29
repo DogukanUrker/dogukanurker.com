@@ -1,0 +1,18 @@
+a {
+  color: white;
+  text-decoration: none;
+}
+.container {
+  text-align: center;
+
+  user-select: none;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(2 6 23);
+  border-radius: 1rem;
+  width: 38rem;
+}
+.image {
+  width: 5rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}

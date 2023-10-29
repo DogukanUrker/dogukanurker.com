@@ -3,11 +3,12 @@ import unicodedata
 import smtplib, ssl
 from flask_sslify import SSLify
 from githubStats import getGitHubStats
-from flask import Flask, render_template, redirect,send_file
+from flask import Flask, render_template, redirect, send_file
 
 
 app = Flask(__name__)
 sslify = SSLify(app)
+
 
 @app.route("/")
 def index():
@@ -85,27 +86,31 @@ def LinktreeClone():
         "LinktreeClone.html", repoStats=getGitHubStats("LinktreeClone")
     )
 
+
 @app.route("/brokenurlchecker")
 def BrokenURLChecker():
     return render_template(
         "BrokenURLChecker.html", repoStats=getGitHubStats("BrokenURLChecker")
     )
 
+
 @app.route("/blackholes")
 def BlackHoles():
-    return render_template(
-        "BlackHoles.html", repoStats=getGitHubStats("BlackHoles")
-    )
+    return render_template("BlackHoles.html", repoStats=getGitHubStats("BlackHoles"))
+
 
 @app.route("/astronomicaldistanceconverter")
 def AstronomicalDistanceConverter():
     return render_template(
-        "AstronomicalDistanceConverter.html", repoStats=getGitHubStats("AstronomicalDistanceConverter")
+        "AstronomicalDistanceConverter.html",
+        repoStats=getGitHubStats("AstronomicalDistanceConverter"),
     )
+
 
 @app.route("/cv")
 def cv():
     return send_file("static/cv.pdf")
+
 
 @app.route(
     "/send/sendername=<senderName>/sendermail=<senderMail>/message=<content>/redirect=<direct>"
@@ -133,6 +138,26 @@ def send(senderName, senderMail, content, direct):
     finally:
         server.quit()
     return redirect(direct.replace("&", "/"))
+
+
+@app.route("/stars/<owner>/<repo>")
+def stars(owner, repo):
+    import requests
+    from bs4 import BeautifulSoup
+
+    repoURL = f"https://github.com/{owner}/{repo}/stargazers"
+    r = requests.get(repoURL)
+
+    soup = BeautifulSoup(r.content, "html.parser")
+
+    imagesSources = soup.find_all("img", class_="avatar")
+    images = []
+    for image in imagesSources:
+        images.append(image["src"])
+
+    return render_template(
+        "stars.html", images=images, starsCount=len(images), repoURL=repoURL, repo=repo
+    )
 
 
 @app.errorhandler(404)

@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="/static/css/stars.css" />
+<div class="container">
+  <a href="{{repoURL}}"
+    ><h1>⭐{{starsCount}} user starred {{repo}}</h1>
+    <div class="images">
+      {% for i in images %}
+      <img src="{{i}}" class="image" />
+      {% endfor %}
+    </div></a
+  >
+</div>
