@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
+      href="{{ url_for('static', filename='css/reset.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
       href="{{ url_for('static', filename='css/general.css') }}"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.46.0/tabler-icons.min.css"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.46.0/tabler-icons.min.css" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   </head>
     {% block head %} {% endblock head %}
   </head>
