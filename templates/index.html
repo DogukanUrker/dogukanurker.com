@@ -1,5 +1,135 @@
 {% extends 'layout.html'%} {% block head %}
-<title>index</title>
+<title>Doğukan Ürker</title>
 {% endblock head %} {% block body %}
-<h1>index</h1>
+<div
+  class="lg:flex h-screen w-full flex-col items-center justify-center p-6 text-white select-none"
+>
+  <div class="lg:grid h-ful w-full grid-cols-10 gap-4">
+    <div
+      class="relative col-span-4 row-span-3 rounded-3xl bg-neutral-950 flex justify-center items-center font-bold"
+    >
+      <img
+        src="/static/images/me.jpeg"
+        alt="Doğukan Ürker"
+        class="w-full h-full object-cover rounded-3xl grayscale"
+      />
+      <div class="absolute top-2 left-4">
+        <h2 class="text-4xl font-bold">Doğukan Ürker</h2>
+        <h2 class="text-3xl text-white/50">Developer</h2>
+      </div>
+    </div>
+    <div
+      class="col-span-5 row-span-1 rounded-3xl bg-neutral-950 flex flex-col justify-center items-center font-bold"
+    >
+      <h1 class="mb-6 text-4xl">Tech Stack</h1>
+      <div class="text-5xl">
+        <i
+          class="devicon-python-plain m-2 hover:text-white/75 duration-300"
+        ></i>
+        <i
+          class="devicon-javascript-plain m-2 hover:text-white/75 duration-300"
+        ></i>
+        <i
+          class="devicon-typescript-plain m-2 hover:text-white/75 duration-300"
+        ></i>
+        <i class="devicon-swift-plain m-2 hover:text-white/75 duration-300"></i>
+        <i class="devicon-html5-plain m-2 hover:text-white/75 duration-300"></i>
+        <i class="devicon-css3-plain m-2 hover:text-white/75 duration-300"></i>
+        <i
+          class="devicon-fastapi-plain m-2 hover:text-white/75 duration-300"
+        ></i>
+        <i class="devicon-flask-plain m-2 hover:text-white/75 duration-300"></i>
+        <i class="devicon-react-plain m-2 hover:text-white/75 duration-300"></i>
+        <i
+          class="devicon-tailwindcss-plain m-2 hover:text-white/75 duration-300"
+        ></i>
+      </div>
+    </div>
+    <div
+      class="col-span-1 row-span-1 rounded-3xl bg-neutral-950 flex flex-col justify-center items-center font-bold"
+    >
+      <h1 class="mb-6 text-4xl">CV</h1>
+      <a
+        href="/cv"
+        target="_blank"
+        class="hover:text-white/75 duration-300 text-5xl"
+        ><i class="fa-regular fa-file-lines"></i
+      ></a>
+    </div>
+    <div
+      class="col-span-2 row-span-2 rounded-3xl bg-neutral-950 flex flex-col justify-center items-center font-bold"
+    ></div>
+    <div
+      class="relative col-span-4 row-span-2 rounded-3xl bg-neutral-950 flex justify-center items-center font-bold"
+    >
+      <img
+        src="/static/images/flaskBlog.png"
+        alt="Doğukan Ürker"
+        class="object-cover rounded-3xl"
+      />
+      <div class="absolute top-0 left-4">
+        <a
+          href="/projects"
+          target="_blank"
+          class="text-2xl font-bold hover:text-white/75 duration-300"
+          >Projects</a
+        >
+        <p class="inline mx-2 text-2xl text-white/75">|</p>
+        <a
+          href="/flaskblog"
+          target="_blank"
+          class="text-xl text-white/50 hover:text-white/25 duration-300"
+          >flaskBlog</a
+        >
+      </div>
+    </div>
+    <div
+      class="col-span-4 row-span-2 rounded-3xl bg-neutral-950 flex flex-col justify-center items-center font-bold"
+    >
+      <h1 class="mb-6 text-4xl">About</h1>
+      <p class="text-lg text-center m-2">
+        I'm deeply passionate about coding and love solving complex problems.
+        Creating new solutions always excites me.
+      </p>
+    </div>
+    <div
+      class="col-span-6 row-span-2 rounded-3xl bg-neutral-950 flex flex-col justify-center items-center font-bold"
+    >
+      <h1 class="mt-8 mb-6 text-4xl">Socials</h1>
+      <div class="mb-8 text-5xl text-center">
+        <a
+          href="https://github.com/dogukanurker"
+          class="hover:text-white/75 duration-300 m-3"
+          target="_blank"
+          ><i class="fa-brands fa-github"></i
+        ></a>
+        <a
+          href="https://twitter.com/dogukanurker"
+          class="hover:text-white/75 duration-300 m-3"
+          target="_blank"
+          ><i class="fa-brands fa-x-twitter"></i
+        ></a>
+        <a
+          href="https://www.instagram.com/dogukanurker/"
+          class="hover:text-white/75 duration-300 m-3"
+          target="_blank"
+          ><i class="fa-brands fa-instagram"></i
+        ></a>
+        <a
+          href="https://www.youtube.com/@dogukanurker"
+          class="hover:text-white/75 duration-300 m-3"
+          target="_blank"
+          ><i class="fa-brands fa-youtube"></i
+        ></a>
+        <a
+          href="mailto:dogukanurker@icloud.com"
+          class="hover:text-white/75 duration-300 m-3"
+          target="_blank"
+          ><i class="fa-solid fa-envelope"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock body %}
