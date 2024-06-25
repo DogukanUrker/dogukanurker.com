@@ -3,10 +3,10 @@
 {% endblock head %} {% block body %}
 
 <div
-  class="lg:flex h-screen w-full flex-col items-center justify-center p-6 text-white select-none"
+  class="lg:flex h-screen w-full flex-col items-center justify-center p-6 text-slate-100 select-none"
 >
   <div
-    class="lg:grid lg:h-2/3 h-full w-full grid-cols-6 grid-rows-3 gap-4 text-white"
+    class="lg:grid lg:h-2/3 h-full w-full grid-cols-6 grid-rows-3 gap-4 text-slate-100"
   >
     <div
       class="mb-8 mt-2 lg:mt-0 lg:mb-0 py-2 lg:py-0 col-span-2 lg:row-span-1 rounded-3xl bg-neutral-950 flex justify-center items-center text-2xl lg:text-4xl text-center font-bold"
@@ -21,7 +21,10 @@
     <div
       class="my-8 lg:my-0 py-2 lg:py-0 col-span-1 row-span-1 rounded-3xl bg-neutral-950 flex justify-center items-center text-2xl lg:text-4xl text-center font-bold"
     >
-      <a href="{{url}}" target="_blank" class="hover:text-white/75 duration-300"
+      <a
+        href="{{url}}"
+        target="_blank"
+        class="hover:text-slate-100/75 duration-300"
         ><i class="fa-brands fa-github"></i
       ></a>
     </div>
@@ -29,7 +32,7 @@
       class="my-8 lg:my-0 py-2 lg:py-0 col-span-1 row-span-1 rounded-3xl bg-neutral-950 flex justify-center items-center text-xl lg:text-3xl text-center font-bold"
     >
       <a
-        class="hover:text-white/75 duration-300"
+        class="hover:text-slate-100/75 duration-300"
         href="/projects"
         target="_blank"
       >
@@ -48,7 +51,10 @@
     <div
       class="my-8 lg:my-0 py-2 lg:py-0 col-span-1 row-span-1 rounded-3xl bg-neutral-950 flex justify-center items-center text-xl lg:text-3xl text-center font-bold"
     >
-      <a href="/donate" target="_blank" class="hover:text-white/75 duration-300"
+      <a
+        href="/donate"
+        target="_blank"
+        class="hover:text-slate-100/75 duration-300"
         ><i class="fa-solid fa-sack-dollar mr-2"></i> Donate</a
       >
     </div>
@@ -86,7 +92,7 @@
       <a
         href="{{url}}#readme"
         target="_blank"
-        class="hover:text-white/75 duration-300"
+        class="hover:text-slate-100/75 duration-300"
         ><i class="fa-solid fa-file-lines mr-2"></i> Docs</a
       >
     </div>
