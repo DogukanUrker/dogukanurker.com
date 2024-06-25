@@ -41,7 +41,7 @@ def queryAPI(url):
 @app.route("/<projectName>")
 def project(projectName):
     projectNames = []
-    repos = queryAPI(githubAPI + "users/dogukanurker/repos")
+    repos = queryAPI(githubAPI + "users/dogukanurker/repos?per_page=100")
     # Query the GitHub API to get the user's repositories
 
     for repo in repos:
@@ -101,7 +101,7 @@ def cv():
 
 @app.route("/projects")
 def projects():
-    repos = queryAPI(githubAPI + "users/dogukanurker/repos")
+    repos = queryAPI(githubAPI + "users/dogukanurker/repos?per_page=100")
     # Query the GitHub API to get the user's repositories
 
     repoData = []
