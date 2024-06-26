@@ -124,9 +124,8 @@ def socials():
 
 @app.route("/donate")
 def donate():
-    return redirect("https://www.buymeacoffee.com/dogukanurker")
-# Define the donate route to redirect to the Buy Me a Coffee page
-
+    return render_template("donate.html")
+# Define the donate route which renders the donate.html template
 
 if __name__ == "__main__":
     app.run()
