@@ -7,6 +7,9 @@ from flask_sslify import SSLify
 from requests import request
 # Import the request function from the requests module
 
+from os import path
+# Import the path function from the os module
+
 app = Flask(__name__)
 # Initialize a Flask app
 
@@ -29,7 +32,7 @@ token = open("token.txt", "r").read().strip("\n")
 payload = {}
 # Initialize an empty payload for the API request
 
-headers = {"Authorization": f'Bearer {token}'}
+headers = {"Authorization": f"Bearer {token}"}
 # Set up the headers for the API request with the authorization token
 
 
@@ -97,6 +100,16 @@ def notFound(e):
 def cv():
     return send_file("static/cv.pdf")
 # Define the cv route to send the cv.pdf file
+
+
+@app.route("/letter/<letter>")
+def letter(letter):
+    letterPath = f"static/letters/{letter}.pdf"
+    if path.exists(letterPath):
+        return send_file(letterPath)
+    else:
+        return redirect(url_for("home"))
+# Define the letter route to send the {letter}.pdf file
 
 
 @app.route("/projects")
