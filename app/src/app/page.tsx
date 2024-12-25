@@ -8,12 +8,13 @@ import {
 
 
 export default function Home() {
+    
     return (
         <div className="h-screen flex flex-col items-center justify-center select-none text-4xl font-bold">
             <div className={"mb-4"}><Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
-                        <BreadcrumbLink href="https://x.com/dogukanurker" target={"_blank"}> X</BreadcrumbLink>
+                        <BreadcrumbLink href="https://x.com/dogukanurker" target={"_blank"}>X</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator/>
                     <BreadcrumbItem>
