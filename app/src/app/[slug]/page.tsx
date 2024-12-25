@@ -3,7 +3,6 @@ import {ProjectDetails} from './project-details';
 import {notFound} from 'next/navigation';
 import {Skeleton} from "@/components/ui/skeleton";
 import {Card, CardContent, CardHeader} from '@/components/ui/card';
-import {ghToken} from "../../../const";
 
 export default async function Page({params}: { params: { slug: string } }) {
     const {slug} = params;
@@ -13,7 +12,7 @@ export default async function Page({params}: { params: { slug: string } }) {
     }
 
     try {
-        const token = ghToken;
+        const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY || '';
         const data = await fetchRepos('dogukanurker', token);
         const currentRepo = data.find(r => r.name.toLowerCase() === slug.toLowerCase());
 

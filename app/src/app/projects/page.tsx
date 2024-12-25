@@ -7,7 +7,6 @@ import {Button} from '@/components/ui/button'
 import {ArrowRight, GitFork, Star} from 'lucide-react'
 import Link from 'next/link'
 import {Skeleton} from "@/components/ui/skeleton"
-import {ghToken} from "../../../const";
 
 export default function Projects() {
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -17,7 +16,7 @@ export default function Projects() {
         async function getRepos() {
             try {
                 setIsLoading(true);
-                const token = ghToken;
+                const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY || '';
                 const data = await fetchRepos('dogukanurker', token);
                 setRepos(data);
             } finally {
