@@ -52,7 +52,7 @@ export default function SocialsPage() {
                         className="flex justify-center"
                     >
                         <Avatar className="h-28 w-28 hover:scale-110 transition">
-                            <AvatarImage src="meSmall.jpeg" alt="Profile" className={"grayscale"}/>
+                            <AvatarImage src="/meSmall.JPEG" alt="Profile" className={"grayscale"}/>
                             <AvatarFallback>DU</AvatarFallback>
                         </Avatar>
                     </motion.div>
