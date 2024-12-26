@@ -13,6 +13,7 @@ export interface Repo {
     html_url: string;
     languages_url: string;
     contributors_url: string;
+    updated_at: number;
 }
 
 export interface Contributor {  // Exporting Contributor interface
@@ -28,7 +29,15 @@ export async function fetchRepos(username: string, token: string): Promise<Repo[
             'Authorization': `Bearer ${token.trim()}`
         }
     });
-    const data: Repo[] = (await response.json()).sort((a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count);
+    let data: Repo[] = (await response.json())
+        .sort((a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count)
+        .sort((a: Repo, b: Repo) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+
+    const flaskBlogRepo = data.find(repo => repo.id === 566979145);
+    if (flaskBlogRepo) {
+        data = [flaskBlogRepo, ...data.filter(repo => repo.id !== 566979145)];
+    }
+
     return data;
 }
 
