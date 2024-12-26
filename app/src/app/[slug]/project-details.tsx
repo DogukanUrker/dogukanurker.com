@@ -6,13 +6,13 @@ import {Button} from '@/components/ui/button';
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {ArrowLeft, ExternalLink, GitFork, Star} from 'lucide-react';
 import {motion} from "framer-motion";
-import type {Repo} from '@/lib/fetchRepos';
+import type {Contributor, Repo} from '@/lib/fetchRepos';
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip"
 
 interface ProjectDetailsProps {
     repo: Repo;
     languages: Record<string, number>;
-    contributors: any[];
+    contributors: Contributor[];
 }
 
 export function ProjectDetails({repo, languages, contributors}: ProjectDetailsProps) {

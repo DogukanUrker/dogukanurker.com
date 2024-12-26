@@ -15,10 +15,11 @@ export interface Repo {
     contributors_url: string;
 }
 
-interface Contributor {
+export interface Contributor {  // Exporting Contributor interface
     login: string;
     avatar_url: string;
     contributions: number;
+    html_url: string;
 }
 
 export async function fetchRepos(username: string, token: string): Promise<Repo[]> {
@@ -27,7 +28,7 @@ export async function fetchRepos(username: string, token: string): Promise<Repo[
             'Authorization': `Bearer ${token.trim()}`
         }
     });
-    const data: Repo[] = (await response.json()).sort((a, b) => b.stargazers_count - a.stargazers_count);
+    const data: Repo[] = (await response.json()).sort((a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count);
     return data;
 }
 
@@ -49,7 +50,7 @@ export async function fetchContributors(url: string, token: string): Promise<Con
     return response.json();
 }
 
-export async function fetchReadme(username: string, repo: string, token: string): Promise<string> {
+export async function fetchReadme(username: string, repo: string): Promise<string> {
     const response = await fetch(
         `https://raw.githubusercontent.com/${username}/${repo}/main/README.md`,
     );

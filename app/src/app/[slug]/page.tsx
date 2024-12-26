@@ -1,11 +1,15 @@
 import {fetchContributors, fetchLanguages, fetchRepos} from '@/lib/fetchRepos';
 import {ProjectDetails} from './project-details';
 import {notFound} from 'next/navigation';
-import {Skeleton} from "@/components/ui/skeleton";
-import {Card, CardContent, CardHeader} from '@/components/ui/card';
 
-export default async function Page({params}: { params: { slug: string } }) {
-    const {slug} = params;
+interface PageProps {
+    params: Promise<{
+        slug: string;
+    }>;
+}
+
+export default async function Page({params}: PageProps) {
+    const {slug} = await params;
 
     if (!slug) {
         notFound();
@@ -37,26 +41,4 @@ export default async function Page({params}: { params: { slug: string } }) {
         console.error('Error fetching data:', error);
         notFound();
     }
-}
-
-// Loading state
-export function Loading() {
-    return (
-        <div className="container mx-auto py-10 space-y-8">
-            <Skeleton className="h-8 w-48"/>
-            <Card>
-                <CardHeader>
-                    <Skeleton className="h-8 w-3/4 mb-2"/>
-                    <Skeleton className="h-4 w-full"/>
-                </CardHeader>
-                <CardContent className="space-y-8">
-                    <div className="space-y-4">
-                        <Skeleton className="h-4 w-full"/>
-                        <Skeleton className="h-4 w-full"/>
-                        <Skeleton className="h-4 w-3/4"/>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
-    );
 }
