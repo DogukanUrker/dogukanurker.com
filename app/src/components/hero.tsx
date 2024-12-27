@@ -39,7 +39,7 @@ export function Hero() {
                                 <h2 className="text-primary font-semibold tracking-wide uppercase">
                                     Full Stack Developer
                                 </h2>
-                                <h1 className="p-2 text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 leading-none">
+                                <h1 className="py-2 text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 leading-none">
                                     Doğukan Ürker
                                 </h1>
                             </motion.div>
