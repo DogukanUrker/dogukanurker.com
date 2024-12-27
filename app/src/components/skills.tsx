@@ -5,10 +5,11 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Progress} from "@/components/ui/progress"
 
 const skills = [
-    {name: "Frontend Development", progress: 70, description: "React, Next.js, TypeScript"},
     {name: "Backend Development", progress: 90, description: "Python, Flask, FastAPI, Node.js, SQLite, MongoDB"},
-    {name: "UI/UX Design", progress: 60, description: "Figma, Adobe XD"},
-    {name: "DevOps", progress: 80, description: "Docker, AWS, CI/CD"}
+    {name: "Frontend Development", progress: 70, description: "React, Next.js, TypeScript"},
+    {name: "DevOps", progress: 80, description: "Docker, AWS, CI/CD"},
+    {name: "UI/UX Design", progress: 60, description: "Figma, Adobe XD"}
+
 ]
 
 export function Skills() {
