@@ -6,7 +6,7 @@ import {ArrowRight, Github, Link, Linkedin, Mail, Twitter, Youtube} from 'lucide
 
 export function Hero() {
     return (
-        <section className="min-h-[calc(100vh-3.5rem)] w-full relative">
+        <section className="min-h-[calc(100vh-3.5rem)] w-full relative select-none">
             <div className="container h-full">
                 <div className="grid lg:grid-cols-2 min-h-[calc(100vh-3.5rem)] gap-8">
                     {/* Left side - Photo */}
@@ -39,7 +39,7 @@ export function Hero() {
                                 <h2 className="text-primary font-semibold tracking-wide uppercase">
                                     Full Stack Developer
                                 </h2>
-                                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 leading-none">
+                                <h1 className="p-2 text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 leading-none">
                                     Doğukan Ürker
                                 </h1>
                             </motion.div>

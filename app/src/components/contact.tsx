@@ -1,52 +1,57 @@
-"use client"
+"use client";
 
-import {useState} from "react"
-import {motion} from "framer-motion"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import {Input} from "@/components/ui/input"
-import {Textarea} from "@/components/ui/textarea"
-import {Button} from "@/components/ui/button"
+import {useState} from "react";
+import {motion} from "framer-motion";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
+import {Button} from "@/components/ui/button";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {Loader2, MailCheck, MailX} from "lucide-react";
 
 export function Contact() {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [subject, setSubject] = useState("")
-    const [message, setMessage] = useState("")
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setLoading(true)
-        setError("")
-        setSuccess("")
+        e.preventDefault();
+        setLoading(true);
 
         try {
             const response = await fetch("/api/contact", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({name, email, subject, message}),
-            })
+            });
 
-            if (!response.ok) {
-                throw new Error("Something went wrong")
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message);
             }
 
-            setSuccess("Message sent successfully!")
-            setName("")
-            setEmail("")
-            setSubject("")
-            setMessage("")
-        } catch (error) {
-            console.error(error)
-            setError("Failed to send message. Please try again later.")
+            setSuccess("Message sent successfully!");
+            setError("");
+            setName("");
+            setEmail("");
+            setSubject("");
+            setMessage("");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message || "Failed to send message");
+            } else {
+                setError("Failed to send message");
+            }
+            setSuccess("");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     return (
         <section id="contact" className="container py-12">
@@ -70,57 +75,67 @@ export function Contact() {
                 <Card className="max-w-lg mx-auto">
                     <CardHeader>
                         <CardTitle>Send me a message</CardTitle>
-                        <CardDescription>
-                            I&apos;ll get back to you as soon as possible.
-                        </CardDescription>
+                        <CardDescription>I&apos;ll get back to you as soon as possible.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="grid gap-4 md:grid-cols-2">
-                                <div className="space-y-2">
-                                    <Input
-                                        placeholder="Name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Input
-                                        placeholder="Email"
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
                                 <Input
-                                    placeholder="Subject"
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)}
+                                    placeholder="Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                                <Input
+                                    placeholder="Email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Textarea
-                                    placeholder="Message"
-                                    className="min-h-[100px]"
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <Button className="w-full" type="submit" disabled={loading}>
-                                {loading ? "Sending..." : "Send Message"}
+                            <Input
+                                placeholder="Subject"
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                                required
+                            />
+                            <Textarea
+                                placeholder="Message"
+                                className="min-h-[100px]"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                required
+                            />
+                            <Button
+                                className="w-full flex items-center justify-center"
+                                type="submit"
+                                disabled={loading}
+                            >
+                                {loading ? <Loader2 className="h-5 w-5 animate-spin"/> : "Send Message"}
                             </Button>
-                            {error && <p className="text-red-500">{error}</p>}
-                            {success && <p className="text-green-500">{success}</p>}
+                            {error && (
+                                <Alert variant="destructive" className="mt-4 select-none">
+                                    <MailX className="h-6 w-6 text-destructive shrink-0"/>
+                                    <div>
+                                        <AlertTitle>Error</AlertTitle>
+                                        <AlertDescription>{error}</AlertDescription>
+                                    </div>
+                                </Alert>
+                            )}
+                            {success && (
+                                <Alert className="mt-4 select-none grid ">
+                                    <MailCheck className="h-6 w-6 text-primary shrink-0"/>
+                                    <div>
+                                        <AlertTitle>Success</AlertTitle>
+                                        <AlertDescription>{success}</AlertDescription>
+                                    </div>
+                                </Alert>
+                            )}
                         </form>
                     </CardContent>
                 </Card>
             </motion.div>
         </section>
-    )
+    );
 }
