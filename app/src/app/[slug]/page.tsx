@@ -1,4 +1,3 @@
-// page.tsx
 import {
   fetchContributors,
   fetchLanguages,
@@ -18,6 +17,7 @@ export default async function Page({ params }: PageProps) {
 
   if (!slug) {
     notFound();
+    return;
   }
 
   try {
@@ -29,6 +29,7 @@ export default async function Page({ params }: PageProps) {
 
     if (!currentRepo) {
       notFound();
+      return;
     }
 
     // Fetch additional data
