@@ -36,10 +36,11 @@ export const metadata: Metadata = {
         description:
             "Showcasing projects and expertise in full-stack development with Python, TypeScript, and modern web technologies.",
         url: "https://dogukanurker.com",
+        site_name: "Doğukan Ürker Portfolio",
         type: "website",
         images: [
             {
-                url: "https://dogukanurker.com/ogImage.png",
+                url: "https://raw.githubusercontent.com/DogukanUrker/dogukanurker.com/refs/heads/main/app/public/ogImage.png",
                 width: 1200,
                 height: 630,
                 alt: "Doğukan Ürker's portfolio site, featuring modern web development projects.",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
         title: "Doğukan Ürker | Full-Stack Developer",
         description:
             "Discover projects and skills in full-stack development with Flask and Next.js.",
-        images: ["https://dogukanurker.com/ogImage.png"],
+        images: ["https://raw.githubusercontent.com/DogukanUrker/dogukanurker.com/refs/heads/main/app/public/ogImage.png"],
     },
 };
 
