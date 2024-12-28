@@ -139,16 +139,6 @@ export function ProjectDetailsClient({
             >
               <Card
                 className="p-3 md:p-4 hover:scale-[1.02] transition-transform cursor-pointer"
-                onClick={() => window.open(`${repo.html_url}/forks`, "_blank")}
-              >
-                <div className="flex items-center gap-2">
-                  <GitFork className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />
-                  <div className="font-semibold">{repo.forks}</div>
-                  <div className="text-muted-foreground text-sm">Forks</div>
-                </div>
-              </Card>
-              <Card
-                className="p-3 md:p-4 hover:scale-[1.02] transition-transform cursor-pointer"
                 onClick={() =>
                   window.open(`${repo.html_url}/stargazers`, "_blank")
                 }
@@ -157,6 +147,16 @@ export function ProjectDetailsClient({
                   <Star className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />
                   <div className="font-semibold">{repo.stargazers_count}</div>
                   <div className="text-muted-foreground text-sm">Stars</div>
+                </div>
+              </Card>
+              <Card
+                className="p-3 md:p-4 hover:scale-[1.02] transition-transform cursor-pointer"
+                onClick={() => window.open(`${repo.html_url}/forks`, "_blank")}
+              >
+                <div className="flex items-center gap-2">
+                  <GitFork className="h-4 w-4 md:h-5 md:w-5 text-muted-foreground" />
+                  <div className="font-semibold">{repo.forks}</div>
+                  <div className="text-muted-foreground text-sm">Forks</div>
                 </div>
               </Card>
               <Card
