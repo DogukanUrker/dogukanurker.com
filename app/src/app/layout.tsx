@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         type: "website",
         images: [
             {
-                url: "https://raw.githubusercontent.com/DogukanUrker/dogukanurker.com/refs/heads/main/app/public/ogImage.png",
+                url: "https://dogukanurker.com/ogImage.png",
                 width: 1200,
                 height: 630,
                 alt: "Doğukan Ürker's portfolio site, featuring modern web development projects.",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
         title: "Doğukan Ürker | Full-Stack Developer",
         description:
             "Discover projects and skills in full-stack development with Flask and Next.js.",
-        images: ["https://raw.githubusercontent.com/DogukanUrker/dogukanurker.com/refs/heads/main/app/public/ogImage.png"],
+        images: ["https://dogukanurker.com/ogImage.png"],
     },
 };
 
