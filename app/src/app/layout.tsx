@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         "web apps",
     ],
     openGraph: {
-        title: "Doğukan Ürker | Developer Portfolio",
+        title: "Doğukan Ürker | Full-Stack Developer",
         description:
             "Showcasing projects and expertise in full-stack development with Python, TypeScript, and modern web technologies.",
         url: "https://dogukanurker.com",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         site: "@dogukanurker",
-        title: "Doğukan Ürker | Developer Portfolio",
+        title: "Doğukan Ürker | Full-Stack Developer",
         description:
             "Discover projects and skills in full-stack development with Flask and Next.js.",
         images: ["https://dogukanurker.com/ogImage.png"],
