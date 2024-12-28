@@ -6,7 +6,7 @@ import {Contact} from "@/components/contact"
 
 export default function Home() {
     return (
-        <div className="min-h-screen md:w-full w-11/12 mx-auto">
+        <div className="min-h-screen md:w-fit w-11/12 mx-auto">
             <Navbar/>
             <main>
                 <Hero/>
