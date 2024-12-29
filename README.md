@@ -1,9 +1,5 @@
 **[Personal Website](https://dogukanurker.com/)** 🌐
 
-[Old Version](https://dogukanurker.com/)
-
-[NextJS Version (under dev)](https://dogukanurker.vercel.app)
-
 ### Contributors 💕
 
 <a href="https://github.com/dogukanurker"><img src="https://avatars.githubusercontent.com/u/62756402" title="ngryman" width="80" height="80"></a>

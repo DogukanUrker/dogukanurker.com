@@ -36,6 +36,7 @@ export const metadata: Metadata = {
         description:
             "Showcasing projects and expertise in full-stack development with Python, TypeScript, and modern web technologies.",
         url: "https://dogukanurker.com",
+        siteName: "Doğukan Ürker Portfolio",
         type: "website",
         images: [
             {
