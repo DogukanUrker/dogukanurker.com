@@ -61,7 +61,7 @@ export function Projects() {
                         transition={{duration: 0.5, delay: index * 0.1}}
                     >
                         <Card className="overflow-hidden h-full flex flex-col">
-                            <div className="relative h-72">
+                            <div className="relative h-72 md:h-80">
                                 <img
                                     src={project.image}
                                     alt={project.title}
