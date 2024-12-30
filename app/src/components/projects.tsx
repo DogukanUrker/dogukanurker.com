@@ -22,7 +22,7 @@ const projects = [
         description: "Immortalize your favorite gaming moments.",
         image: "/capturegame.png?height=300&width=600",
         tags: ["Python", "FastAPI", "MongoDB"],
-        github: "https:/www.github.com/dogukanurker/CaptureGame",
+        github: "/CaptureGame",
         demo: "https:/www.capturega.me",
     },
     {
@@ -61,7 +61,7 @@ export function Projects() {
                         transition={{duration: 0.5, delay: index * 0.1}}
                     >
                         <Card className="overflow-hidden h-full flex flex-col">
-                            <div className="relative h-48 md:h-64">
+                            <div className="relative h-72">
                                 <img
                                     src={project.image}
                                     alt={project.title}
@@ -93,6 +93,7 @@ export function Projects() {
                                         size="sm"
                                         variant="outline"
                                         onClick={() => window.open(project.github, "_blank")}
+                                        disabled={project.github === "/CaptureGame"}
                                     >
                                         <Github className="mr-2 h-4 w-4"/>
                                         Code
