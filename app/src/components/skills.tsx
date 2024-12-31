@@ -13,7 +13,7 @@ const skills = [
     {
         name: "Frontend Development",
         progress: 75,
-        description: "React, Next.js, Jinja, TypeScript, JavaScript, Tailwind CSS",
+        description: "React, Next.js, Jinja, TypeScript, JavaScript, Tailwind CSS, Shadcn UI",
     },
     {name: "DevOps", progress: 80, description: "Docker, AWS, CI/CD"},
     {name: "UI/UX Design", progress: 60, description: "Figma, Adobe XD"},
