@@ -29,7 +29,7 @@ const projects = [
     image: "/capturegame.png?height=300&width=600",
     tags: ["Python", "FastAPI", "MongoDB"],
     github: "/CaptureGame",
-    demo: "https:/www.capturega.me",
+    demo: "https://www.capturega.me",
   },
   {
     title: "TamaGen",
@@ -38,7 +38,7 @@ const projects = [
       "https://github.com/DogukanUrker/TamaGen/blob/main/client/public/previewImage.png?raw=true",
     tags: ["NextJS", "Python", "Flask", "Gemini API"],
     github: "/TamaGen",
-    demo: "https:tama-gen.vercel.app",
+    demo: "https://tama-gen.vercel.app",
   },
 ];
 
