@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
           Doğukan Ürker
         </h1>
 
