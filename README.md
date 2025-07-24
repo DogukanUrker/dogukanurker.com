@@ -1,6 +1,6 @@
 # ✨ Dogukan Urker
 
-![Website Preview](public/ogImage.png)
+![Website Preview](app/public/ogImage.png)
 
 **Personal website of Dogukan Urker, Software Engineer**
 
@@ -8,6 +8,6 @@
 
 ---
 
-![Shooting Star](public/shooting-star-bg-desktop.png)
+![Shooting Star](app/public/shooting-star-bg-desktop.png)
 
 *Built with Next.js & TypeScript* 
