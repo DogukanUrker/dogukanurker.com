@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     title: "Doğukan",
     description:
         "The personal website of Doğukan Ürker, a full-stack developer focusing on Python, TypeScript, and modern web apps.",
+    themeColor: "#000000",
     keywords: [
         "Doğukan Ürker",
         "developer",
