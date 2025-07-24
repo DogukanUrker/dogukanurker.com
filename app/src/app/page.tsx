@@ -56,8 +56,8 @@ export default function HomePage() {
           <nav className="flex flex-col items-end gap-2">
             {[
               { name: "github", url: "https://github.com/dogukanurker" },
-              { name: "linkedin", url: "https://linkedin.com/in/dogukanurker" },
               { name: "twitter", url: "https://twitter.com/dogukanurker" },
+              { name: "linkedin", url: "https://linkedin.com/in/dogukanurker" },
               { name: "resume", url: "/cv.pdf" },
             ].map((link, index) => (
               <a
