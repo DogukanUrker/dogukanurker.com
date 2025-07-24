@@ -30,7 +30,7 @@ export default function HomePage() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
 
-      <div className="absolute bottom-12 right-12 text-right">
+      <div className="absolute top-12 right-6 lg:top-auto lg:bottom-12 lg:right-12 text-right">
         <div
           className={`transition-all duration-1500 lg:scale-110 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
