@@ -85,9 +85,11 @@ export default function Home() {
 
         // ---------------------------
         // Blend Layers: animation at 50% opacity over image.
-        // Boost brightness so output isn't pitch black.
+        // Convert to grayscale (white) by averaging channels
         // ---------------------------
-        vec4 finalColor = mix(o_bg, o_anim, 0.5) * 1.5;
+        vec4 blended = mix(o_bg, o_anim, 0.5) * 1.5;
+        float gray = (blended.r + blended.g + blended.b) / 3.0;
+        vec4 finalColor = vec4(gray, gray, gray, 1.0);
         finalColor = clamp(finalColor, 0.0, 1.0);
         gl_FragColor = finalColor;
       }
