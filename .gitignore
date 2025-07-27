@@ -42,3 +42,4 @@ next-env.d.ts
 token.txt
 .idea
 app/const.ts
+app/bun.lock
