@@ -134,6 +134,15 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const headersList = await headers();
 
+    // Filter out Vercel screenshot service
+    const userAgent = body.userAgent || headersList.get("user-agent") || "";
+    if (userAgent === "vercel-screenshot/1.0") {
+      return NextResponse.json(
+        { success: true, action: "filtered" },
+        { status: 200 },
+      );
+    }
+
     // Check if this is an update request
     const isUpdate = body.isUpdate === true;
     const pageId = body.pageId;
