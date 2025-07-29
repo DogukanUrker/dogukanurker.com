@@ -25,11 +25,7 @@ interface AnalyticsData {
     name: string;
     version: string;
   };
-  device: {
-    type: string;
-    vendor: string | null;
-    model: string | null;
-  };
+  device: string;
 
   // Screen Information
   screenResolution: string;
@@ -39,8 +35,6 @@ interface AnalyticsData {
   // Location Information
   ipAddress: string | null;
   country: string | null;
-  city: string | null;
-  region: string | null;
 
   // Performance Metrics
   pageLoadTime: number | null;
@@ -98,18 +92,41 @@ function parseUserAgent(ua: string) {
   }
 
   // Device type detection
-  const device = {
-    type: "Desktop",
-    vendor: null as string | null,
-    model: null as string | null,
-  };
+  let device = "Desktop"; // Default to Desktop
   if (ua.includes("Mobile")) {
-    device.type = "Mobile";
+    device = "Mobile";
   } else if (ua.includes("Tablet")) {
-    device.type = "Tablet";
+    device = "Tablet";
   }
 
   return { browser, os, device };
+}
+
+async function getCountryFromIP(ip: string | null): Promise<string | null> {
+  if (
+    !ip ||
+    ip === "127.0.0.1" ||
+    ip === "::1" ||
+    ip.startsWith("192.168.") ||
+    ip.startsWith("10.") ||
+    ip.startsWith("172.")
+  ) {
+    return null; // Skip local/private IPs
+  }
+
+  try {
+    const response = await fetch(`http://ip-api.com/json/${ip}?fields=country`);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    return data.country || null;
+  } catch (error) {
+    console.warn("Failed to get country from IP:", error);
+    return null;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -130,7 +147,9 @@ export async function POST(req: NextRequest) {
     // Connect to MongoDB
     const client = await getClientPromise();
     const db = client.db(process.env.MONGODB_DB_NAME || "personal-website");
-    const collection = db.collection("analytics");
+    const collection = db.collection(
+      process.env.MONGODB_COLLECTION_NAME || "analytics",
+    );
 
     if (isUpdate && pageId) {
       // Update existing document with timeOnPage
@@ -152,6 +171,9 @@ export async function POST(req: NextRequest) {
       // Parse user agent
       const userAgent = body.userAgent || headersList.get("user-agent") || "";
       const { browser, os, device } = parseUserAgent(userAgent);
+
+      // Get country from IP address
+      const country = await getCountryFromIP(ipAddress);
 
       // Prepare analytics data for new entry
       const analyticsData: AnalyticsData = {
@@ -179,9 +201,7 @@ export async function POST(req: NextRequest) {
 
         // Location Information
         ipAddress,
-        country: body.country || null,
-        city: body.city || null,
-        region: body.region || null,
+        country,
 
         // Performance Metrics
         pageLoadTime: body.pageLoadTime,
@@ -228,7 +248,9 @@ export async function GET(req: NextRequest) {
 
     const client = await getClientPromise();
     const db = client.db(process.env.MONGODB_DB_NAME || "personal-website");
-    const collection = db.collection("analytics");
+    const collection = db.collection(
+      process.env.MONGODB_COLLECTION_NAME || "analytics",
+    );
 
     // Get date ranges
     const now = new Date();
@@ -289,7 +311,7 @@ export async function GET(req: NextRequest) {
       // Device type stats
       collection
         .aggregate([
-          { $group: { _id: "$device.type", count: { $sum: 1 } } },
+          { $group: { _id: "$device", count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ])
         .toArray(),
@@ -410,11 +432,23 @@ export async function GET(req: NextRequest) {
           timeOnPage: 1,
           browser: 1,
           device: 1,
-          country: 1,
-          city: 1,
         })
         .toArray(),
     ]);
+
+    // Country stats - separate query to keep it simple
+    const countryStats = await collection
+      .aggregate([
+        {
+          $match: {
+            country: { $exists: true, $ne: null },
+          },
+        },
+        { $group: { _id: "$country", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ])
+      .toArray();
 
     return NextResponse.json({
       overview: {
@@ -444,6 +478,7 @@ export async function GET(req: NextRequest) {
         languages: languageStats,
         hourlyPattern: hourlyTraffic,
         darkModeUsers: darkModeStats,
+        countries: countryStats,
       },
       recentVisits: recentVisits.map((v) => ({
         ...v,

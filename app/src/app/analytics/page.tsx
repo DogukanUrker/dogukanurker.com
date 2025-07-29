@@ -19,6 +19,7 @@ import {
   ExternalLink,
   Timer,
   RefreshCw,
+  Flag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -50,15 +51,14 @@ interface AnalyticsData {
     languages: Array<{ _id: string; count: number }>;
     hourlyPattern: Array<{ _id: number; count: number }>;
     darkModeUsers: Array<{ _id: boolean; count: number }>;
+    countries: Array<{ _id: string; count: number }>;
   };
   recentVisits: Array<{
     timestamp: string;
     path: string;
     timeOnPage: number;
     browser: { name: string; version: string };
-    device: { type: string };
-    country: string | null;
-    city: string | null;
+    device: string;
   }>;
 }
 
@@ -85,7 +85,7 @@ export default function AnalyticsPage() {
 
   const refreshData = async () => {
     if (!password) return;
-    
+
     setRefreshing(true);
     try {
       const response = await fetch("/api/analytics", {
@@ -204,8 +204,10 @@ export default function AnalyticsPage() {
             disabled={refreshing}
             className="flex items-center gap-2"
           >
-            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-            {refreshing ? 'Refreshing...' : 'Refresh'}
+            <RefreshCw
+              className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
+            />
+            {refreshing ? "Refreshing..." : "Refresh"}
           </Button>
           <Button
             variant="outline"
@@ -538,6 +540,31 @@ export default function AnalyticsPage() {
         </Card>
       </div>
 
+      {/* Countries */}
+      {data.traffic.countries && data.traffic.countries.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Flag className="h-4 w-4" />
+              Top Countries
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {data.traffic.countries.slice(0, 10).map((country) => (
+                <div
+                  key={country._id}
+                  className="flex items-center justify-between"
+                >
+                  <span className="font-medium">{country._id}</span>
+                  <Badge variant="secondary">{country.count} visits</Badge>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Referrers */}
       {data.traffic.referrers.length > 0 && (
         <Card>
@@ -648,7 +675,7 @@ export default function AnalyticsPage() {
                         {visit.path === "/" ? "Home" : visit.path}
                       </span>
                       <Badge variant="outline" className="text-xs">
-                        {visit.device.type}
+                        {visit.device}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {visit.browser.name}
@@ -657,9 +684,6 @@ export default function AnalyticsPage() {
                     <p className="text-sm text-muted-foreground">
                       {visitDate.toLocaleString()} •{" "}
                       {formatDuration(visit.timeOnPage)}
-                      {visit.city &&
-                        visit.country &&
-                        ` • ${visit.city}, ${visit.country}`}
                     </p>
                   </div>
                 </div>
