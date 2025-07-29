@@ -18,6 +18,7 @@ import {
   Sun,
   ExternalLink,
   Timer,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -80,6 +81,29 @@ export default function AnalyticsPage() {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refreshData = async () => {
+    if (!password) return;
+    
+    setRefreshing(true);
+    try {
+      const response = await fetch("/api/analytics", {
+        headers: {
+          Authorization: `Bearer ${password}`,
+        },
+      });
+
+      if (response.ok) {
+        const analyticsData = await response.json();
+        setData(analyticsData);
+      }
+    } catch {
+      // Silently fail for auto refresh
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,16 +196,28 @@ export default function AnalyticsPage() {
     <div className="container mx-auto py-10 space-y-8">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Analytics Dashboard</h1>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setIsAuthenticated(false);
-            sessionStorage.removeItem("analytics_auth");
-            setPassword("");
-          }}
-        >
-          Logout
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refreshData}
+            disabled={refreshing}
+            className="flex items-center gap-2"
+          >
+            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+            {refreshing ? 'Refreshing...' : 'Refresh'}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setIsAuthenticated(false);
+              sessionStorage.removeItem("analytics_auth");
+              setPassword("");
+            }}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
 
       {/* Overview Cards */}
