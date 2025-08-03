@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -854,9 +855,11 @@ export default function AnalyticsPage() {
                       >
                         <div className="flex items-center gap-2 md:gap-3 min-w-0">
                           {favicon && (
-                            <img
+                            <Image
                               src={favicon}
                               alt=""
+                              width={16}
+                              height={16}
                               className="w-4 h-4 rounded flex-shrink-0"
                             />
                           )}
