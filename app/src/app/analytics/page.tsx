@@ -288,39 +288,39 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
       <div className="container mx-auto py-4 md:py-8 space-y-6 md:space-y-8 px-4 md:px-6 max-w-[1400px]">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-          <div className="min-w-0">
-            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold tracking-tight">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
               Analytics Dashboard
             </h1>
-            <p className="text-muted-foreground mt-1 text-xs sm:text-sm md:text-base">
+            <p className="text-muted-foreground mt-1 text-sm md:text-base">
               Real-time insights and metrics
             </p>
           </div>
-          <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 xs:gap-2 w-full xs:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2">
             <Button
               variant="outline"
-              size="default"
-              className="sm:size-sm min-h-[44px] xs:min-h-0"
+              size="sm"
+              className="w-full sm:w-auto py-2.5 sm:py-1.5"
               onClick={refreshData}
               disabled={refreshing}
             >
               <RefreshCw
                 className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`}
               />
-              Refresh
+              <span className="sm:inline">Refresh</span>
             </Button>
             <Button
               variant="ghost"
-              size="default"
-              className="sm:size-sm min-h-[44px] xs:min-h-0"
+              size="sm"
+              className="w-full sm:w-auto py-2.5 sm:py-1.5"
               onClick={() => {
                 setIsAuthenticated(false);
                 sessionStorage.removeItem("analytics_auth");
                 setPassword("");
               }}
             >
-              Sign Out
+              <span className="sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>
