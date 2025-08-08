@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Card,
@@ -36,6 +36,7 @@ import {
   CheckCircle2,
   ArrowUp,
   ArrowDown,
+  ArrowRight,
   Activity,
   BarChart3,
   MousePointer,
@@ -47,6 +48,15 @@ import {
   MapPin,
   Languages,
   Maximize2,
+  UserCheck,
+  UserPlus,
+  TrendingDown,
+  LogOut,
+  Repeat,
+  Calendar,
+  CircleDot,
+  GitBranch,
+  Navigation,
 } from "lucide-react";
 
 interface AnalyticsData {
@@ -60,17 +70,35 @@ interface AnalyticsData {
     avgPageLoadTime: number;
     minPageLoadTime: number;
     maxPageLoadTime: number;
+    bounceRate: number;
+    newUsers: number;
+    returningUsers: number;
+    activeSessions: number;
+    yesterdayViews: number;
+    lastWeekViews: number;
+    avgSessionDuration: number;
+    pagesPerSession: number;
   };
   topPages: Array<{
     path: string;
     views: number;
     avgTimeOnPage: number;
+    bounceRate: number;
+    exitRate: number;
+    uniqueVisitors: number;
+  }>;
+  exitPages: Array<{
+    path: string;
+    exits: number;
+    exitRate: number;
   }>;
   devices: {
     types: Array<{ _id: string; count: number }>;
     browsers: Array<{ _id: { name: string; version: string }; count: number }>;
     os: Array<{ _id: { name: string; version: string }; count: number }>;
     screenResolutions: Array<{ _id: string; count: number }>;
+    viewportSizes: Array<{ _id: string; count: number }>;
+    colorDepths: Array<{ _id: number; count: number }>;
   };
   traffic: {
     referrers: Array<{ _id: string; count: number }>;
@@ -78,14 +106,44 @@ interface AnalyticsData {
     hourlyPattern: Array<{ _id: number; count: number }>;
     darkModeUsers: Array<{ _id: boolean; count: number }>;
     countries: Array<{ _id: string; count: number }>;
+    cities: Array<{ _id: string; country: string; count: number }>;
+    timezones: Array<{ _id: string; count: number }>;
+    dayOfWeekPattern: Array<{ _id: number; count: number }>;
   };
+  userFlow: Array<{
+    from: string;
+    to: string;
+    count: number;
+  }>;
+  sessionPaths: Array<{
+    path: string[];
+    count: number;
+    avgDuration: number;
+  }>;
   recentVisits: Array<{
     timestamp: string;
     path: string;
     timeOnPage: number;
     browser: { name: string; version: string };
     device: string;
+    userId: string;
+    sessionId: string;
+    country?: string;
+    city?: string;
+    isNewUser: boolean;
   }>;
+  performanceMetrics: {
+    byPage: Array<{
+      path: string;
+      avgLoadTime: number;
+      p75LoadTime: number;
+      p95LoadTime: number;
+    }>;
+    byCountry: Array<{
+      country: string;
+      avgLoadTime: number;
+    }>;
+  };
 }
 
 function formatDuration(ms: number): string {
@@ -326,6 +384,20 @@ export default function AnalyticsPage() {
             </Button>
           </div>
         </div>
+        {/* Real-time Active Users Badge */}
+        {data.overview.activeSessions > 0 && (
+          <div className="mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full">
+              <CircleDot className="h-3 w-3 text-green-500 animate-pulse" />
+              <span className="text-sm font-medium">
+                {data.overview.activeSessions} active{" "}
+                {data.overview.activeSessions === 1 ? "user" : "users"} right
+                now
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-200">
             <CardHeader className="pb-3">
@@ -400,21 +472,194 @@ export default function AnalyticsPage() {
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Avg Time on Page
+                  Bounce Rate
                 </CardTitle>
-                <Clock className="h-4 w-4 text-orange-500" />
+                <TrendingDown className="h-4 w-4 text-orange-500" />
               </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl md:text-3xl font-bold">
-                {formatDuration(Math.round(data.overview.avgTimeOnPage))}
+                {data.overview.bounceRate?.toFixed(1) || "0"}%
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                User engagement time
+                Single page sessions
               </p>
             </CardContent>
           </Card>
         </div>
+        {/* New vs Returning Users Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <Card className="border-0 shadow-sm">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium">New Users</CardTitle>
+                <UserPlus className="h-4 w-4 text-green-500" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xl md:text-2xl font-bold">
+                {data.overview.newUsers || 0}
+              </div>
+              <div className="flex items-center gap-1 mt-1">
+                <span className="text-xs text-muted-foreground">
+                  {data.overview.uniqueVisitors > 0
+                    ? `${((data.overview.newUsers / data.overview.uniqueVisitors) * 100).toFixed(0)}%`
+                    : "0%"}{" "}
+                  of total
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Viewport vs Screen Resolution */}
+          {data.devices.viewportSizes &&
+            data.devices.viewportSizes.length > 0 && (
+              <Card className="border-0 shadow-sm">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg md:text-xl font-semibold">
+                        Viewport vs Screen
+                      </CardTitle>
+                      <CardDescription>
+                        Actual window sizes vs screens
+                      </CardDescription>
+                    </div>
+                    <Maximize2 className="h-5 w-5 text-muted-foreground hidden sm:block" />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-sm font-medium mb-3">
+                        Top Viewports
+                      </h4>
+                      <div className="space-y-2">
+                        {data.devices.viewportSizes.slice(0, 3).map((vp) => {
+                          const totalViewports =
+                            data.devices.viewportSizes.reduce(
+                              (sum, v) => sum + v.count,
+                              0,
+                            );
+                          const percentage = (vp.count / totalViewports) * 100;
+                          return (
+                            <div
+                              key={vp._id}
+                              className="flex items-center justify-between"
+                            >
+                              <span className="font-mono text-sm">
+                                {vp._id}
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <Progress
+                                  value={percentage}
+                                  className="w-20 h-2"
+                                />
+                                <span className="text-xs text-muted-foreground">
+                                  {percentage.toFixed(0)}%
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t">
+                      <h4 className="text-sm font-medium mb-3">Top Screens</h4>
+                      <div className="space-y-2">
+                        {data.devices.screenResolutions
+                          .slice(0, 3)
+                          .map((screen) => {
+                            const percentage =
+                              (screen.count / totalScreens) * 100;
+                            return (
+                              <div
+                                key={screen._id}
+                                className="flex items-center justify-between"
+                              >
+                                <span className="font-mono text-sm">
+                                  {screen._id}
+                                </span>
+                                <div className="flex items-center gap-2">
+                                  <Progress
+                                    value={percentage}
+                                    className="w-20 h-2"
+                                  />
+                                  <span className="text-xs text-muted-foreground">
+                                    {percentage.toFixed(0)}%
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+          <Card className="border-0 shadow-sm">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium">
+                  Returning Users
+                </CardTitle>
+                <UserCheck className="h-4 w-4 text-blue-500" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xl md:text-2xl font-bold">
+                {data.overview.returningUsers || 0}
+              </div>
+              <div className="flex items-center gap-1 mt-1">
+                <span className="text-xs text-muted-foreground">
+                  {data.overview.uniqueVisitors > 0
+                    ? `${((data.overview.returningUsers / data.overview.uniqueVisitors) * 100).toFixed(0)}%`
+                    : "0%"}{" "}
+                  retention
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium">
+                  Avg Session Time
+                </CardTitle>
+                <Clock className="h-4 w-4 text-purple-500" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xl md:text-2xl font-bold">
+                {formatDuration(data.overview.avgSessionDuration || 0)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Per session</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm">
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium">
+                  Pages/Session
+                </CardTitle>
+                <Repeat className="h-4 w-4 text-indigo-500" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xl md:text-2xl font-bold">
+                {data.overview.pagesPerSession?.toFixed(1) || "0"}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Avg page views
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <Card className="border-0 shadow-sm">
             <CardHeader className="pb-2">
@@ -546,9 +791,21 @@ export default function AnalyticsPage() {
                           <p className="font-medium text-sm md:text-base">
                             {page.path === "/" ? "Homepage" : page.path}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">
-                            Average time: {formatDuration(page.avgTimeOnPage)}
-                          </p>
+                          <div className="flex items-center gap-3 mt-1">
+                            <span className="text-xs text-muted-foreground">
+                              {formatDuration(page.avgTimeOnPage)} avg
+                            </span>
+                            {page.bounceRate !== undefined && (
+                              <span className="text-xs text-muted-foreground">
+                                {page.bounceRate.toFixed(0)}% bounce
+                              </span>
+                            )}
+                            {page.uniqueVisitors !== undefined && (
+                              <span className="text-xs text-muted-foreground">
+                                {page.uniqueVisitors} unique
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                       <div className="text-right ml-10 sm:ml-0">
@@ -567,6 +824,145 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
+        {/* Session Paths */}
+        {data.sessionPaths && data.sessionPaths.length > 0 && (
+          <Card className="border-0 shadow-sm">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg md:text-xl font-semibold">
+                    Common User Journeys
+                  </CardTitle>
+                  <CardDescription>
+                    Most frequent navigation patterns
+                  </CardDescription>
+                </div>
+                <Navigation className="h-5 w-5 text-muted-foreground hidden sm:block" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {data.sessionPaths.slice(0, 5).map((session, index) => (
+                  <div
+                    key={index}
+                    className="p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant={index === 0 ? "default" : "secondary"}>
+                        {session.count} sessions
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {formatDuration(session.avgDuration)} avg
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {session.path.map((page, pageIndex) => (
+                        <React.Fragment key={pageIndex}>
+                          <span className="text-xs font-medium px-2 py-1 bg-background rounded">
+                            {page === "/" ? "Home" : page}
+                          </span>
+                          {pageIndex < session.path.length - 1 && (
+                            <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* User Flow Visualization */}
+        {data.userFlow && data.userFlow.length > 0 && (
+          <Card className="border-0 shadow-sm">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg md:text-xl font-semibold">
+                    User Flow
+                  </CardTitle>
+                  <CardDescription>
+                    Most common navigation paths
+                  </CardDescription>
+                </div>
+                <GitBranch className="h-5 w-5 text-muted-foreground hidden sm:block" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {data.userFlow.slice(0, 10).map((flow, index) => (
+                  <div
+                    key={`${flow.from}-${flow.to}-${index}`}
+                    className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 flex-1">
+                      <span className="text-sm font-medium max-w-[150px] truncate">
+                        {flow.from === "/" ? "Home" : flow.from}
+                      </span>
+                      <ArrowRight className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                      <span className="text-sm font-medium max-w-[150px] truncate">
+                        {flow.to === "/" ? "Home" : flow.to}
+                      </span>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">
+                      {flow.count} users
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Exit Pages */}
+        {data.exitPages && data.exitPages.length > 0 && (
+          <Card className="border-0 shadow-sm">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg md:text-xl font-semibold">
+                    Exit Pages
+                  </CardTitle>
+                  <CardDescription>Where users leave your site</CardDescription>
+                </div>
+                <LogOut className="h-5 w-5 text-muted-foreground hidden sm:block" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {data.exitPages.slice(0, 5).map((page, index) => (
+                  <div key={page.path} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
+                          ${index === 0 ? "bg-red-500/20 text-red-600" : "bg-muted text-muted-foreground"}`}
+                        >
+                          {index + 1}
+                        </div>
+                        <span className="font-medium text-sm">
+                          {page.path === "/" ? "Homepage" : page.path}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm font-semibold">
+                          {page.exitRate.toFixed(1)}%
+                        </span>
+                        <span className="text-xs text-muted-foreground ml-2">
+                          ({page.exits} exits)
+                        </span>
+                      </div>
+                    </div>
+                    <Progress value={page.exitRate} className="h-2" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -657,6 +1053,65 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
+        {/* Day of Week Pattern */}
+        {data.traffic.dayOfWeekPattern &&
+          data.traffic.dayOfWeekPattern.length > 0 && (
+            <Card className="border-0 shadow-sm">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-lg md:text-xl font-semibold">
+                      Weekly Pattern
+                    </CardTitle>
+                    <CardDescription>
+                      Traffic distribution by day of week
+                    </CardDescription>
+                  </div>
+                  <Calendar className="h-5 w-5 text-muted-foreground hidden sm:block" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-7 gap-2">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                    (day, index) => {
+                      const dayData = data.traffic.dayOfWeekPattern.find(
+                        (d) => d._id === index,
+                      );
+                      const count = dayData?.count || 0;
+                      const maxDayTraffic = Math.max(
+                        ...data.traffic.dayOfWeekPattern.map((d) => d.count),
+                        1,
+                      );
+                      const percentage = (count / maxDayTraffic) * 100;
+                      const isWeekend = index === 0 || index === 6;
+
+                      return (
+                        <div key={day} className="text-center">
+                          <div className="text-xs font-medium mb-2 text-muted-foreground">
+                            {day}
+                          </div>
+                          <div
+                            className={`relative h-24 bg-muted/30 rounded-lg overflow-hidden hover:bg-muted/50 transition-colors
+                          ${isWeekend ? "ring-1 ring-blue-500/20" : ""}`}
+                          >
+                            <div
+                              className={`absolute bottom-0 left-0 right-0 transition-all duration-500
+                            ${percentage > 75 ? "bg-green-500" : percentage > 50 ? "bg-blue-500" : "bg-muted-foreground/50"}`}
+                              style={{ height: `${percentage}%` }}
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-xs font-bold">{count}</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -767,6 +1222,63 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
+        {/* Performance Metrics by Page */}
+        {data.performanceMetrics?.byPage &&
+          data.performanceMetrics.byPage.length > 0 && (
+            <Card className="border-0 shadow-sm">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-lg md:text-xl font-semibold">
+                      Page Performance
+                    </CardTitle>
+                    <CardDescription>
+                      Load times by page (P50, P75, P95)
+                    </CardDescription>
+                  </div>
+                  <Zap className="h-5 w-5 text-muted-foreground hidden sm:block" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {data.performanceMetrics.byPage.slice(0, 5).map((page) => (
+                    <div key={page.path} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-sm">
+                          {page.path === "/" ? "Homepage" : page.path}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-xs">
+                        <div className="flex items-center gap-1">
+                          <span className="text-muted-foreground">P50:</span>
+                          <span className="font-mono font-medium text-green-600">
+                            {formatLoadTime(page.avgLoadTime)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-muted-foreground">P75:</span>
+                          <span className="font-mono font-medium text-yellow-600">
+                            {formatLoadTime(page.p75LoadTime)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-muted-foreground">P95:</span>
+                          <span className="font-mono font-medium text-red-600">
+                            {formatLoadTime(page.p95LoadTime)}
+                          </span>
+                        </div>
+                      </div>
+                      <Progress
+                        value={Math.min((2000 / page.avgLoadTime) * 100, 100)}
+                        className="h-1"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -783,35 +1295,69 @@ export default function AnalyticsPage() {
               </div>
             </CardHeader>
             <CardContent>
-              {data.traffic.countries.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  No geographic data available
-                </p>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                  {data.traffic.countries.slice(0, 10).map((country, index) => (
-                    <div
-                      key={country._id}
-                      className="flex items-center justify-between p-2 md:p-3 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs md:text-sm font-medium">
-                          {index + 1}.
-                        </span>
-                        <span className="font-medium text-sm md:text-base">
-                          {country._id}
-                        </span>
-                      </div>
-                      <Badge
-                        variant={index < 3 ? "default" : "secondary"}
-                        className="text-xs"
-                      >
-                        {country.count}
-                      </Badge>
+              <div className="space-y-4">
+                {data.traffic.countries.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    No geographic data available
+                  </p>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
+                      {data.traffic.countries
+                        .slice(0, 6)
+                        .map((country, index) => (
+                          <div
+                            key={country._id}
+                            className="flex items-center justify-between p-2 md:p-3 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs md:text-sm font-medium">
+                                {index + 1}.
+                              </span>
+                              <span className="font-medium text-sm md:text-base">
+                                {country._id}
+                              </span>
+                            </div>
+                            <Badge
+                              variant={index < 3 ? "default" : "secondary"}
+                              className="text-xs"
+                            >
+                              {country.count}
+                            </Badge>
+                          </div>
+                        ))}
                     </div>
-                  ))}
-                </div>
-              )}
+
+                    {/* Cities breakdown */}
+                    {data.traffic.cities && data.traffic.cities.length > 0 && (
+                      <div className="mt-4 pt-4 border-t">
+                        <h4 className="text-sm font-medium mb-3 text-muted-foreground">
+                          Top Cities
+                        </h4>
+                        <div className="space-y-2">
+                          {data.traffic.cities.slice(0, 5).map((city) => (
+                            <div
+                              key={city._id}
+                              className="flex items-center justify-between text-sm"
+                            >
+                              <span className="flex items-center gap-2">
+                                <CircleDot className="h-2 w-2" />
+                                <span>{city._id}</span>
+                                <span className="text-muted-foreground text-xs">
+                                  {city.country}
+                                </span>
+                              </span>
+                              <Badge variant="outline" className="text-xs">
+                                {city.count}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </CardContent>
           </Card>
 
@@ -920,6 +1466,40 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
+        {/* Timezones Distribution */}
+        {data.traffic.timezones && data.traffic.timezones.length > 0 && (
+          <Card className="border-0 shadow-sm">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg md:text-xl font-semibold">
+                    Timezone Distribution
+                  </CardTitle>
+                  <CardDescription>Global audience spread</CardDescription>
+                </div>
+                <Globe className="h-5 w-5 text-muted-foreground hidden sm:block" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {data.traffic.timezones.slice(0, 8).map((tz) => (
+                  <div
+                    key={tz._id}
+                    className="flex items-center justify-between p-2 bg-muted/30 rounded-lg text-sm"
+                  >
+                    <span className="font-mono text-xs truncate mr-2">
+                      {tz._id}
+                    </span>
+                    <Badge variant="secondary" className="text-xs">
+                      {tz.count}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -1010,6 +1590,9 @@ export default function AnalyticsPage() {
                       <TableHead className="font-semibold text-xs md:text-sm">
                         Browser
                       </TableHead>
+                      <TableHead className="font-semibold text-xs md:text-sm">
+                        Location
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1062,6 +1645,22 @@ export default function AnalyticsPage() {
                               <span className="text-xs md:text-sm">
                                 {visit.browser.name} {visit.browser.version}
                               </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="text-xs">
+                              {visit.city && visit.country ? (
+                                <div className="flex flex-col">
+                                  <span>{visit.city}</span>
+                                  <span className="text-muted-foreground">
+                                    {visit.country}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  Unknown
+                                </span>
+                              )}
                             </div>
                           </TableCell>
                         </TableRow>
