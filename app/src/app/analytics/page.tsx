@@ -1030,9 +1030,7 @@ export default function AnalyticsPage() {
                 <CardTitle className="text-lg md:text-xl font-semibold">
                   24-Hour Traffic Pattern
                 </CardTitle>
-                <CardDescription>
-                  Activity distribution by hour (GMT)
-                </CardDescription>
+                <CardDescription>Activity distribution by hour</CardDescription>
               </div>
               <Timer className="h-5 w-5 text-muted-foreground hidden sm:block" />
             </div>
@@ -1047,6 +1045,7 @@ export default function AnalyticsPage() {
                 const percentage = (count / maxHourlyTraffic) * 100;
                 const isActive = percentage > 50;
                 const isPeak = percentage > 75;
+                const istanbulHour = (hour + 3) % 24;
 
                 return (
                   <div
@@ -1054,7 +1053,7 @@ export default function AnalyticsPage() {
                     className="flex items-center gap-2 md:gap-3 group"
                   >
                     <span className="text-xs font-mono w-8 md:w-10 text-muted-foreground group-hover:text-foreground transition-colors">
-                      {hour.toString().padStart(2, "0")}:00
+                      {istanbulHour.toString().padStart(2, "0")}:00
                     </span>
                     <div className="flex-1 relative h-5 md:h-6 bg-muted/50 rounded overflow-hidden group-hover:bg-muted/70 transition-colors">
                       <div
