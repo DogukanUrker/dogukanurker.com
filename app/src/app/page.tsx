@@ -42,7 +42,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-gray-300 text-sm mb-6 opacity-80">
-            software engineer{" "}
+            full-stack engineer{" "}
             <a
               href="https://sensity.ai"
               target="_blank"
