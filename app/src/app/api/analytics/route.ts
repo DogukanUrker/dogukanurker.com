@@ -434,7 +434,6 @@ export async function GET(req: NextRequest) {
       collection
         .find({})
         .sort({ timestamp: -1 })
-        .limit(20)
         .project({
           timestamp: 1,
           path: 1,
