@@ -178,6 +178,26 @@ function calculateTrend(
   return { value: Math.abs(percentChange), isPositive: percentChange >= 0 };
 }
 
+function getFirstDataDate(data: AnalyticsData): string {
+  if (!data.recentVisits || data.recentVisits.length === 0) {
+    return "No data available";
+  }
+
+  const earliestTimestamp = data.recentVisits
+    .map((visit) => new Date(visit.timestamp))
+    .reduce((earliest, current) => (current < earliest ? current : earliest));
+
+  return earliestTimestamp.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Istanbul",
+  });
+}
+
 export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -347,6 +367,9 @@ export default function AnalyticsPage() {
             </h1>
             <p className="text-muted-foreground mt-1 text-sm md:text-base">
               Real-time insights and metrics
+            </p>
+            <p className="text-muted-foreground/70 text-xs md:text-sm mt-1">
+              Data since {getFirstDataDate(data)}
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2">
