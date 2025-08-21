@@ -1104,13 +1104,13 @@ export default function AnalyticsPage() {
         </Card>
         {/* Hourly Traffic Pattern - End */}
 
-        {/* Recent Activity - Start */}
+        {/* All Activity - Start */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-lg md:text-xl font-semibold">
-                  Recent Activity
+                  All Activity
                 </CardTitle>
                 <CardDescription>Complete visitor log</CardDescription>
               </div>
@@ -1220,7 +1220,7 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
-        {/* Recent Activity - End */}
+        {/* All Activity - End */}
       </div>
     </div>
   );
