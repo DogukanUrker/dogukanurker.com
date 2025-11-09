@@ -7,6 +7,7 @@ import { TableOfContents } from "@/components/article/TableOfContents";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { ShareButton } from "@/components/article/ShareButton";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
+import { CodeBlock } from "@/components/mdx/CodeBlock";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -55,12 +56,7 @@ const components = {
       {...props}
     />
   ),
-  pre: (props: any) => (
-    <pre
-      className="my-6 overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900 p-4 text-sm"
-      {...props}
-    />
-  ),
+  pre: (props: any) => <CodeBlock {...props} />,
   code: (props: any) => {
     // Inline code
     if (!props.className) {
