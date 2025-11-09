@@ -359,7 +359,6 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
       <div className="container mx-auto py-4 md:py-8 space-y-6 md:space-y-8 px-4 md:px-6 max-w-[1400px]">
-        {/* Header - Start */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
@@ -399,9 +398,7 @@ export default function AnalyticsPage() {
             </Button>
           </div>
         </div>
-        {/* Header - End */}
 
-        {/* Primary Stats - Start */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-200">
             <CardHeader className="pb-3">
@@ -489,9 +486,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
-        {/* Primary Stats - End */}
 
-        {/* Secondary Stats - Start */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <Card className="border-0 shadow-sm">
             <CardHeader className="pb-2">
@@ -582,9 +577,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
-        {/* Secondary Stats - End */}
 
-        {/* Top Pages - Start */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -647,9 +640,7 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
-        {/* Top Pages - End */}
 
-        {/* Device & Browser Distribution - Start */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -740,9 +731,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
-        {/* Device & Browser Distribution - End */}
 
-        {/* OS, Screen & Theme - Start */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -853,9 +842,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
-        {/* OS, Screen & Theme - End */}
 
-        {/* Geographic & Traffic Sources - Start */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <Card className="border-0 shadow-sm">
             <CardHeader>
@@ -1002,9 +989,7 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
         </div>
-        {/* Geographic & Traffic Sources - End */}
 
-        {/* Languages - Start */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -1043,9 +1028,7 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
-        {/* Languages - End */}
 
-        {/* Hourly Traffic Pattern - Start */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -1102,9 +1085,7 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
-        {/* Hourly Traffic Pattern - End */}
 
-        {/* All Activity - Start */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -1220,7 +1201,6 @@ export default function AnalyticsPage() {
             </div>
           </CardContent>
         </Card>
-        {/* All Activity - End */}
       </div>
     </div>
   );

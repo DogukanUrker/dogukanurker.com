@@ -13,10 +13,8 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Metadata } from "next";
 
-// MDX Components
 const components = {
   ImageWithCaption,
-  // Style default elements
   h1: (props: any) => (
     <h1 className="mb-6 mt-8 text-4xl font-bold text-zinc-100" {...props} />
   ),
@@ -55,7 +53,6 @@ const components = {
   ),
   pre: (props: any) => <CodeBlock {...props} />,
   code: (props: any) => {
-    // Inline code
     if (!props.className) {
       return (
         <code
@@ -64,7 +61,6 @@ const components = {
         />
       );
     }
-    // Code block (handled by pre)
     return <code {...props} />;
   },
   table: (props: any) => (
@@ -137,12 +133,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="min-h-screen bg-zinc-950">
-      {/* Reading Progress Bar */}
       <ReadingProgress />
       
-      {/* Content Container */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Navigation Bar with Back and Share Buttons */}
         <div className="mb-8 flex items-center justify-between">
           <Link
             href="/article"
@@ -156,19 +149,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           />
         </div>
 
-        {/* Article Header - Centered */}
         <header className="mb-12 space-y-6 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
             {post.title}
           </h1>
 
-          {/* Meta - Combined Format */}
           <p className="text-sm text-zinc-500">
             {formatDate(post.date)} • {post.readingTime}
           </p>
         </header>
 
-        {/* Banner Image - Integrated Design */}
         {post.bannerImage && (
           <div className="mb-12">
             <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl border border-zinc-800/50 shadow-2xl">
@@ -179,17 +169,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 priority
                 className="object-cover"
               />
-              {/* Subtle gradient overlay for depth */}
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/20 to-transparent" />
             </div>
           </div>
         )}
 
-        {/* Main Content Area */}
         <div className="flex gap-12">
-          {/* Article */}
           <article className="min-w-0 flex-1">
-            {/* MDX Content */}
             <div className="prose prose-invert max-w-none">
               <MDXRemote
                 source={post.content}
@@ -215,7 +201,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
           </article>
 
-          {/* Table of Contents - Desktop Only */}
           <aside className="hidden w-64 shrink-0 xl:block">
             <TableOfContents headings={headings} />
           </aside>

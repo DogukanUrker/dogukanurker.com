@@ -17,7 +17,6 @@ export interface Repo {
 }
 
 export interface Contributor {
-  // Exporting Contributor interface
   login: string;
   avatar_url: string;
   contributions: number;

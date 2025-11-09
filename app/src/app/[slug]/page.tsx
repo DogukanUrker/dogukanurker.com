@@ -32,7 +32,6 @@ export default async function Page({ params }: PageProps) {
       return;
     }
 
-    // Fetch additional data
     const [languagesData, contributorsData] = await Promise.all([
       fetchLanguages(currentRepo.languages_url, token),
       fetchContributors(currentRepo.contributors_url, token),

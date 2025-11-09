@@ -3,19 +3,14 @@ import getClientPromise from "@/lib/mongodb";
 import { headers } from "next/headers";
 
 interface AnalyticsData {
-  // User Information
   userId: string;
   sessionId: string;
   timestamp: Date;
-  pageId: string; // Unique identifier for this page view
-
-  // Page Information
+  pageId: string;
   url: string;
   path: string;
   referrer: string | null;
   title: string;
-
-  // Device Information
   userAgent: string;
   browser: {
     name: string;
@@ -26,29 +21,20 @@ interface AnalyticsData {
     version: string;
   };
   device: string;
-
-  // Screen Information
   screenResolution: string;
   viewportSize: string;
   colorDepth: number;
-
-  // Location Information
   ipAddress: string | null;
   country: string | null;
-
-  // Performance Metrics
   pageLoadTime: number | null;
   timeOnPage: number | null;
   lastUpdated?: Date;
-
-  // Additional Context
   language: string;
   timezone: string;
   isDarkMode: boolean;
 }
 
 function parseUserAgent(ua: string) {
-  // Browser detection
   const browser = { name: "Unknown", version: "Unknown" };
   if (ua.includes("Chrome")) {
     browser.name = "Chrome";
@@ -68,7 +54,6 @@ function parseUserAgent(ua: string) {
     if (match) browser.version = match[1];
   }
 
-  // OS detection
   const os = { name: "Unknown", version: "Unknown" };
   if (ua.includes("Windows")) {
     os.name = "Windows";
@@ -91,8 +76,7 @@ function parseUserAgent(ua: string) {
     if (match) os.version = match[1];
   }
 
-  // Device type detection
-  let device = "Desktop"; // Default to Desktop
+  let device = "Desktop";
   if (ua.includes("Mobile")) {
     device = "Mobile";
   } else if (ua.includes("Tablet")) {
@@ -134,7 +118,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const headersList = await headers();
 
-    // Filter out Vercel screenshot service
     const userAgent = body.userAgent || headersList.get("user-agent") || "";
     if (userAgent === "vercel-screenshot/1.0") {
       return NextResponse.json(
@@ -143,17 +126,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if this is an update request
     const isUpdate = body.isUpdate === true;
     const pageId = body.pageId;
 
-    // Get IP address (in production, this would come from x-forwarded-for or x-real-ip)
     const ipAddress =
       headersList.get("x-forwarded-for")?.split(",")[0] ||
       headersList.get("x-real-ip") ||
       null;
 
-    // Connect to MongoDB
     const client = await getClientPromise();
     const db = client.db(process.env.MONGODB_DB_NAME || "personal-website");
     const collection = db.collection(
@@ -161,7 +141,6 @@ export async function POST(req: NextRequest) {
     );
 
     if (isUpdate && pageId) {
-      // Update existing document with timeOnPage
       await collection.updateOne(
         { pageId },
         {
@@ -177,52 +156,36 @@ export async function POST(req: NextRequest) {
         { status: 200 },
       );
     } else {
-      // Parse user agent
       const userAgent = body.userAgent || headersList.get("user-agent") || "";
       const { browser, os, device } = parseUserAgent(userAgent);
 
-      // Get country from IP address
       const country = await getCountryFromIP(ipAddress);
 
-      // Prepare analytics data for new entry
       const analyticsData: AnalyticsData = {
         userId: body.userId,
         sessionId: body.sessionId,
         timestamp: new Date(),
         pageId: body.pageId,
-
-        // Page Information
         url: body.url,
         path: body.path,
         referrer: body.referrer,
         title: body.title,
-
-        // Device Information
         userAgent,
         browser,
         os,
         device,
-
-        // Screen Information
         screenResolution: body.screenResolution,
         viewportSize: body.viewportSize,
         colorDepth: body.colorDepth,
-
-        // Location Information
         ipAddress,
         country,
-
-        // Performance Metrics
         pageLoadTime: body.pageLoadTime,
-        timeOnPage: null, // Will be updated when user leaves
-
-        // Additional Context
+        timeOnPage: null,
         language: body.language,
         timezone: body.timezone,
         isDarkMode: body.isDarkMode,
       };
 
-      // Insert new document
       await collection.insertOne(analyticsData);
 
       return NextResponse.json(
@@ -232,15 +195,12 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error("Analytics error:", error);
-    // Don't return error details to client for security
     return NextResponse.json({ success: false }, { status: 200 });
   }
 }
 
-// GET endpoint for fetching analytics with password protection
 export async function GET(req: NextRequest) {
   try {
-    // Check for password in Authorization header
     const authHeader = req.headers.get("authorization");
     const expectedPassword = process.env.ANALYTICS_PASSWORD;
 
@@ -261,13 +221,11 @@ export async function GET(req: NextRequest) {
       process.env.MONGODB_COLLECTION_NAME || "analytics",
     );
 
-    // Get date ranges
     const now = new Date();
     const todayStart = new Date(now.setHours(0, 0, 0, 0));
     const weekAgo = new Date(now.setDate(now.getDate() - 7));
     const monthAgo = new Date(now.setDate(now.getDate() - 30));
 
-    // Fetch comprehensive analytics data
     const [
       totalViews,
       uniqueVisitors,
@@ -287,22 +245,11 @@ export async function GET(req: NextRequest) {
       darkModeStats,
       recentVisits,
     ] = await Promise.all([
-      // Total views (all time)
       collection.countDocuments({}),
-
-      // Unique visitors (all time)
       collection.distinct("userId"),
-
-      // Views today
       collection.countDocuments({ timestamp: { $gte: todayStart } }),
-
-      // Views this week
       collection.countDocuments({ timestamp: { $gte: weekAgo } }),
-
-      // Views this month
       collection.countDocuments({ timestamp: { $gte: monthAgo } }),
-
-      // Top pages
       collection
         .aggregate([
           {
@@ -316,16 +263,12 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // Device type stats
       collection
         .aggregate([
           { $group: { _id: "$device", count: { $sum: 1 } } },
           { $sort: { count: -1 } },
         ])
         .toArray(),
-
-      // Browser stats
       collection
         .aggregate([
           {
@@ -338,8 +281,6 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // OS stats
       collection
         .aggregate([
           {
@@ -352,8 +293,6 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // Language stats
       collection
         .aggregate([
           { $group: { _id: "$language", count: { $sum: 1 } } },
@@ -361,8 +300,6 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // Screen resolution stats
       collection
         .aggregate([
           { $group: { _id: "$screenResolution", count: { $sum: 1 } } },
@@ -370,8 +307,6 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // Referrer stats
       collection
         .aggregate([
           {
@@ -388,16 +323,12 @@ export async function GET(req: NextRequest) {
           { $limit: 10 },
         ])
         .toArray(),
-
-      // Average time on page (in seconds)
       collection
         .aggregate([
           { $match: { timeOnPage: { $ne: null, $gt: 0 } } },
           { $group: { _id: null, avgTime: { $avg: "$timeOnPage" } } },
         ])
         .toArray(),
-
-      // Page load time stats
       collection
         .aggregate([
           { $match: { pageLoadTime: { $ne: null, $gt: 0 } } },
@@ -411,8 +342,6 @@ export async function GET(req: NextRequest) {
           },
         ])
         .toArray(),
-
-      // Hourly traffic pattern (last 7 days)
       collection
         .aggregate([
           { $match: { timestamp: { $gte: weekAgo } } },
@@ -421,16 +350,12 @@ export async function GET(req: NextRequest) {
           { $sort: { _id: 1 } },
         ])
         .toArray(),
-
-      // Dark mode preference
       collection
         .aggregate([
           { $group: { _id: "$isDarkMode", count: { $sum: 1 } } },
           { $sort: { _id: -1 } },
         ])
         .toArray(),
-
-      // Recent visits (last 20)
       collection
         .find({})
         .sort({ timestamp: -1 })
@@ -444,7 +369,6 @@ export async function GET(req: NextRequest) {
         .toArray(),
     ]);
 
-    // Country stats - separate query to keep it simple
     const countryStats = await collection
       .aggregate([
         {

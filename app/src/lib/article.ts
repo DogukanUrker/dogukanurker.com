@@ -35,7 +35,6 @@ export async function getAllPosts(
   includeDrafts: boolean = false
 ): Promise<ArticleMetadata[]> {
   try {
-    // Check if content directory exists
     if (!fs.existsSync(contentDirectory)) {
       console.warn(`Content directory not found: ${contentDirectory}`);
       return [];
@@ -130,11 +129,8 @@ export interface Heading {
 }
 
 export function extractHeadings(content: string): Heading[] {
-  // First, remove all code blocks (both fenced and inline) to avoid matching # inside them
   const contentWithoutCodeBlocks = content
-    // Remove fenced code blocks (```...```)
     .replace(/```[\s\S]*?```/g, "")
-    // Remove inline code (`...`)
     .replace(/`[^`]+`/g, "");
 
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
@@ -144,7 +140,6 @@ export function extractHeadings(content: string): Heading[] {
   while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    // Use github-slugger to ensure ID matches what rehypeSlug generates
     const id = slug(text);
 
     headings.push({ id, text, level });

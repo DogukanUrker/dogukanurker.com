@@ -11,21 +11,17 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
-    // Handle scroll to find the currently visible heading
     const handleScroll = () => {
-      // Check if we're at the bottom of the page
       const scrollHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
       const clientHeight = window.innerHeight;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
 
-      // If at bottom, activate the last heading
       if (isAtBottom && headings.length > 0) {
         setActiveId(headings[headings.length - 1].id);
         return;
       }
 
-      // Find all heading elements and their positions
       const headingElements = headings
         .map(({ id }) => {
           const element = document.getElementById(id);
@@ -35,8 +31,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
         })
         .filter((item): item is { id: string; top: number } => item !== null);
 
-      // Find the heading that's currently visible (closest to top but still on screen)
-      const OFFSET = 100; // Offset from top of viewport
+      const OFFSET = 100;
       let currentId = "";
 
       for (let i = headingElements.length - 1; i >= 0; i--) {
@@ -47,7 +42,6 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
         }
       }
 
-      // If no heading is above the offset, use the first one
       if (!currentId && headingElements.length > 0) {
         currentId = headingElements[0].id;
       }
@@ -57,10 +51,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
       }
     };
 
-    // Initial call
     handleScroll();
 
-    // Add scroll listener with throttling
     let ticking = false;
     const scrollListener = () => {
       if (!ticking) {
@@ -105,8 +97,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                     e.preventDefault();
                     const element = document.getElementById(heading.id);
                     if (element) {
-                      // Get element position and scroll with offset
-                      const offset = 20; // Reduced padding for better visibility
+                      const offset = 20;
                       const elementPosition = element.getBoundingClientRect().top;
                       const offsetPosition = elementPosition + window.scrollY - offset;
 
@@ -114,7 +105,6 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                         top: offsetPosition,
                         behavior: "smooth",
                       });
-                      // Update active state immediately for better UX
                       setActiveId(heading.id);
                     } else {
                       console.warn(`Element with id "${heading.id}" not found`);

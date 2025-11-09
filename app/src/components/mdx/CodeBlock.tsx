@@ -12,7 +12,6 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    // Extract text from children recursively
     const getText = (node: React.ReactNode): string => {
       if (typeof node === "string") return node;
       if (Array.isArray(node)) return node.map(getText).join("");
