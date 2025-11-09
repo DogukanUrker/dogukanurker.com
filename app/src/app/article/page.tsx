@@ -1,7 +1,6 @@
 import { getAllPosts, formatDate } from "@/lib/article";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Calendar } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -59,16 +58,9 @@ export default async function ArticlesPage() {
                   </p>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-4 text-sm text-zinc-500">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="h-4 w-4" />
-                      <time>{formatDate(post.date)}</time>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="h-4 w-4" />
-                      <span>{post.readingTime}</span>
-                    </div>
-                  </div>
+                  <p className="text-sm text-zinc-500">
+                    {formatDate(post.date)} • {post.readingTime}
+                  </p>
                 </article>
               </Link>
             ))}
