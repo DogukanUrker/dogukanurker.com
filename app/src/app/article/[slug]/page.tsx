@@ -82,7 +82,7 @@ const components = {
   img: (props: React.ImgHTMLAttributes<HTMLImageElement> & { src: string }) => (
     <Image
       src={props.src}
-      alt={props.alt || ""}
+      alt={props.alt || "Article image"}
       width={800}
       height={600}
       className="my-6 rounded-lg border border-zinc-800"
