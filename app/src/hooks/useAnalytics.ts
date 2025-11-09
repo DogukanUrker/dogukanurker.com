@@ -70,30 +70,19 @@ export function useAnalytics() {
       }
     }
 
-    // Collect analytics data
     const analyticsData = {
       userId: getUserId(),
       sessionId: getSessionId(),
       pageId: pageId.current,
-
-      // Page Information
       url: window.location.href,
       path: pathname,
       referrer: document.referrer || null,
       title: document.title,
-
-      // Device Information
       userAgent: navigator.userAgent,
-
-      // Screen Information
       screenResolution: `${screen.width}x${screen.height}`,
       viewportSize: `${window.innerWidth}x${window.innerHeight}`,
       colorDepth: screen.colorDepth,
-
-      // Performance Metrics
       pageLoadTime: pageLoadTime.current,
-
-      // Additional Context
       language: navigator.language,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       isDarkMode: window.matchMedia("(prefers-color-scheme: dark)").matches,
@@ -127,10 +116,8 @@ export function useAnalytics() {
       }
     };
 
-    // Add event listeners
     window.addEventListener("beforeunload", handleUnload);
 
-    // Cleanup
     return () => {
       window.removeEventListener("beforeunload", handleUnload);
       isTracked.current = false;

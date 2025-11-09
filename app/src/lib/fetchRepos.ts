@@ -17,7 +17,6 @@ export interface Repo {
 }
 
 export interface Contributor {
-  // Exporting Contributor interface
   login: string;
   avatar_url: string;
   contributions: number;
@@ -43,9 +42,9 @@ export async function fetchRepos(
         new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
     );
 
-  const flaskBlogRepo = data.find((repo) => repo.id === 566979145);
-  if (flaskBlogRepo) {
-    data = [flaskBlogRepo, ...data.filter((repo) => repo.id !== 566979145)];
+  const flaskArticleRepo = data.find((repo) => repo.id === 566979145);
+  if (flaskArticleRepo) {
+    data = [flaskArticleRepo, ...data.filter((repo) => repo.id !== 566979145)];
   }
 
   return data;

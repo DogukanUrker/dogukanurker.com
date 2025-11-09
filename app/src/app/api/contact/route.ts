@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, email, subject, message } = body;
 
-    // Validation
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },

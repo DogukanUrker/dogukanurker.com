@@ -1,0 +1,1 @@
+export { ImageWithCaption } from "./ImageWithCaption";
