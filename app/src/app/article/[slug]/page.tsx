@@ -3,7 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { TableOfContents } from "@/components/article/TableOfContents";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
@@ -147,19 +147,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {/* Reading Progress Bar */}
       <ReadingProgress />
       
-      {/* Banner Image */}
-      {post.bannerImage && (
-        <div className="relative aspect-video w-full overflow-hidden border-b border-zinc-800">
-          <Image
-            src={post.bannerImage}
-            alt={post.title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-      )}
-
       {/* Content Container */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Back Button */}
@@ -171,29 +158,39 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           Back to Articles
         </Link>
 
+        {/* Article Header - Centered */}
+        <header className="mb-12 space-y-6 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+            {post.title}
+          </h1>
+
+          {/* Meta - Combined Format */}
+          <p className="text-sm text-zinc-500">
+            {formatDate(post.date)} • {post.readingTime}
+          </p>
+        </header>
+
+        {/* Banner Image - Integrated Design */}
+        {post.bannerImage && (
+          <div className="mb-12">
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl border border-zinc-800/50 shadow-2xl">
+              <Image
+                src={post.bannerImage}
+                alt={post.title}
+                fill
+                priority
+                className="object-cover"
+              />
+              {/* Subtle gradient overlay for depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/20 to-transparent" />
+            </div>
+          </div>
+        )}
+
         {/* Main Content Area */}
         <div className="flex gap-12">
           {/* Article */}
           <article className="min-w-0 flex-1">
-            {/* Header */}
-            <header className="mb-8 space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
-                {post.title}
-              </h1>
-
-              {/* Meta */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  <time>{formatDate(post.date)}</time>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{post.readingTime}</span>
-                </div>
-              </div>
-            </header>
-
             {/* MDX Content */}
             <div className="prose prose-invert max-w-none">
               <MDXRemote
