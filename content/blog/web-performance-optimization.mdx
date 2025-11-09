@@ -1,0 +1,540 @@
+---
+title: "Web Performance Optimization: From Basics to Advanced Techniques"
+date: "2024-02-01"
+description: "Comprehensive guide to web performance optimization covering Core Web Vitals, lazy loading, code splitting, caching strategies, and advanced optimization techniques."
+bannerImage: "https://images.ctfassets.net/kftzwdyauwt9/392n5G7ZSalPOT9S9HHtjE/bcf0f6f03da19cc5d2d01844cae39c09/oai_GA_Stories_1.1.png"
+draft: false
+---
+
+Web performance directly impacts user experience, engagement, and conversions. Studies show that a 1-second delay in page load time can result in a 7% reduction in conversions. Let's explore how to build blazingly fast web applications.
+
+## Why Performance Matters
+
+Performance affects every aspect of your web application:
+
+- **User Experience**: Faster sites provide better UX
+- **SEO**: Google uses performance as a ranking factor
+- **Conversion Rates**: Faster pages convert better
+- **Accessibility**: Performance is an accessibility concern
+- **Costs**: Less data transfer = lower hosting costs
+
+<Callout type="info">
+  A 0.1-second improvement in load time can increase conversion rates by up to 8% for retail sites.
+</Callout>
+
+## Understanding Core Web Vitals
+
+Core Web Vitals are Google's metrics for measuring user experience:
+
+### Largest Contentful Paint (LCP)
+
+Measures loading performance. Good LCP is under 2.5 seconds.
+
+```typescript
+// Measure LCP
+new PerformanceObserver((list) => {
+  const entries = list.getEntries();
+  const lastEntry = entries[entries.length - 1];
+  
+  console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+}).observe({ entryTypes: ['largest-contentful-paint'] });
+```
+
+### First Input Delay (FID)
+
+Measures interactivity. Good FID is under 100 milliseconds.
+
+```typescript
+// Measure FID
+new PerformanceObserver((list) => {
+  const firstInput = list.getEntries()[0];
+  
+  console.log('FID:', firstInput.processingStart - firstInput.startTime);
+}).observe({ entryTypes: ['first-input'] });
+```
+
+### Cumulative Layout Shift (CLS)
+
+Measures visual stability. Good CLS is under 0.1.
+
+```typescript
+// Measure CLS
+let clsScore = 0;
+
+new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    if (!entry.hadRecentInput) {
+      clsScore += entry.value;
+    }
+  }
+  console.log('CLS:', clsScore);
+}).observe({ entryTypes: ['layout-shift'] });
+```
+
+<Callout type="success">
+  Use Chrome DevTools Lighthouse or PageSpeed Insights to measure your Core Web Vitals in real-time.
+</Callout>
+
+## Image Optimization
+
+Images often account for most of a page's weight. Optimize them aggressively:
+
+### Modern Image Formats
+
+```typescript
+// Next.js Image component with optimization
+import Image from 'next/image';
+
+export function OptimizedImage() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      priority // Load immediately for above-fold images
+      quality={85} // Balance quality vs size
+      placeholder="blur" // Show blur while loading
+      blurDataURL="data:image/jpeg;base64,..."
+    />
+  );
+}
+```
+
+### Lazy Loading
+
+```html
+<!-- Native lazy loading -->
+<img src="image.jpg" loading="lazy" alt="Description" />
+
+<!-- For multiple images -->
+<img src="image1.jpg" loading="lazy" alt="Image 1" />
+<img src="image2.jpg" loading="lazy" alt="Image 2" />
+<img src="image3.jpg" loading="lazy" alt="Image 3" />
+```
+
+### Responsive Images
+
+```html
+<picture>
+  <source 
+    srcset="image-mobile.webp" 
+    type="image/webp" 
+    media="(max-width: 640px)"
+  />
+  <source 
+    srcset="image-desktop.webp" 
+    type="image/webp" 
+    media="(min-width: 641px)"
+  />
+  <img 
+    src="image-fallback.jpg" 
+    alt="Responsive image"
+    width="1200"
+    height="600"
+  />
+</picture>
+```
+
+<Callout type="warning">
+  Always specify width and height attributes to prevent layout shifts when images load.
+</Callout>
+
+## Code Splitting and Lazy Loading
+
+Break down large bundles into smaller chunks that load on demand:
+
+### Dynamic Imports
+
+```typescript
+// Instead of static import
+// import HeavyComponent from './HeavyComponent';
+
+// Use dynamic import
+import { lazy, Suspense } from 'react';
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+export function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  );
+}
+```
+
+### Route-Based Code Splitting
+
+```typescript
+// Next.js automatically code-splits by route
+// app/dashboard/page.tsx
+export default function Dashboard() {
+  return <div>Dashboard content</div>;
+}
+
+// This code is only loaded when visiting /dashboard
+```
+
+### Component-Level Splitting
+
+```typescript
+import dynamic from 'next/dynamic';
+
+// Load component only when needed
+const DynamicChart = dynamic(() => import('./Chart'), {
+  loading: () => <p>Loading chart...</p>,
+  ssr: false, // Disable server-side rendering for this component
+});
+
+export function Analytics() {
+  const [showChart, setShowChart] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setShowChart(true)}>
+        Show Chart
+      </button>
+      {showChart && <DynamicChart data={data} />}
+    </div>
+  );
+}
+```
+
+## Caching Strategies
+
+Effective caching can dramatically improve performance:
+
+### Browser Caching
+
+```typescript
+// next.config.js
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=60, stale-while-revalidate=30',
+          },
+        ],
+      },
+    ];
+  },
+};
+```
+
+### Service Worker Caching
+
+```typescript
+// service-worker.ts
+const CACHE_NAME = 'v1';
+const urlsToCache = [
+  '/',
+  '/styles/main.css',
+  '/scripts/main.js',
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
+      
+      // Clone the request
+      const fetchRequest = event.request.clone();
+      
+      return fetch(fetchRequest).then((response) => {
+        // Check if valid response
+        if (!response || response.status !== 200) {
+          return response;
+        }
+        
+        // Clone the response
+        const responseToCache = response.clone();
+        
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+        
+        return response;
+      });
+    })
+  );
+});
+```
+
+### React Query for Data Caching
+
+```typescript
+import { useQuery } from '@tanstack/react-query';
+
+export function UserProfile({ userId }: { userId: string }) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => fetch(`/api/users/${userId}`).then(r => r.json()),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading user</div>;
+
+  return <div>{data.name}</div>;
+}
+```
+
+## Font Optimization
+
+Web fonts can significantly impact performance:
+
+```typescript
+// next.js with next/font
+import { Inter, Roboto_Mono } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+});
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${inter.variable} ${robotoMono.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+<Callout type="success">
+  Using next/font automatically optimizes fonts, including self-hosting for better privacy and performance.
+</Callout>
+
+## JavaScript Optimization
+
+### Tree Shaking
+
+```typescript
+// ❌ Import entire library
+import _ from 'lodash';
+const result = _.debounce(fn, 300);
+
+// ✅ Import only what you need
+import debounce from 'lodash/debounce';
+const result = debounce(fn, 300);
+```
+
+### Debouncing and Throttling
+
+```typescript
+import { useCallback } from 'react';
+import { debounce } from 'lodash';
+
+export function SearchInput() {
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      // Perform search
+      fetch(`/api/search?q=${query}`);
+    }, 300),
+    []
+  );
+
+  return (
+    <input
+      type="text"
+      onChange={(e) => debouncedSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### Web Workers for Heavy Computation
+
+```typescript
+// worker.ts
+self.addEventListener('message', (e) => {
+  const result = heavyComputation(e.data);
+  self.postMessage(result);
+});
+
+// main.ts
+const worker = new Worker(new URL('./worker.ts', import.meta.url));
+
+worker.postMessage(largeDataSet);
+
+worker.addEventListener('message', (e) => {
+  console.log('Result:', e.data);
+});
+```
+
+## Performance Monitoring
+
+```typescript
+// lib/analytics.ts
+export function reportWebVitals(metric: any) {
+  const body = JSON.stringify(metric);
+  const url = '/api/analytics';
+
+  // Use `navigator.sendBeacon()` if available, falling back to `fetch()`
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(url, body);
+  } else {
+    fetch(url, { body, method: 'POST', keepalive: true });
+  }
+}
+
+// app/layout.tsx
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
+    </html>
+  );
+}
+```
+
+## Performance Evolution
+
+<Timeline>
+  <TimelineItem title="Early Web" date="1990s">
+    Simple HTML pages, minimal CSS, no JavaScript. Performance was rarely an issue, but functionality was limited.
+  </TimelineItem>
+
+  <TimelineItem title="Rich Interactions" date="2000s">
+    Heavy JavaScript libraries like jQuery. Pages grew larger and slower. Performance became a concern.
+  </TimelineItem>
+
+  <TimelineItem title="Mobile Revolution" date="2010s">
+    Mobile-first design and responsive web. Performance critical for slow mobile networks. Image optimization became essential.
+  </TimelineItem>
+
+  <TimelineItem title="Modern Performance" date="2020-Present">
+    Core Web Vitals, edge computing, and modern frameworks. Performance is now a competitive advantage and SEO factor.
+  </TimelineItem>
+</Timeline>
+
+## Advanced Techniques
+
+### Prefetching and Preloading
+
+```html
+<!-- Preload critical resources -->
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+<!-- Prefetch for next page -->
+<link rel="prefetch" href="/dashboard" />
+
+<!-- DNS prefetch for external domains -->
+<link rel="dns-prefetch" href="https://api.example.com" />
+
+<!-- Preconnect to external domains -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+```
+
+### Resource Hints in Next.js
+
+```typescript
+import Link from 'next/link';
+
+// Automatic prefetching for internal links
+<Link href="/dashboard" prefetch>
+  Dashboard
+</Link>
+```
+
+### Streaming SSR
+
+```typescript
+// app/page.tsx
+import { Suspense } from 'react';
+
+async function SlowComponent() {
+  const data = await fetchSlowData();
+  return <div>{data}</div>;
+}
+
+export default function Page() {
+  return (
+    <div>
+      <h1>Welcome</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <SlowComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+## Performance Checklist
+
+<Callout type="info">
+  Use this checklist to audit your application's performance:
+</Callout>
+
+1. ✅ **Images**: Use modern formats (WebP, AVIF), lazy load, and specify dimensions
+2. ✅ **Code Splitting**: Implement route and component-level splitting
+3. ✅ **Caching**: Configure proper cache headers and use service workers
+4. ✅ **Fonts**: Self-host fonts and use font-display: swap
+5. ✅ **JavaScript**: Tree shake unused code and minimize bundle size
+6. ✅ **CSS**: Remove unused styles and use CSS-in-JS wisely
+7. ✅ **Monitoring**: Set up Real User Monitoring (RUM)
+8. ✅ **CDN**: Use a CDN for static assets
+9. ✅ **Compression**: Enable Gzip or Brotli compression
+10. ✅ **HTTP/2**: Use HTTP/2 or HTTP/3 for multiplexing
+
+## Conclusion
+
+Web performance is not a one-time task but an ongoing process. Measure, optimize, and monitor continuously. Every millisecond counts, and your users will notice the difference.
+
+<Callout type="success">
+  Start with the biggest impact items first. Optimize images and implement code splitting before micro-optimizing JavaScript.
+</Callout>
+
+Remember: "Fast load times is a feature, not a nice-to-have." Make performance a priority from day one, and your users will reward you with engagement and conversions.
+
+---
+
+**Performance Resources:**
+
+- [Web.dev Performance](https://web.dev/performance/)
+- [Core Web Vitals](https://web.dev/vitals/)
+- [Chrome DevTools Performance](https://developer.chrome.com/docs/devtools/performance/)
+- [WebPageTest](https://www.webpagetest.org/)
+- [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci)
+

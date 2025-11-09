@@ -1,0 +1,476 @@
+---
+title: "Building Production-Ready RESTful APIs with Node.js and Express"
+date: "2024-03-05"
+description: "Learn how to design, build, and deploy scalable RESTful APIs using Node.js, Express, and industry best practices for authentication, validation, and error handling."
+bannerImage: "https://images.ctfassets.net/kftzwdyauwt9/Y4aGZFaNFXtB1neH0uPKK/b5a8aa19e98fb8ddcd54d9bf4bd6e5e1/1-million-business-customers-putting-ai-to-work-1.1.png"
+draft: false
+---
+
+Building a robust RESTful API is a fundamental skill for modern backend development. In this guide, we'll walk through creating a production-ready API using Node.js and Express, covering everything from basic setup to advanced security patterns.
+
+## Why Node.js for APIs?
+
+Node.js has become the go-to choice for building APIs due to its:
+
+- **Non-blocking I/O**: Perfect for handling multiple concurrent requests
+- **JavaScript Everywhere**: Use the same language for frontend and backend
+- **Rich Ecosystem**: NPM provides thousands of packages for common tasks
+- **Scalability**: Easy to scale horizontally with its event-driven architecture
+
+<Callout type="info">
+  This guide uses Express 4.x and assumes familiarity with JavaScript ES6+ features and basic HTTP concepts.
+</Callout>
+
+## Project Setup
+
+Let's start by initializing a new Node.js project with TypeScript:
+
+```bash
+mkdir my-api
+cd my-api
+npm init -y
+npm install express cors helmet dotenv
+npm install -D typescript @types/node @types/express @types/cors ts-node nodemon
+```
+
+Create a `tsconfig.json` file:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+```
+
+## Basic Server Setup
+
+Create your main server file:
+
+```typescript
+// src/server.ts
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const app: Application = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(helmet()); // Security headers
+app.use(cors()); // Enable CORS
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true }));
+
+// Health check endpoint
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
+export default app;
+```
+
+<Callout type="success">
+  Using helmet() adds essential security headers to protect your API from common vulnerabilities.
+</Callout>
+
+## RESTful API Design
+
+### Resource-Based URLs
+
+Follow REST conventions for your endpoints:
+
+```typescript
+// Users resource
+GET    /api/users         // Get all users
+GET    /api/users/:id     // Get specific user
+POST   /api/users         // Create new user
+PUT    /api/users/:id     // Update user
+DELETE /api/users/:id     // Delete user
+
+// Posts resource
+GET    /api/posts         // Get all posts
+POST   /api/posts         // Create post
+GET    /api/posts/:id     // Get specific post
+PUT    /api/posts/:id     // Update post
+DELETE /api/posts/:id     // Delete post
+```
+
+### Implementing CRUD Operations
+
+```typescript
+// src/routes/users.ts
+import { Router, Request, Response } from 'express';
+
+const router = Router();
+
+// In-memory storage (replace with database in production)
+let users: Array<{ id: string; name: string; email: string }> = [];
+
+// GET all users
+router.get('/', (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    data: users,
+    count: users.length
+  });
+});
+
+// GET single user
+router.get('/:id', (req: Request, res: Response) => {
+  const user = users.find(u => u.id === req.params.id);
+  
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      error: 'User not found'
+    });
+  }
+  
+  res.json({
+    success: true,
+    data: user
+  });
+});
+
+// POST create user
+router.post('/', (req: Request, res: Response) => {
+  const { name, email } = req.body;
+  
+  const newUser = {
+    id: Date.now().toString(),
+    name,
+    email
+  };
+  
+  users.push(newUser);
+  
+  res.status(201).json({
+    success: true,
+    data: newUser
+  });
+});
+
+// PUT update user
+router.put('/:id', (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+  
+  const userIndex = users.findIndex(u => u.id === id);
+  
+  if (userIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      error: 'User not found'
+    });
+  }
+  
+  users[userIndex] = { ...users[userIndex], name, email };
+  
+  res.json({
+    success: true,
+    data: users[userIndex]
+  });
+});
+
+// DELETE user
+router.delete('/:id', (req: Request, res: Response) => {
+  const { id } = req.params;
+  const initialLength = users.length;
+  
+  users = users.filter(u => u.id !== id);
+  
+  if (users.length === initialLength) {
+    return res.status(404).json({
+      success: false,
+      error: 'User not found'
+    });
+  }
+  
+  res.json({
+    success: true,
+    message: 'User deleted successfully'
+  });
+});
+
+export default router;
+```
+
+## Middleware and Validation
+
+### Request Validation
+
+```typescript
+// src/middleware/validation.ts
+import { Request, Response, NextFunction } from 'express';
+import { z, ZodSchema } from 'zod';
+
+export const validate = (schema: ZodSchema) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await schema.parseAsync(req.body);
+      next();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          errors: error.errors.map(e => ({
+            field: e.path.join('.'),
+            message: e.message
+          }))
+        });
+      }
+      next(error);
+    }
+  };
+};
+
+// Usage
+import { z } from 'zod';
+
+const createUserSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.string().email(),
+  age: z.number().min(18).optional()
+});
+
+router.post('/', validate(createUserSchema), (req, res) => {
+  // Request body is validated
+  const { name, email, age } = req.body;
+  // ... create user
+});
+```
+
+<Callout type="warning">
+  Never trust user input! Always validate and sanitize data before processing it.
+</Callout>
+
+### Authentication Middleware
+
+```typescript
+// src/middleware/auth.ts
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+interface JwtPayload {
+  userId: string;
+  email: string;
+}
+
+export const authenticate = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      error: 'No token provided'
+    });
+  }
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      error: 'Invalid token'
+    });
+  }
+};
+
+// Usage
+router.get('/profile', authenticate, (req, res) => {
+  res.json({
+    success: true,
+    data: req.user
+  });
+});
+```
+
+## Error Handling
+
+### Centralized Error Handler
+
+```typescript
+// src/middleware/errorHandler.ts
+import { Request, Response, NextFunction } from 'express';
+
+export class ApiError extends Error {
+  constructor(
+    public statusCode: number,
+    public message: string,
+    public isOperational: boolean = true
+  ) {
+    super(message);
+    Object.setPrototypeOf(this, ApiError.prototype);
+  }
+}
+
+export const errorHandler = (
+  err: Error | ApiError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (err instanceof ApiError) {
+    return res.status(err.statusCode).json({
+      success: false,
+      error: err.message
+    });
+  }
+  
+  // Log unexpected errors
+  console.error('Unexpected error:', err);
+  
+  return res.status(500).json({
+    success: false,
+    error: 'Internal server error'
+  });
+};
+
+// Usage
+app.use(errorHandler);
+
+// Throwing errors
+router.get('/users/:id', async (req, res, next) => {
+  try {
+    const user = await findUser(req.params.id);
+    if (!user) {
+      throw new ApiError(404, 'User not found');
+    }
+    res.json({ success: true, data: user });
+  } catch (error) {
+    next(error);
+  }
+});
+```
+
+## API Evolution Timeline
+
+<Timeline>
+  <TimelineItem title="SOAP Era" date="2000-2010">
+    Web services were dominated by SOAP with XML. Complex, verbose, but standardized. Development was slow and required heavy tooling.
+  </TimelineItem>
+
+  <TimelineItem title="REST Revolution" date="2010-2015">
+    REST APIs with JSON became the standard. Simpler, more flexible, and developer-friendly. HTTP methods mapped to CRUD operations.
+  </TimelineItem>
+
+  <TimelineItem title="GraphQL Emergence" date="2015-2020">
+    GraphQL offered a new paradigm with flexible queries and strong typing. Allowed clients to request exactly what they needed.
+  </TimelineItem>
+
+  <TimelineItem title="Modern API Landscape" date="2020-Present">
+    Mix of REST, GraphQL, and gRPC depending on use case. Focus on developer experience, type safety, and real-time capabilities.
+  </TimelineItem>
+</Timeline>
+
+## Rate Limiting and Security
+
+```typescript
+import rateLimit from 'express-rate-limit';
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  message: 'Too many requests from this IP'
+});
+
+app.use('/api/', limiter);
+```
+
+<Callout type="info">
+  Rate limiting prevents abuse and helps maintain API availability for all users.
+</Callout>
+
+## Testing Your API
+
+```typescript
+// tests/users.test.ts
+import request from 'supertest';
+import app from '../src/server';
+
+describe('Users API', () => {
+  it('should get all users', async () => {
+    const response = await request(app)
+      .get('/api/users')
+      .expect(200);
+    
+    expect(response.body.success).toBe(true);
+    expect(Array.isArray(response.body.data)).toBe(true);
+  });
+  
+  it('should create a new user', async () => {
+    const newUser = {
+      name: 'John Doe',
+      email: 'john@example.com'
+    };
+    
+    const response = await request(app)
+      .post('/api/users')
+      .send(newUser)
+      .expect(201);
+    
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.name).toBe(newUser.name);
+  });
+});
+```
+
+## Best Practices
+
+1. **Use proper HTTP status codes**: 200 for success, 201 for creation, 400 for client errors, 500 for server errors
+2. **Version your API**: Use `/api/v1/` prefixes to manage breaking changes
+3. **Implement pagination**: Don't return all records at once
+4. **Add request logging**: Track API usage and debug issues
+5. **Use environment variables**: Never hardcode secrets
+6. **Document your API**: Use tools like Swagger/OpenAPI
+
+<Callout type="success">
+  A well-documented API is a well-used API. Invest time in creating clear documentation.
+</Callout>
+
+## Deployment
+
+Deploy your API to production with proper environment configuration:
+
+```bash
+# .env.production
+NODE_ENV=production
+PORT=3000
+JWT_SECRET=your-secure-secret
+DATABASE_URL=your-database-url
+```
+
+## Conclusion
+
+Building a production-ready REST API requires attention to security, scalability, and maintainability. By following these patterns and best practices, you'll create APIs that are reliable, secure, and easy to maintain.
+
+---
+
+**Resources:**
+
+- [Express.js Documentation](https://expressjs.com/)
+- [REST API Best Practices](https://restfulapi.net/)
+- [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
+- [JWT Authentication Guide](https://jwt.io/introduction)
+
