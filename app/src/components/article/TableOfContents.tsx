@@ -84,7 +84,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <nav className="hidden xl:sticky xl:top-8 xl:block xl:max-h-[calc(100vh-5rem)] xl:overflow-y-auto">
+    <nav className="hidden xl:sticky xl:top-16 xl:block xl:max-h-[calc(100vh-5rem)] xl:overflow-y-auto">
       <div>
         <h3 className="mb-4 text-sm font-semibold text-zinc-100">
           On This Page
