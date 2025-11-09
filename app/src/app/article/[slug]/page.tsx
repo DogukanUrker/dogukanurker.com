@@ -3,9 +3,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
 import { TableOfContents } from "@/components/article/TableOfContents";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
+import { ShareButton } from "@/components/article/ShareButton";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
@@ -149,14 +149,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       
       {/* Content Container */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Back Button */}
-        <Link
-          href="/article"
-          className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-zinc-100"
-        >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Back to Articles
-        </Link>
+        {/* Navigation Bar with Back and Share Buttons */}
+        <div className="mb-8 flex items-center justify-between">
+          <Link
+            href="/article"
+            className="text-sm text-zinc-400 transition-colors hover:text-zinc-100"
+          >
+            Back to Articles
+          </Link>
+          
+          <ShareButton 
+            url={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://dogukanurker.com'}/article/${slug}`}
+          />
+        </div>
 
         {/* Article Header - Centered */}
         <header className="mb-12 space-y-6 text-center">
