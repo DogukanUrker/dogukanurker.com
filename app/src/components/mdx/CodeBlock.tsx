@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 interface CodeBlockProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 

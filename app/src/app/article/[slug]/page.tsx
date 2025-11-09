@@ -12,47 +12,48 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Metadata } from "next";
+import React from "react";
 
 const components = {
   ImageWithCaption,
-  h1: (props: any) => (
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className="mb-6 mt-8 text-4xl font-bold text-zinc-100" {...props} />
   ),
-  h2: (props: any) => (
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 className="mb-4 mt-8 text-3xl font-semibold text-zinc-100" {...props} />
   ),
-  h3: (props: any) => (
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 className="mb-3 mt-6 text-2xl font-semibold text-zinc-200" {...props} />
   ),
-  h4: (props: any) => (
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4 className="mb-2 mt-4 text-xl font-semibold text-zinc-200" {...props} />
   ),
-  p: (props: any) => (
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className="mb-4 leading-7 text-zinc-300" {...props} />
   ),
-  a: (props: any) => (
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       className="text-blue-400 underline decoration-blue-400/30 underline-offset-4 transition-colors hover:text-blue-300 hover:decoration-blue-300/50"
       {...props}
     />
   ),
-  ul: (props: any) => (
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className="mb-4 ml-6 list-disc space-y-2 text-zinc-300" {...props} />
   ),
-  ol: (props: any) => (
+  ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
     <ol className="mb-4 ml-6 list-decimal space-y-2 text-zinc-300" {...props} />
   ),
-  li: (props: any) => (
+  li: (props: React.LiHTMLAttributes<HTMLLIElement>) => (
     <li className="leading-7" {...props} />
   ),
-  blockquote: (props: any) => (
+  blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
       className="my-6 border-l-4 border-zinc-700 pl-6 italic text-zinc-400"
       {...props}
     />
   ),
-  pre: (props: any) => <CodeBlock {...props} />,
-  code: (props: any) => {
+  pre: (props: React.HTMLAttributes<HTMLPreElement>) => <CodeBlock {...props} />,
+  code: (props: React.HTMLAttributes<HTMLElement>) => {
     if (!props.className) {
       return (
         <code
@@ -63,28 +64,28 @@ const components = {
     }
     return <code {...props} />;
   },
-  table: (props: any) => (
+  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 overflow-x-auto">
       <table className="w-full border-collapse text-sm" {...props} />
     </div>
   ),
-  th: (props: any) => (
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
       className="border border-zinc-800 bg-zinc-900 px-4 py-2 text-left font-semibold text-zinc-200"
       {...props}
     />
   ),
-  td: (props: any) => (
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
     <td className="border border-zinc-800 px-4 py-2 text-zinc-300" {...props} />
   ),
   hr: () => <hr className="my-8 border-zinc-800" />,
-  img: (props: any) => (
+  img: (props: React.ImgHTMLAttributes<HTMLImageElement> & { src: string }) => (
     <Image
-      {...props}
+      src={props.src}
+      alt={props.alt || ""}
       width={800}
       height={600}
       className="my-6 rounded-lg border border-zinc-800"
-      alt={props.alt || ""}
     />
   ),
 };
