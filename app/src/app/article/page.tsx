@@ -27,7 +27,7 @@ export default async function ArticlesPage() {
             <p className="text-zinc-500">No posts yet. Check back soon!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
             {posts.map((post) => (
               <Link
                 key={post.slug}
@@ -53,7 +53,7 @@ export default async function ArticlesPage() {
                   </h2>
 
                   {/* Description */}
-                  <p className="text-base leading-relaxed text-zinc-400 group-hover:text-zinc-300">
+                  <p className="line-clamp-2 text-base leading-relaxed text-zinc-400 group-hover:text-zinc-300">
                     {post.description}
                   </p>
 
