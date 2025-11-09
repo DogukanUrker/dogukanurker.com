@@ -18,10 +18,6 @@ Containers have revolutionized how we deploy applications by providing:
 - **Efficiency**: Share OS kernel, start in seconds
 - **Scalability**: Easy to scale horizontally
 
-<Callout type="info">
-  Containers package your application with all its dependencies, ensuring it runs consistently across different environments.
-</Callout>
-
 ## Getting Started with Docker
 
 ### Installing Docker
@@ -88,10 +84,6 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 # Start application
 CMD ["node", "dist/server.js"]
 ```
-
-<Callout type="success">
-  Multi-stage builds reduce final image size by separating build dependencies from runtime dependencies.
-</Callout>
 
 ### Docker Compose for Local Development
 
@@ -177,10 +169,6 @@ docker-compose logs -f app
 # Stop services
 docker-compose down
 ```
-
-<Callout type="warning">
-  Always use specific version tags in production. Avoid `latest` tag as it can lead to unpredictable deployments.
-</Callout>
 
 ## Introduction to Kubernetes
 
@@ -343,10 +331,6 @@ stringData:
   api-key: "your-secret-api-key"
 ```
 
-<Callout type="warning">
-  Never commit secrets to version control. Use tools like sealed-secrets or external secret managers like Vault.
-</Callout>
-
 ## Deploying to Kubernetes
 
 ```bash
@@ -411,26 +395,6 @@ spec:
         averageUtilization: 80
 ```
 
-## Container Orchestration Evolution
-
-<Timeline>
-  <TimelineItem title="Manual Deployment" date="2000-2010">
-    Applications deployed manually to servers. Configuration drift and "works on my machine" problems were common. Scaling required purchasing and configuring new hardware.
-  </TimelineItem>
-
-  <TimelineItem title="Virtual Machines" date="2010-2013">
-    VMware and virtual machines improved resource utilization. However, VMs were heavy, slow to start, and resource-intensive.
-  </TimelineItem>
-
-  <TimelineItem title="Docker Revolution" date="2013-2015">
-    Docker made containers mainstream. Lightweight, fast, and portable. Development and production environments finally matched.
-  </TimelineItem>
-
-  <TimelineItem title="Kubernetes Era" date="2015-Present">
-    Kubernetes became the standard for container orchestration. Automated scaling, self-healing, and declarative configuration transformed operations.
-  </TimelineItem>
-</Timeline>
-
 ## Best Practices
 
 ### Container Best Practices
@@ -450,10 +414,6 @@ spec:
 5. **Secrets Management**: Use proper secret storage solutions
 6. **Network Policies**: Control pod-to-pod communication
 7. **RBAC**: Implement role-based access control
-
-<Callout type="success">
-  Start small, learn the basics thoroughly, then gradually adopt advanced features as your needs grow.
-</Callout>
 
 ## CI/CD Integration
 
@@ -488,10 +448,6 @@ jobs:
 ## Conclusion
 
 Docker and Kubernetes have become essential tools for modern application deployment. By containerizing your applications and leveraging Kubernetes for orchestration, you gain portability, scalability, and reliability.
-
-<Callout type="info">
-  The container ecosystem is vast. Focus on mastering the fundamentals before diving into advanced topics like service meshes and serverless containers.
-</Callout>
 
 Start with Docker for local development, graduate to Docker Compose for multi-container applications, and then move to Kubernetes when you need production-grade orchestration.
 

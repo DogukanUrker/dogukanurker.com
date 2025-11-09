@@ -18,10 +18,6 @@ Performance affects every aspect of your web application:
 - **Accessibility**: Performance is an accessibility concern
 - **Costs**: Less data transfer = lower hosting costs
 
-<Callout type="info">
-  A 0.1-second improvement in load time can increase conversion rates by up to 8% for retail sites.
-</Callout>
-
 ## Understanding Core Web Vitals
 
 Core Web Vitals are Google's metrics for measuring user experience:
@@ -70,10 +66,6 @@ new PerformanceObserver((list) => {
   console.log('CLS:', clsScore);
 }).observe({ entryTypes: ['layout-shift'] });
 ```
-
-<Callout type="success">
-  Use Chrome DevTools Lighthouse or PageSpeed Insights to measure your Core Web Vitals in real-time.
-</Callout>
 
 ## Image Optimization
 
@@ -135,10 +127,6 @@ export function OptimizedImage() {
   />
 </picture>
 ```
-
-<Callout type="warning">
-  Always specify width and height attributes to prevent layout shifts when images load.
-</Callout>
 
 ## Code Splitting and Lazy Loading
 
@@ -334,10 +322,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-<Callout type="success">
-  Using next/font automatically optimizes fonts, including self-hosting for better privacy and performance.
-</Callout>
-
 ## JavaScript Optimization
 
 ### Tree Shaking
@@ -429,26 +413,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## Performance Evolution
-
-<Timeline>
-  <TimelineItem title="Early Web" date="1990s">
-    Simple HTML pages, minimal CSS, no JavaScript. Performance was rarely an issue, but functionality was limited.
-  </TimelineItem>
-
-  <TimelineItem title="Rich Interactions" date="2000s">
-    Heavy JavaScript libraries like jQuery. Pages grew larger and slower. Performance became a concern.
-  </TimelineItem>
-
-  <TimelineItem title="Mobile Revolution" date="2010s">
-    Mobile-first design and responsive web. Performance critical for slow mobile networks. Image optimization became essential.
-  </TimelineItem>
-
-  <TimelineItem title="Modern Performance" date="2020-Present">
-    Core Web Vitals, edge computing, and modern frameworks. Performance is now a competitive advantage and SEO factor.
-  </TimelineItem>
-</Timeline>
-
 ## Advanced Techniques
 
 ### Prefetching and Preloading
@@ -503,10 +467,6 @@ export default function Page() {
 
 ## Performance Checklist
 
-<Callout type="info">
-  Use this checklist to audit your application's performance:
-</Callout>
-
 1. ✅ **Images**: Use modern formats (WebP, AVIF), lazy load, and specify dimensions
 2. ✅ **Code Splitting**: Implement route and component-level splitting
 3. ✅ **Caching**: Configure proper cache headers and use service workers
@@ -521,10 +481,6 @@ export default function Page() {
 ## Conclusion
 
 Web performance is not a one-time task but an ongoing process. Measure, optimize, and monitor continuously. Every millisecond counts, and your users will notice the difference.
-
-<Callout type="success">
-  Start with the biggest impact items first. Optimize images and implement code splitting before micro-optimizing JavaScript.
-</Callout>
 
 Remember: "Fast load times is a feature, not a nice-to-have." Make performance a priority from day one, and your users will reward you with engagement and conversions.
 

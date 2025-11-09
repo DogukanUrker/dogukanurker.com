@@ -12,10 +12,6 @@ React Hooks revolutionized how we write React components by allowing us to use s
 
 Hooks are functions that let you "hook into" React state and lifecycle features from function components. They were introduced in React 16.8 and have since become the standard way to write React components.
 
-<Callout type="info">
-  Hooks are backward-compatible and don't replace your knowledge of React concepts. They provide a more direct API to React concepts you already know.
-</Callout>
-
 ## Essential Hooks
 
 ### useState: Managing Local State
@@ -99,10 +95,6 @@ function UserProfile({ userId }: { userId: string }) {
   return <div>{user.name}</div>;
 }
 ```
-
-<Callout type="warning">
-  Always include cleanup functions in useEffect when dealing with async operations or subscriptions to prevent memory leaks.
-</Callout>
 
 ## Advanced Hooks
 
@@ -215,10 +207,6 @@ function ThemeToggle() {
 }
 ```
 
-<Callout type="success">
-  Custom hooks should always start with "use" to follow React conventions and enable linting rules.
-</Callout>
-
 ### useFetch Hook
 
 ```typescript
@@ -273,26 +261,6 @@ function useFetch<T>(url: string): FetchState<T> {
 }
 ```
 
-## Hook Evolution Timeline
-
-<Timeline>
-  <TimelineItem title="Class Components Era" date="2013-2018">
-    React relied on class components with lifecycle methods. State management required understanding complex lifecycle patterns and binding methods.
-  </TimelineItem>
-
-  <TimelineItem title="Hooks Introduction" date="February 2019">
-    React 16.8 introduced Hooks, revolutionizing how developers write components. Function components could now use state and lifecycle features.
-  </TimelineItem>
-
-  <TimelineItem title="Custom Hooks Ecosystem" date="2019-2021">
-    The community created thousands of custom hooks for common patterns, from data fetching to animation and form handling.
-  </TimelineItem>
-
-  <TimelineItem title="Concurrent Features" date="2022-Present">
-    New hooks like useTransition and useDeferredValue enable concurrent rendering features, making apps more responsive.
-  </TimelineItem>
-</Timeline>
-
 ## Best Practices
 
 When working with React Hooks, follow these guidelines:
@@ -302,10 +270,6 @@ When working with React Hooks, follow these guidelines:
 3. **Use the ESLint Plugin**: Install `eslint-plugin-react-hooks` to enforce these rules
 4. **Extract Complex Logic**: Create custom hooks for reusable stateful logic
 5. **Minimize Dependencies**: Keep useEffect dependency arrays small and focused
-
-<Callout type="warning">
-  Avoid infinite loops by being careful with useEffect dependencies. Always include all values used inside the effect that change over time.
-</Callout>
 
 ## Common Pitfalls
 
@@ -346,10 +310,6 @@ function Counter() {
 ## Conclusion
 
 React Hooks have transformed how we write React applications, making code more readable, reusable, and easier to test. By understanding the fundamental hooks and learning to create custom hooks, you can write cleaner and more maintainable React applications.
-
-<Callout type="success">
-  Practice is key to mastering hooks. Start by refactoring existing class components to hooks, then gradually build your own custom hooks library.
-</Callout>
 
 ---
 

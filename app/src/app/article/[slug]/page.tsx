@@ -6,7 +6,7 @@ import Image from "next/image";
 import { TableOfContents } from "@/components/article/TableOfContents";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { ShareButton } from "@/components/article/ShareButton";
-import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
+import { ImageWithCaption } from "@/components/mdx";
 import { CodeBlock } from "@/components/mdx/CodeBlock";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
@@ -15,9 +15,6 @@ import { Metadata } from "next";
 
 // MDX Components
 const components = {
-  Callout,
-  Timeline,
-  TimelineItem,
   ImageWithCaption,
   // Style default elements
   h1: (props: any) => (

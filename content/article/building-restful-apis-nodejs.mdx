@@ -17,10 +17,6 @@ Node.js has become the go-to choice for building APIs due to its:
 - **Rich Ecosystem**: NPM provides thousands of packages for common tasks
 - **Scalability**: Easy to scale horizontally with its event-driven architecture
 
-<Callout type="info">
-  This guide uses Express 4.x and assumes familiarity with JavaScript ES6+ features and basic HTTP concepts.
-</Callout>
-
 ## Project Setup
 
 Let's start by initializing a new Node.js project with TypeScript:
@@ -87,10 +83,6 @@ app.listen(PORT, () => {
 
 export default app;
 ```
-
-<Callout type="success">
-  Using helmet() adds essential security headers to protect your API from common vulnerabilities.
-</Callout>
 
 ## RESTful API Design
 
@@ -259,10 +251,6 @@ router.post('/', validate(createUserSchema), (req, res) => {
 });
 ```
 
-<Callout type="warning">
-  Never trust user input! Always validate and sanitize data before processing it.
-</Callout>
-
 ### Authentication Middleware
 
 ```typescript
@@ -364,26 +352,6 @@ router.get('/users/:id', async (req, res, next) => {
 });
 ```
 
-## API Evolution Timeline
-
-<Timeline>
-  <TimelineItem title="SOAP Era" date="2000-2010">
-    Web services were dominated by SOAP with XML. Complex, verbose, but standardized. Development was slow and required heavy tooling.
-  </TimelineItem>
-
-  <TimelineItem title="REST Revolution" date="2010-2015">
-    REST APIs with JSON became the standard. Simpler, more flexible, and developer-friendly. HTTP methods mapped to CRUD operations.
-  </TimelineItem>
-
-  <TimelineItem title="GraphQL Emergence" date="2015-2020">
-    GraphQL offered a new paradigm with flexible queries and strong typing. Allowed clients to request exactly what they needed.
-  </TimelineItem>
-
-  <TimelineItem title="Modern API Landscape" date="2020-Present">
-    Mix of REST, GraphQL, and gRPC depending on use case. Focus on developer experience, type safety, and real-time capabilities.
-  </TimelineItem>
-</Timeline>
-
 ## Rate Limiting and Security
 
 ```typescript
@@ -397,10 +365,6 @@ const limiter = rateLimit({
 
 app.use('/api/', limiter);
 ```
-
-<Callout type="info">
-  Rate limiting prevents abuse and helps maintain API availability for all users.
-</Callout>
 
 ## Testing Your API
 
@@ -444,10 +408,6 @@ describe('Users API', () => {
 4. **Add request logging**: Track API usage and debug issues
 5. **Use environment variables**: Never hardcode secrets
 6. **Document your API**: Use tools like Swagger/OpenAPI
-
-<Callout type="success">
-  A well-documented API is a well-used API. Invest time in creating clear documentation.
-</Callout>
 
 ## Deployment
 
