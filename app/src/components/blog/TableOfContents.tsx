@@ -19,7 +19,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
           }
         });
       },
-      { rootMargin: "-80px 0px -80% 0px" }
+      { rootMargin: "-80px 0px -80% 0px" },
     );
 
     headings.forEach(({ id }) => {
@@ -44,8 +44,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <nav className="hidden xl:block">
-      <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
+    <nav className="hidden xl:sticky xl:top-24 xl:block xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto">
+      <div>
         <h3 className="mb-4 text-sm font-semibold text-zinc-100">
           On This Page
         </h3>
@@ -59,9 +59,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                 <a
                   href={`#${heading.id}`}
                   className={`block py-1 transition-colors hover:text-zinc-100 ${
-                    isActive
-                      ? "font-medium text-zinc-100"
-                      : "text-zinc-500"
+                    isActive ? "font-medium text-zinc-100" : "text-zinc-500"
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
