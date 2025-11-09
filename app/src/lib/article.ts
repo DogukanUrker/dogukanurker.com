@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { slug } from "github-slugger";
 
 const contentDirectory = path.join(process.cwd(), "..", "content", "article");
 
@@ -129,17 +130,22 @@ export interface Heading {
 }
 
 export function extractHeadings(content: string): Heading[] {
+  // First, remove all code blocks (both fenced and inline) to avoid matching # inside them
+  const contentWithoutCodeBlocks = content
+    // Remove fenced code blocks (```...```)
+    .replace(/```[\s\S]*?```/g, "")
+    // Remove inline code (`...`)
+    .replace(/`[^`]+`/g, "");
+
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   const headings: Heading[] = [];
   let match;
 
-  while ((match = headingRegex.exec(content)) !== null) {
+  while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+    // Use github-slugger to ensure ID matches what rehypeSlug generates
+    const id = slug(text);
 
     headings.push({ id, text, level });
   }
