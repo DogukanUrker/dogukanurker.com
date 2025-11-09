@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
@@ -143,6 +144,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen bg-zinc-950">
+      {/* Reading Progress Bar */}
+      <ReadingProgress />
+      
       {/* Banner Image */}
       {post.bannerImage && (
         <div className="relative aspect-video w-full overflow-hidden border-b border-zinc-800">
