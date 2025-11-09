@@ -5,7 +5,35 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Articles",
-  description: "Thoughts, tutorials, and insights on software development",
+  description: "Explore articles about software engineering, web development, and programming best practices.",
+  openGraph: {
+    type: 'website',
+    title: "Articles | Dogukan Urker",
+    description: "Explore articles about software engineering, web development, and programming best practices.",
+    url: 'https://dogukanurker.com/article',
+    siteName: 'Dogukan Urker',
+    locale: 'en_US',
+    images: [
+      {
+        url: 'https://dogukanurker.com/ogImage.png',
+        width: 1200,
+        height: 630,
+        alt: 'Dogukan Urker - Articles',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Articles | Dogukan Urker",
+    description: "Explore articles about software engineering, web development, and programming best practices.",
+    images: ['https://dogukanurker.com/ogImage.png'],
+    creator: '@dogukanurker',
+    site: '@dogukanurker',
+  },
+  alternates: {
+    canonical: 'https://dogukanurker.com/article',
+  },
 };
 
 export default async function ArticlesPage() {

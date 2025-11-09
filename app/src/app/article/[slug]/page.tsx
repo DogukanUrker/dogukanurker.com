@@ -104,13 +104,52 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     };
   }
 
+  const articleUrl = `https://dogukanurker.com/article/${slug}`;
+  const ogImage = post.bannerImage || 'https://dogukanurker.com/ogImage.png';
+
   return {
     title: post.title,
     description: post.description,
+    authors: [{ name: 'Dogukan Urker' }],
+    creator: 'Dogukan Urker',
+    publisher: 'Dogukan Urker',
     openGraph: {
+      type: 'article',
       title: post.title,
       description: post.description,
-      images: post.bannerImage ? [post.bannerImage] : [],
+      url: articleUrl,
+      siteName: 'Dogukan Urker',
+      locale: 'en_US',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+          type: 'image/png',
+        },
+      ],
+      publishedTime: post.date,
+      authors: ['Dogukan Urker'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: [ogImage],
+      creator: '@dogukanurker',
+      site: '@dogukanurker',
+    },
+    alternates: {
+      canonical: articleUrl,
+    },
+    robots: {
+      index: !post.draft,
+      follow: !post.draft,
+      googleBot: {
+        index: !post.draft,
+        follow: !post.draft,
+      },
     },
   };
 }
@@ -146,7 +185,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </Link>
           
           <ShareButton 
-            url={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://dogukanurker.com'}/article/${slug}`}
+            url={`https://dogukanurker.com/article/${slug}`}
           />
         </div>
 
