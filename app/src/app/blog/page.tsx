@@ -1,6 +1,5 @@
 import { getAllPosts, formatDate } from "@/lib/blog";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Calendar } from "lucide-react";
@@ -22,9 +21,6 @@ export default async function BlogPage() {
           <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
             Blog
           </h1>
-          <p className="text-lg text-zinc-400">
-            Thoughts, tutorials, and insights on software development
-          </p>
         </div>
 
         {/* Posts Grid */}
@@ -55,21 +51,6 @@ export default async function BlogPage() {
 
                   {/* Content */}
                   <div className="flex h-full flex-col p-6">
-                    {/* Tags */}
-                    {post.tags.length > 0 && (
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge
-                            key={tag}
-                            variant="secondary"
-                            className="bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
                     {/* Title */}
                     <h2 className="mb-3 text-xl font-semibold text-zinc-100 group-hover:text-zinc-50">
                       {post.title}

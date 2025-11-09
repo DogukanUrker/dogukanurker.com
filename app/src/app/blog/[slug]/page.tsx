@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
 import rehypeHighlight from "rehype-highlight";
@@ -189,21 +188,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <span>{post.readingTime}</span>
                 </div>
               </div>
-
-              {/* Tags */}
-              {post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="bg-zinc-800 text-zinc-300"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              )}
             </header>
 
             {/* MDX Content */}

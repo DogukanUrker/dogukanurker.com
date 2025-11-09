@@ -10,7 +10,6 @@ export interface BlogPost {
   title: string;
   date: string;
   description: string;
-  tags: string[];
   bannerImage: string;
   draft: boolean;
   content: string;
@@ -22,7 +21,6 @@ export interface BlogPostMetadata {
   title: string;
   date: string;
   description: string;
-  tags: string[];
   bannerImage: string;
   draft: boolean;
   readingTime: string;
@@ -59,7 +57,6 @@ export async function getAllPosts(
           title: data.title || "Untitled",
           date: data.date || new Date().toISOString(),
           description: data.description || "",
-          tags: data.tags || [],
           bannerImage: data.bannerImage || "",
           draft: data.draft || false,
           readingTime: stats.text,
@@ -97,7 +94,6 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       title: data.title || "Untitled",
       date: data.date || new Date().toISOString(),
       description: data.description || "",
-      tags: data.tags || [],
       bannerImage: data.bannerImage || "",
       draft: data.draft || false,
       content,
@@ -107,20 +103,6 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     console.error(`Error getting post ${slug}:`, error);
     return null;
   }
-}
-
-/**
- * Get all unique tags from all posts
- */
-export async function getAllTags(): Promise<string[]> {
-  const posts = await getAllPosts();
-  const tagsSet = new Set<string>();
-
-  posts.forEach((post) => {
-    post.tags.forEach((tag) => tagsSet.add(tag));
-  });
-
-  return Array.from(tagsSet).sort();
 }
 
 /**
