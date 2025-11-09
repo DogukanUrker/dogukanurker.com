@@ -1,15 +1,15 @@
-import { getAllPosts, formatDate } from "@/lib/blog";
+import { getAllPosts, formatDate } from "@/lib/article";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Calendar } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Articles",
   description: "Thoughts, tutorials, and insights on software development",
 };
 
-export default async function BlogPage() {
+export default async function ArticlesPage() {
   const posts = await getAllPosts();
 
   return (
@@ -18,7 +18,7 @@ export default async function BlogPage() {
         {/* Header */}
         <div className="mb-12 space-y-4">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
-            Blog
+            Articles
           </h1>
         </div>
 
@@ -32,7 +32,7 @@ export default async function BlogPage() {
             {posts.map((post) => (
               <Link
                 key={post.slug}
-                href={`/blog/${post.slug}`}
+                href={`/article/${post.slug}`}
                 className="group block"
               >
                 <article className="space-y-4">

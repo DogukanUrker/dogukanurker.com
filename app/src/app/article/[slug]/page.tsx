@@ -1,11 +1,11 @@
-import { getPostBySlug, getAllPosts, formatDate, extractHeadings } from "@/lib/blog";
+import { getPostBySlug, getAllPosts, formatDate, extractHeadings } from "@/lib/article";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import { TableOfContents } from "@/components/blog/TableOfContents";
-import { ReadingProgress } from "@/components/blog/ReadingProgress";
+import { TableOfContents } from "@/components/article/TableOfContents";
+import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { Callout, Timeline, TimelineItem, ImageWithCaption } from "@/components/mdx";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
@@ -100,11 +100,11 @@ const components = {
   ),
 };
 
-interface BlogPostPageProps {
+interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
@@ -132,7 +132,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
@@ -164,11 +164,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Back Button */}
         <Link
-          href="/blog"
+          href="/article"
           className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-zinc-100"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Back to Blog
+          Back to Articles
         </Link>
 
         {/* Main Content Area */}

@@ -3,9 +3,9 @@ import path from "path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 
-const contentDirectory = path.join(process.cwd(), "..", "content", "blog");
+const contentDirectory = path.join(process.cwd(), "..", "content", "article");
 
-export interface BlogPost {
+export interface Article {
   slug: string;
   title: string;
   date: string;
@@ -16,7 +16,7 @@ export interface BlogPost {
   readingTime: string;
 }
 
-export interface BlogPostMetadata {
+export interface ArticleMetadata {
   slug: string;
   title: string;
   date: string;
@@ -27,12 +27,12 @@ export interface BlogPostMetadata {
 }
 
 /**
- * Get all blog posts sorted by date (newest first)
- * @param includeDrafts - Whether to include draft posts (default: false)
+ * Get all articles sorted by date (newest first)
+ * @param includeDrafts - Whether to include draft articles (default: false)
  */
 export async function getAllPosts(
   includeDrafts: boolean = false
-): Promise<BlogPostMetadata[]> {
+): Promise<ArticleMetadata[]> {
   try {
     // Check if content directory exists
     if (!fs.existsSync(contentDirectory)) {
@@ -60,7 +60,7 @@ export async function getAllPosts(
           bannerImage: data.bannerImage || "",
           draft: data.draft || false,
           readingTime: stats.text,
-        } as BlogPostMetadata;
+        } as ArticleMetadata;
       })
       .filter((post) => includeDrafts || !post.draft)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -73,10 +73,10 @@ export async function getAllPosts(
 }
 
 /**
- * Get a single blog post by slug
- * @param slug - The slug of the post
+ * Get a single article by slug
+ * @param slug - The slug of the article
  */
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+export async function getPostBySlug(slug: string): Promise<Article | null> {
   try {
     const filePath = path.join(contentDirectory, `${slug}.mdx`);
 
@@ -146,3 +146,4 @@ export function extractHeadings(content: string): Heading[] {
 
   return headings;
 }
+
