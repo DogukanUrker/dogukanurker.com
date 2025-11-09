@@ -3,7 +3,7 @@ title: "Building Modern Web Applications with Next.js and TypeScript"
 date: "2024-01-15"
 description: "A comprehensive guide to building scalable, performant web applications using Next.js 14, TypeScript, and modern development practices."
 tags: ["Next.js", "TypeScript", "Web Development", "React"]
-bannerImage: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=1200&h=675&fit=crop"
+bannerImage: "https://images.ctfassets.net/kftzwdyauwt9/6hzNVLjPZq56rOlD33UwPs/bcfb01b68d985564659658e634cdcc1d/oai_GA_Stories_1.1_-_Introducing_the_Teen_Safety_Blueprint.png"
 draft: false
 ---
 
@@ -14,7 +14,8 @@ Modern web development has evolved significantly over the past few years. With t
 Next.js is a powerful React framework that provides a robust foundation for building production-ready applications. It combines the best features of server-side rendering, static site generation, and client-side rendering to deliver exceptional performance and user experience.
 
 <Callout type="info">
-This guide assumes you have basic knowledge of React and TypeScript. If you're new to these technologies, consider reviewing their documentation first.
+  This guide assumes you have basic knowledge of React and TypeScript. If you're
+  new to these technologies, consider reviewing their documentation first.
 </Callout>
 
 ## Getting Started
@@ -51,7 +52,8 @@ my-app/
 ```
 
 <Callout type="success">
-The App Router introduces a new paradigm for routing and data fetching that's more intuitive and powerful than the Pages Router.
+  The App Router introduces a new paradigm for routing and data fetching that's
+  more intuitive and powerful than the Pages Router.
 </Callout>
 
 ## Key Features
@@ -96,8 +98,16 @@ export function Counter() {
 ```
 
 <Callout type="warning">
-Only use client components when necessary. Server components are more performant and should be your default choice.
+  Only use client components when necessary. Server components are more
+  performant and should be your default choice.
 </Callout>
+
+<ImageWithCaption
+  src="https://images.ctfassets.net/kftzwdyauwt9/6hzNVLjPZq56rOlD33UwPs/bcfb01b68d985564659658e634cdcc1d/oai_GA_Stories_1.1_-_Introducing_the_Teen_Safety_Blueprint.png"
+  caption="This is a test caption"
+>
+  {" "}
+</ImageWithCaption>
 
 ## Development Timeline
 
@@ -108,13 +118,15 @@ Here's how modern web development practices have evolved:
     Single-page applications with client-side rendering dominated the landscape. While interactive, they suffered from poor SEO and slow initial load times.
   </TimelineItem>
 
-  <TimelineItem title="Server-Side Rendering" date="2018-2020">
-    Frameworks like Next.js introduced SSR, improving SEO and initial load performance. However, development complexity increased.
-  </TimelineItem>
+<TimelineItem title="Server-Side Rendering" date="2018-2020">
+  Frameworks like Next.js introduced SSR, improving SEO and initial load
+  performance. However, development complexity increased.
+</TimelineItem>
 
-  <TimelineItem title="Static Site Generation" date="2020-2022">
-    JAMstack architecture became popular, combining the benefits of static sites with dynamic capabilities through APIs.
-  </TimelineItem>
+<TimelineItem title="Static Site Generation" date="2020-2022">
+  JAMstack architecture became popular, combining the benefits of static sites
+  with dynamic capabilities through APIs.
+</TimelineItem>
 
   <TimelineItem title="React Server Components" date="2023-Present">
     The latest evolution brings server-first rendering with selective client-side interactivity, offering the best of both worlds.
@@ -138,18 +150,18 @@ Organize your code into logical modules:
 ```typescript
 // lib/utils.ts
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(date);
 }
 
 // lib/api.ts
 export async function fetchPosts() {
-  const response = await fetch('https://api.example.com/posts');
+  const response = await fetch("https://api.example.com/posts");
   if (!response.ok) {
-    throw new Error('Failed to fetch posts');
+    throw new Error("Failed to fetch posts");
   }
   return response.json();
 }
@@ -176,7 +188,8 @@ The build process automatically optimizes your application for production, inclu
 Building modern web applications requires understanding the trade-offs between different rendering strategies and choosing the right tools for your specific needs. Next.js 14 with TypeScript provides a solid foundation that scales from small projects to large enterprise applications.
 
 <Callout type="success">
-Start small, measure everything, and iterate based on real user feedback. The tools are mature, the ecosystem is vibrant, and the future is bright.
+  Start small, measure everything, and iterate based on real user feedback. The
+  tools are mature, the ecosystem is vibrant, and the future is bright.
 </Callout>
 
 By following the practices outlined in this guide, you'll be well-equipped to build performant, maintainable, and user-friendly web applications that stand the test of time.
