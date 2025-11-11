@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 
 const socials = [
   {
+    name: "email",
+    url: "mailto:dogukanurker@icloud.com",
+  },
+  {
     name: "github",
     url: "https://github.com/dogukanurker",
   },
@@ -12,20 +16,16 @@ const socials = [
     url: "https://twitter.com/dogukanurker",
   },
   {
-    name: "instagram",
-    url: "https://instagram.com/dogukanurker",
+    name: "youtube",
+    url: "https://youtube.com/@dogukanurker",
   },
   {
     name: "linkedin",
     url: "https://linkedin.com/in/dogukanurker",
   },
   {
-    name: "youtube",
-    url: "https://youtube.com/@dogukanurker",
-  },
-  {
-    name: "email",
-    url: "mailto:dogukanurker@icloud.com",
+    name: "instagram",
+    url: "https://instagram.com/dogukanurker",
   },
 ];
 
