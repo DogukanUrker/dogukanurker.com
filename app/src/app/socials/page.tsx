@@ -61,7 +61,7 @@ export default function SocialsPage() {
             className="text-white text-4xl font-light mb-2 tracking-wide"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Connect
+            Dogukan Urker
           </h1>
 
           <p className="text-gray-300 text-sm mb-6 opacity-80">
