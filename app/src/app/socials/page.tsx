@@ -1,132 +1,101 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import {
-  Code,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-  Twitter,
-  Youtube,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
 
 const socials = [
   {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com/dogukanurker",
+    name: "email",
+    url: "mailto:dogukanurker@icloud.com",
   },
   {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/dogukanurker",
-  },
-  {
-    name: "GitHub",
-    icon: Github,
+    name: "github",
     url: "https://github.com/dogukanurker",
   },
   {
-    name: "YouTube",
-    icon: Youtube,
+    name: "twitter",
+    url: "https://twitter.com/dogukanurker",
+  },
+  {
+    name: "youtube",
     url: "https://youtube.com/@dogukanurker",
   },
   {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/dogukanurker/",
+    name: "linkedin",
+    url: "https://linkedin.com/in/dogukanurker",
   },
   {
-    name: "Email",
-    icon: Mail,
-    url: "mailto:dogukanurker@icloud.com",
+    name: "instagram",
+    url: "https://instagram.com/dogukanurker",
   },
 ];
 
 export default function SocialsPage() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-black select-none">
-      <Card className="relative w-full max-w-md mx-4 bg-black border-zinc-800">
-        <CardHeader className="space-y-4">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", duration: 0.8 }}
-            className="flex justify-center"
+    <div className="relative w-full h-screen overflow-hidden bg-black select-none">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700"
+        style={{
+          backgroundImage: `url('/shooting-star-bg.png')`,
+        }}
+      />
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 hidden lg:block"
+        style={{
+          backgroundImage: `url('/shooting-star-bg-desktop.png')`,
+        }}
+      />
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+
+      <div className="absolute top-12 right-6 lg:top-auto lg:bottom-12 lg:right-12 text-right">
+        <div
+          className={`transition-all duration-1000 lg:scale-110 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <h1
+            className="text-white text-4xl font-light mb-2 tracking-wide"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            <Avatar className="h-28 w-28 hover:scale-110 transition">
-              <AvatarImage
-                src="/meSmall.webp"
-                alt="Profile"
-                className={"grayscale"}
-              />
-              <AvatarFallback>DU</AvatarFallback>
-            </Avatar>
-          </motion.div>
-          <div className="space-y-2 text-center">
-            <CardTitle className="text-2xl font-bold text-white">
-              Doğukan Ürker
-            </CardTitle>
-            <Badge
-              variant="outline"
-              className="font-normal text-white border-zinc-800"
+            Dogukan Urker
+          </h1>
+
+          <p className="text-gray-300 text-sm mb-6 opacity-80">
+            full-stack engineer{" "}
+            <a
+              href="https://sensity.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 transition-all duration-300 hover:text-white"
             >
-              Full Stack Developer
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <motion.div
-            className="grid grid-cols-2 gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+              @sensity.ai
+            </a>
+          </p>
+
+          <nav className="flex flex-col items-end gap-2">
             {socials.map((social, index) => (
-              <motion.div
+              <a
                 key={social.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.1,
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative text-gray-400 text-sm transition-all duration-300 hover:text-white"
+                style={{
+                  transitionDelay: `${index * 50}ms`,
+                  opacity: loaded ? 1 : 0,
+                  transform: loaded ? "translateX(0)" : "translateX(20px)",
                 }}
               >
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="w-full transition-all  text-white group"
-                  asChild
-                >
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center text-2xl"
-                  >
-                    <social.icon className="transition-transform group-hover:scale-110" />
-                  </a>
-                </Button>
-              </motion.div>
+                <span className="relative">{social.name}</span>
+              </a>
             ))}
-          </motion.div>
-          <Button
-            variant="outline"
-            size="lg"
-            className={"w-full mt-4"}
-            onClick={() => (window.location.href = "/projects")}
-          >
-            {" "}
-            <Code />
-            See my work
-          </Button>
-        </CardContent>
-      </Card>
+          </nav>
+        </div>
+      </div>
     </div>
   );
 }
