@@ -58,11 +58,23 @@ export default function SocialsPage() {
           className={`text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <h1
-            className="text-white text-4xl font-light mb-8 tracking-wide"
+            className="text-white text-4xl font-light mb-2 tracking-wide"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Connect
           </h1>
+
+          <p className="text-gray-300 text-sm mb-8 opacity-80">
+            full-stack engineer{" "}
+            <a
+              href="https://sensity.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 transition-all duration-300 hover:text-white"
+            >
+              @sensity.ai
+            </a>
+          </p>
 
           <nav className="flex flex-col items-center gap-4">
             {socials.map((social, index) => (
