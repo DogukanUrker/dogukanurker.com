@@ -53,9 +53,9 @@ export default function SocialsPage() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
 
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute top-12 right-6 lg:top-auto lg:bottom-12 lg:right-12 text-right">
         <div
-          className={`text-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`transition-all duration-1000 lg:scale-110 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <h1
             className="text-white text-4xl font-light mb-2 tracking-wide"
@@ -64,7 +64,7 @@ export default function SocialsPage() {
             Connect
           </h1>
 
-          <p className="text-gray-300 text-sm mb-8 opacity-80">
+          <p className="text-gray-300 text-sm mb-6 opacity-80">
             full-stack engineer{" "}
             <a
               href="https://sensity.ai"
@@ -76,37 +76,24 @@ export default function SocialsPage() {
             </a>
           </p>
 
-          <nav className="flex flex-col items-center gap-4">
+          <nav className="flex flex-col items-end gap-2">
             {socials.map((social, index) => (
               <a
                 key={social.name}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 text-lg transition-all duration-300 hover:text-white"
+                className="relative text-gray-400 text-sm transition-all duration-300 hover:text-white"
                 style={{
                   transitionDelay: `${index * 50}ms`,
                   opacity: loaded ? 1 : 0,
-                  transform: loaded ? "translateX(0)" : "translateX(-20px)",
+                  transform: loaded ? "translateX(0)" : "translateX(20px)",
                 }}
               >
-                {social.name}
+                <span className="relative">{social.name}</span>
               </a>
             ))}
           </nav>
-
-          <div className="mt-12">
-            <a
-              href="/"
-              className="text-gray-500 text-sm transition-all duration-300 hover:text-gray-300"
-              style={{
-                opacity: loaded ? 1 : 0,
-                transitionDelay: "350ms",
-              }}
-            >
-              go home
-            </a>
-          </div>
         </div>
       </div>
     </div>
