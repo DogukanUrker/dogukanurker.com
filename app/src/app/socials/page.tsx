@@ -1,10 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
-  Code,
   Github,
   Instagram,
   Linkedin,
@@ -12,121 +9,109 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 
 const socials = [
   {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com/dogukanurker",
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/dogukanurker",
-  },
-  {
-    name: "GitHub",
+    name: "github",
     icon: Github,
     url: "https://github.com/dogukanurker",
+    username: "@dogukanurker",
   },
   {
-    name: "YouTube",
+    name: "twitter",
+    icon: Twitter,
+    url: "https://twitter.com/dogukanurker",
+    username: "@dogukanurker",
+  },
+  {
+    name: "instagram",
+    icon: Instagram,
+    url: "https://instagram.com/dogukanurker",
+    username: "@dogukanurker",
+  },
+  {
+    name: "linkedin",
+    icon: Linkedin,
+    url: "https://linkedin.com/in/dogukanurker",
+    username: "dogukanurker",
+  },
+  {
+    name: "youtube",
     icon: Youtube,
     url: "https://youtube.com/@dogukanurker",
+    username: "@dogukanurker",
   },
   {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/dogukanurker/",
-  },
-  {
-    name: "Email",
+    name: "email",
     icon: Mail,
     url: "mailto:dogukanurker@icloud.com",
+    username: "dogukanurker@icloud.com",
   },
 ];
 
 export default function SocialsPage() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-black select-none">
-      <Card className="relative w-full max-w-md mx-4 bg-black border-zinc-800">
-        <CardHeader className="space-y-4">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", duration: 0.8 }}
-            className="flex justify-center"
-          >
-            <Avatar className="h-28 w-28 hover:scale-110 transition">
-              <AvatarImage
-                src="/meSmall.webp"
-                alt="Profile"
-                className={"grayscale"}
-              />
-              <AvatarFallback>DU</AvatarFallback>
-            </Avatar>
-          </motion.div>
-          <div className="space-y-2 text-center">
-            <CardTitle className="text-2xl font-bold text-white">
-              Doğukan Ürker
-            </CardTitle>
-            <Badge
-              variant="outline"
-              className="font-normal text-white border-zinc-800"
-            >
-              Full Stack Developer
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <motion.div
-            className="grid grid-cols-2 gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {socials.map((social, index) => (
-              <motion.div
+    <div className="min-h-screen bg-zinc-950 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl">
+        <div
+          className={`mb-16 space-y-4 text-center transition-all duration-700 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+            Connect
+          </h1>
+          <p className="text-base text-zinc-400">
+            Find me across the web
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {socials.map((social, index) => {
+            const Icon = social.icon;
+            return (
+              <a
                 key={social.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.1,
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group flex items-center gap-4 rounded-lg border border-zinc-800/50 bg-zinc-900/20 px-6 py-4 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/40 ${loaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
+                style={{
+                  transitionDelay: `${index * 50}ms`,
                 }}
               >
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="w-full transition-all  text-white group"
-                  asChild
-                >
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center text-2xl"
-                  >
-                    <social.icon className="transition-transform group-hover:scale-110" />
-                  </a>
-                </Button>
-              </motion.div>
-            ))}
-          </motion.div>
-          <Button
-            variant="outline"
-            size="lg"
-            className={"w-full mt-4"}
-            onClick={() => (window.location.href = "/projects")}
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800/50 transition-colors group-hover:bg-zinc-800">
+                  <Icon className="h-5 w-5 text-zinc-400 transition-colors group-hover:text-zinc-100" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-zinc-100 transition-colors group-hover:text-white">
+                    {social.name}
+                  </div>
+                  <div className="text-xs text-zinc-500 transition-colors group-hover:text-zinc-400">
+                    {social.username}
+                  </div>
+                </div>
+                <div className="text-zinc-600 transition-all group-hover:translate-x-1 group-hover:text-zinc-400">
+                  →
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+        <div className="mt-12 text-center">
+          <a
+            href="/"
+            className="text-sm text-zinc-500 transition-colors hover:text-zinc-300"
           >
-            {" "}
-            <Code />
-            See my work
-          </Button>
-        </CardContent>
-      </Card>
+            ← Back to home
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
