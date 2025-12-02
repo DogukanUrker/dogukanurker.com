@@ -202,31 +202,7 @@ function getDateDifference(startDate: Date): string {
   const now = new Date();
   const diffInMs = now.getTime() - startDate.getTime();
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  if (diffInDays < 1) {
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    if (diffInHours < 1) {
-      const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-      return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''}`;
-    }
-    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''}`;
-  }
-
-  if (diffInDays < 30) {
-    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''}`;
-  }
-
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) {
-    return `${diffInMonths} month${diffInMonths !== 1 ? 's' : ''}`;
-  }
-
-  const years = Math.floor(diffInMonths / 12);
-  const months = diffInMonths % 12;
-  if (months === 0) {
-    return `${years} year${years !== 1 ? 's' : ''}`;
-  }
-  return `${years} year${years !== 1 ? 's' : ''} and ${months} month${months !== 1 ? 's' : ''}`;
+  return `${diffInDays} day${diffInDays !== 1 ? "s" : ""}`;
 }
 
 export default function AnalyticsPage() {
