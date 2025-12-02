@@ -198,6 +198,13 @@ function getFirstDataDate(data: AnalyticsData): string {
   });
 }
 
+function getDateDifference(startDate: Date): string {
+  const now = new Date();
+  const diffInMs = now.getTime() - startDate.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  return `${diffInDays} day${diffInDays !== 1 ? "s" : ""}`;
+}
+
 export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -368,7 +375,7 @@ export default function AnalyticsPage() {
               Real-time insights and metrics
             </p>
             <p className="text-muted-foreground/70 text-xs md:text-sm mt-1">
-              Data since {getFirstDataDate(data)}
+              Data since July 29, 2025 at 20:09 ({getDateDifference(new Date(2025, 6, 29, 20, 9))})
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2">
