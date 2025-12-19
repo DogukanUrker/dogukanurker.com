@@ -1,4 +1,9 @@
-import { getPostBySlug, getAllPosts, formatDate, extractHeadings } from "@/lib/article";
+import {
+  getPostBySlug,
+  getAllPosts,
+  formatDate,
+  extractHeadings,
+} from "@/lib/article";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -33,7 +38,7 @@ const components = {
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="text-blue-400 underline decoration-blue-400/30 underline-offset-4 transition-colors hover:text-blue-300 hover:decoration-blue-300/50"
+      className="text-zinc-100 underline decoration-zinc-500/50 underline-offset-4 transition-colors hover:text-zinc-50 hover:decoration-zinc-400"
       {...props}
     />
   ),
@@ -52,7 +57,9 @@ const components = {
       {...props}
     />
   ),
-  pre: (props: React.HTMLAttributes<HTMLPreElement>) => <CodeBlock {...props} />,
+  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
+    <CodeBlock {...props} />
+  ),
   code: (props: React.HTMLAttributes<HTMLElement>) => {
     if (!props.className) {
       return (
@@ -94,7 +101,9 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
@@ -105,40 +114,40 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   }
 
   const articleUrl = `https://dogukanurker.com/article/${slug}`;
-  const ogImage = post.bannerImage || 'https://dogukanurker.com/ogImage.png';
+  const ogImage = post.bannerImage || "https://dogukanurker.com/ogImage.png";
 
   return {
     title: post.title,
     description: post.description,
-    authors: [{ name: 'Dogukan Urker' }],
-    creator: 'Dogukan Urker',
-    publisher: 'Dogukan Urker',
+    authors: [{ name: "Dogukan Urker" }],
+    creator: "Dogukan Urker",
+    publisher: "Dogukan Urker",
     openGraph: {
-      type: 'article',
+      type: "article",
       title: post.title,
       description: post.description,
       url: articleUrl,
-      siteName: 'Dogukan Urker',
-      locale: 'en_US',
+      siteName: "Dogukan Urker",
+      locale: "en_US",
       images: [
         {
           url: ogImage,
           width: 1200,
           height: 630,
           alt: post.title,
-          type: 'image/png',
+          type: "image/png",
         },
       ],
       publishedTime: post.date,
-      authors: ['Dogukan Urker'],
+      authors: ["Dogukan Urker"],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
       images: [ogImage],
-      creator: '@dogukanurker',
-      site: '@dogukanurker',
+      creator: "@dogukanurker",
+      site: "@dogukanurker",
     },
     alternates: {
       canonical: articleUrl,
@@ -174,7 +183,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <div className="min-h-screen bg-zinc-950">
       <ReadingProgress />
-      
+
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <Link
@@ -183,10 +192,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           >
             Back to Articles
           </Link>
-          
-          <ShareButton 
-            url={`https://dogukanurker.com/article/${slug}`}
-          />
+
+          <ShareButton url={`https://dogukanurker.com/article/${slug}`} />
         </div>
 
         <header className="mb-12 space-y-6 text-center">
