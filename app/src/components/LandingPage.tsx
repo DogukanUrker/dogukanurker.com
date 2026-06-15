@@ -200,7 +200,7 @@ export default function LandingPage() {
             //   lines so neither edge is cut off by overflow-x:hidden on <main>.
             className="font-serif text-center w-full tracking-tighter select-none
               whitespace-normal sm:whitespace-nowrap
-              text-[clamp(44px,15vw,90px)] sm:text-[clamp(64px,18.5vw,300px)]"
+              text-[clamp(44px,15vw,90px)] sm:text-[clamp(64px,18vw,300px)]"
             style={
               {
                 lineHeight: 0.95,
