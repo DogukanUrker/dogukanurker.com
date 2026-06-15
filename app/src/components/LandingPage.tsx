@@ -132,7 +132,6 @@ export default function LandingPage() {
           backgroundColor: "rgba(243, 241, 234, 0.85)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(220, 216, 205, 0.6)",
         }}
       >
         <div className="flex items-center gap-4">
