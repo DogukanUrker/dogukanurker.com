@@ -86,11 +86,12 @@ export default function LandingPage() {
   // Cubic bezier typed as a tuple — required by framer-motion's Easing type
   const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
+  // Portrait and nav links both start 0.5 s after page load.
   const portraitVariants = {
     hidden: { clipPath: "inset(100% 0% 0% 0%)" },
     visible: {
       clipPath: "inset(0% 0% 0% 0%)",
-      transition: { duration: 1.1, ease: expo },
+      transition: { duration: 1.4, ease: expo, delay: 0.5 },
     },
   };
 
@@ -98,11 +99,12 @@ export default function LandingPage() {
   // The clip lives on the wrapper (below) so it can open its top beyond
   // the wrapper’s own box — giving the accents room without a state toggle.
   // On mobile we use a larger translate so the text starts fully off-screen.
+  // Starts immediately with the navbar (delay: 0).
   const nameVariants = {
     hidden: { y: isMobile ? "250%" : "108%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.0, ease: expo, delay: 0.25 },
+      transition: { duration: 1.3, ease: expo, delay: 0 },
     },
   };
 
@@ -115,11 +117,22 @@ export default function LandingPage() {
     },
   };
 
+  // Navbar slides in from the top immediately on load (same time as hero name).
   const navVariants = {
     hidden: { y: "-100%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.0, ease: expo, delay: 0.25 },
+      transition: { duration: 1.3, ease: expo, delay: 0 },
+    },
+  };
+
+  // Nav links (about / resume) fade in 0.5 s after load, same wave as the portrait.
+  const navLinksVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.9, ease: expo, delay: 0.5 },
     },
   };
 
@@ -161,10 +174,15 @@ export default function LandingPage() {
             <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
           </span>
         </div>
-        <div className="flex items-center gap-6">
+        <motion.div
+          className="flex items-center gap-6"
+          variants={navLinksVariants}
+          initial={shouldReduce ? "visible" : "hidden"}
+          animate="visible"
+        >
           <UnderlineLink href="#about">about</UnderlineLink>
           <UnderlineLink href="/cv">resume</UnderlineLink>
-        </div>
+        </motion.div>
         {/* Mobile-only role subtitle — sits below the first row */}
         <div
           className="w-full mt-1 md:hidden text-xs tracking-wide leading-relaxed"
@@ -219,7 +237,7 @@ export default function LandingPage() {
               : { clipPath: "inset(0px -600px -40px -600px)" }
           }
           animate={{ clipPath: "inset(-30px -600px -40px -600px)" }}
-          transition={{ duration: 1.25, ease: "linear" }}
+          transition={{ duration: 1.6, ease: "linear" }}
           aria-hidden
         >
           <motion.h1
