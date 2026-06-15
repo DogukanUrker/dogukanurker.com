@@ -83,6 +83,19 @@ export default function LandingPage() {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
+  // Scroll cue: appears after 1.8 s, fades out when scrolled, fades back in on return.
+  const [cueVisible, setCueVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setCueVisible(true), 1800);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   // Cubic bezier typed as a tuple — required by framer-motion’s Easing type
   const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -133,6 +146,20 @@ export default function LandingPage() {
     visible: {
       opacity: 1,
       transition: { duration: 0.9, ease: expo, delay: 0.5 },
+    },
+  };
+
+  // Footer: stagger location + each social link in from below as the section enters view.
+  const footerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.08 } },
+  };
+  const footerItemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: expo },
     },
   };
 
@@ -263,13 +290,12 @@ export default function LandingPage() {
           </motion.h1>
         </motion.div>
 
-        {/* Scroll cue — animated fill/drain line on the left, desktop only */}
+        {/* Scroll cue — fades in at 1.8 s, out when scrolled, back in on return */}
         {!shouldReduce && (
           <motion.div
             className="absolute left-6 md:left-10 bottom-12 hidden sm:block pointer-events-none select-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
+            animate={{ opacity: cueVisible && !scrolled ? 1 : 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             aria-hidden
           >
             <div className="w-px h-12 overflow-hidden">
@@ -342,27 +368,33 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer
+      <motion.footer
         className="flex flex-col items-center gap-3 pb-10 px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10"
         style={{ color: "var(--brand-muted)" }}
+        variants={footerVariants}
+        initial={shouldReduce ? "visible" : "hidden"}
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
       >
-        <span className="text-sm">izmir, türkiye</span>
+        <motion.span className="text-sm" variants={footerItemVariants}>
+          izmir, türkiye
+        </motion.span>
         <nav aria-label="social links" className="flex items-center gap-5">
-          <UnderlineLink href="mailto:dogukanurker@icloud.me">
-            mail
-          </UnderlineLink>
-          <UnderlineLink href="https://github.com/dogukanurker">
-            github
-          </UnderlineLink>
-          <UnderlineLink href="https://twitter.com/dogukanurker">
-            twitter
-          </UnderlineLink>
-          <UnderlineLink href="https://linkedin.com/in/dogukanurker">
-            linkedin
-          </UnderlineLink>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="mailto:dogukanurker@icloud.me">mail</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://github.com/dogukanurker">github</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://twitter.com/dogukanurker">twitter</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://linkedin.com/in/dogukanurker">linkedin</UnderlineLink>
+          </motion.span>
         </nav>
-      </footer>
+      </motion.footer>
     </main>
   );
 }
