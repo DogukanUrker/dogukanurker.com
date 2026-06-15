@@ -68,9 +68,6 @@ function UnderlineLink({ href, children, className = "" }: UnderlineLinkProps) {
 
 export default function LandingPage() {
   const [cursorEnabled, setCursorEnabled] = useState(false);
-  // Released to overflow-visible once the entrance animation completes so
-  // diacritics (ğ breve, ü umlaut) are never clipped at rest.
-  const [nameRevealed, setNameRevealed] = useState(false);
   const shouldReduce = useReducedMotion();
 
   // Cubic bezier typed as a tuple — required by framer-motion's Easing type
@@ -84,6 +81,9 @@ export default function LandingPage() {
     },
   };
 
+  // y-translate on the h1 gives the physical rise feel.
+  // The clip lives on the wrapper (below) so it can open its top beyond
+  // the wrapper’s own box — giving the accents room without a state toggle.
   const nameVariants = {
     hidden: { y: "108%" },
     visible: {
@@ -166,17 +166,21 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        {/* Giant name — absolutely pinned to the bottom of the hero, rises from a mask.
-             overflow-hidden only during the entrance; released on completion so
-             tall diacritics (ğ / ü) are never clipped at rest. */}
-        <div
-          className={`absolute left-0 right-0 pointer-events-none
-            bottom-5 sm:-bottom-2
-            ${
-              nameRevealed || shouldReduce
-                ? "overflow-visible"
-                : "overflow-hidden"
-            }`}
+        {/* Giant name — absolutely pinned to the bottom of the hero.
+             The wrapper clip acts as the mask (like overflow:hidden) during
+             the rise, then opens its top to -30 px so the breve/umlaut have
+             room at rest. Both transitions finish at the same time so the
+             clip is already open when the text lands — no pop. */}
+        <motion.div
+          className="absolute left-0 right-0 pointer-events-none bottom-10 sm:-bottom-2"
+          // -600 px sides allow the name to bleed past viewport edges.
+          initial={
+            shouldReduce
+              ? { clipPath: "inset(-30px -600px 0px -600px)" }
+              : { clipPath: "inset(0px -600px 0px -600px)" }
+          }
+          animate={{ clipPath: "inset(-30px -600px 0px -600px)" }}
+          transition={{ duration: 1.25, ease: "linear" }}
           aria-hidden
         >
           <motion.h1
@@ -197,11 +201,10 @@ export default function LandingPage() {
             variants={nameVariants}
             initial={shouldReduce ? "visible" : "hidden"}
             animate="visible"
-            onAnimationComplete={() => setNameRevealed(true)}
           >
             Doğukan Ürker
           </motion.h1>
-        </div>
+        </motion.div>
       </section>
 
       {/* ── Intro ────────────────────────────────────────────────────────── */}
