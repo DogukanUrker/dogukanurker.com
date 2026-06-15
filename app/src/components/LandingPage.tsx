@@ -128,7 +128,7 @@ export default function LandingPage() {
             className="hidden md:inline text-sm"
             style={{ color: "var(--brand-muted)" }}
           >
-            · full-stack engineer @{" "}
+            full-stack engineer @{" "}
             <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
           </span>
         </div>
