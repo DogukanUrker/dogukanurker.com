@@ -1,26 +1,25 @@
-export default function OGImage() {
+// Dev-preview page — renders the live opengraph-image.tsx output so you can
+// inspect the OG image at /ogImage without leaving the browser.
+// This page itself is never indexed or shared; it just mirrors /opengraph-image.
+export default function OGImagePreview() {
   return (
-    <div className="relative h-[630px] w-[1200px] bg-black overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/shooting-star-bg-desktop.png')`,
-        }}
+    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-6 p-8">
+      <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase">
+        opengraph-image preview · 1200 × 630
+      </p>
+
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/opengraph-image"
+        alt="OG image preview"
+        width={1200}
+        height={630}
+        style={{ maxWidth: "100%", height: "auto", display: "block" }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-
-      <div className="absolute bottom-16 right-16 text-right">
-        <h1
-          className="text-white text-7xl font-light mb-4 tracking-wide"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Dogukan Urker
-        </h1>
-        <p className="text-gray-300 text-2xl opacity-80">
-          software engineer @sensity.ai
-        </p>
-      </div>
+      <p className="text-zinc-600 text-xs font-mono">
+        source → app/src/app/opengraph-image.tsx
+      </p>
     </div>
   );
 }
