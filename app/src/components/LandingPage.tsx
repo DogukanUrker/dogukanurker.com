@@ -117,7 +117,7 @@ export default function LandingPage() {
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-5 md:px-10"
         style={{ backgroundColor: "var(--brand-cream)" }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <span
             className="text-sm font-medium tracking-tight"
             style={{ color: "var(--brand-ink)" }}
