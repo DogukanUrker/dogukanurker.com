@@ -70,6 +70,16 @@ export default function LandingPage() {
   const [cursorEnabled, setCursorEnabled] = useState(false);
   const shouldReduce = useReducedMotion();
 
+  // Set the html background to cream so mobile Safari's overscroll area
+  // matches the page instead of showing the default dark root background.
+  useEffect(() => {
+    const prev = document.documentElement.style.backgroundColor;
+    document.documentElement.style.backgroundColor = "#f3f1ea";
+    return () => {
+      document.documentElement.style.backgroundColor = prev;
+    };
+  }, []);
+
   // Detect mobile to push the name's hidden position further off-screen.
   // On small screens the text is smaller, so "108%" isn't enough to hide it
   // below the viewport edge — use a much larger translate instead.
