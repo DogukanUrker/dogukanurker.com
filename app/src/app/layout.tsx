@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 
@@ -14,6 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 const inter = Inter({ subsets: ["latin"] });
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin", "latin-ext"],
+  style: ["normal", "italic"],
+  display: "swap",
+  axes: ["opsz"],
+});
 
 export const viewport: Viewport = {
   themeColor: "#000000",
@@ -68,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${inter.className} antialiased`}
       >
         <AnalyticsProvider>{children}</AnalyticsProvider>
       </body>

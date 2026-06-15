@@ -4,13 +4,13 @@ import { Fragment, useEffect, useState } from "react";
 
 const cvStyles = `
   .cv-page {
-    --cv-bg: #0a0a0a;
-    --cv-bg-subtle: #111111;
-    --cv-fg: #fafafa;
-    --cv-fg-muted: #a0a0a0;
-    --cv-fg-dim: #6a6a6a;
-    --cv-accent: #fafafa;
-    --cv-border: #1f1f1f;
+    --cv-bg: var(--brand-cream);
+    --cv-bg-subtle: var(--brand-cream-subtle);
+    --cv-fg: var(--brand-ink);
+    --cv-fg-muted: var(--brand-muted);
+    --cv-fg-dim: var(--brand-dim);
+    --cv-accent: var(--brand-ink);
+    --cv-border: var(--brand-border);
     background-color: var(--cv-bg);
     color: var(--cv-fg);
     min-height: 100vh;
@@ -23,7 +23,7 @@ const cvStyles = `
   }
 
   .cv-name {
-    font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-style: italic;
     font-size: clamp(2.8rem, 8vw, 4.5rem);
     font-weight: 400;
@@ -34,7 +34,7 @@ const cvStyles = `
   }
 
   .cv-section-heading {
-    font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-size: 1.4rem;
     font-weight: 400;
     color: var(--cv-fg);
@@ -107,7 +107,7 @@ const cvStyles = `
     bottom: 32px;
     right: 32px;
     background: var(--cv-accent);
-    color: #0a0a0a;
+    color: var(--brand-cream);
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -484,10 +484,7 @@ export default function CVPage() {
           <hr className="cv-divider" />
           <section>
             <div style={{ marginBottom: "32px" }}>
-              <h2
-                className="cv-section-heading"
-                style={{ margin: "0 0 6px" }}
-              >
+              <h2 className="cv-section-heading" style={{ margin: "0 0 6px" }}>
                 Selected Projects
               </h2>
               <p className="cv-mono" style={{ color: "var(--cv-fg-dim)" }}>

@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Cream editorial palette ─────────────────────────────────── */
+:root {
+    --brand-cream: #f3f1ea;
+    --brand-cream-subtle: #eae6dc;
+    --brand-ink: #16140d;
+    --brand-muted: #5c5a52;
+    --brand-dim: #8a877e;
+    --brand-border: #dcd8cd;
+}
+
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 4rem;
