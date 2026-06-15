@@ -314,12 +314,6 @@ export default function CVPage() {
     setLoaded(true);
   }, []);
 
-  // Adds .cream-bg to <html> so globals.css can paint both html + body cream,
-  // fixing mobile Safari rubber-band overscroll showing the dark root bg.
-  useEffect(() => {
-    document.documentElement.classList.add("cream-bg");
-    return () => document.documentElement.classList.remove("cream-bg");
-  }, []);
 
   return (
     <>

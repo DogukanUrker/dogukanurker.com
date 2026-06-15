@@ -5,11 +5,7 @@ import {
 } from "@/lib/fetchRepos";
 import { ProjectDetailsClient } from "./project-details";
 import { notFound } from "next/navigation";
-import type { Viewport } from "next";
 
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
 
 interface PageProps {
   params: Promise<{

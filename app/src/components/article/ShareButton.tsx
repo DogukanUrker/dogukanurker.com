@@ -22,7 +22,8 @@ export function ShareButton({ url }: ShareButtonProps) {
   return (
     <button
       onClick={handleShare}
-      className="text-sm text-zinc-400 transition-colors hover:text-zinc-100"
+      className="text-sm transition-colors"
+      style={{ color: "var(--brand-muted)" }}
       aria-label="Share article"
     >
       {copied ? "Copied!" : "Share"}

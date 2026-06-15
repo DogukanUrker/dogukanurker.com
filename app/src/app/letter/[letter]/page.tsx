@@ -1,9 +1,4 @@
 import { notFound } from "next/navigation";
-import type { Viewport } from "next";
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
 
 interface PageProps {
   params: Promise<{

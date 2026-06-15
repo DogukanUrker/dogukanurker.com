@@ -17,7 +17,7 @@ export function ImageWithCaption({
 }: ImageWithCaptionProps) {
   return (
     <figure className="my-8">
-      <div className="overflow-hidden rounded-lg border border-zinc-800">
+      <div className="overflow-hidden rounded-lg border border-[var(--brand-border)]">
         <Image
           src={src}
           alt={alt}
@@ -27,7 +27,7 @@ export function ImageWithCaption({
         />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm italic text-zinc-500">
+        <figcaption className="mt-3 text-center text-sm italic text-[var(--brand-dim)]">
           {caption}
         </figcaption>
       )}

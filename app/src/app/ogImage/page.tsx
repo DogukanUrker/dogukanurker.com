@@ -3,8 +3,8 @@
 // This page itself is never indexed or shared; it just mirrors /opengraph-image.
 export default function OGImagePreview() {
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-6 p-8">
-      <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase">
+    <div className="min-h-screen bg-[var(--brand-cream)] flex flex-col items-center justify-center gap-6 p-8">
+      <p className="text-[var(--brand-muted)] text-xs font-mono tracking-widest uppercase">
         opengraph-image preview · 1200 × 630
       </p>
 
@@ -17,7 +17,7 @@ export default function OGImagePreview() {
         style={{ maxWidth: "100%", height: "auto", display: "block" }}
       />
 
-      <p className="text-zinc-600 text-xs font-mono">
+      <p className="text-[var(--brand-dim)] text-xs font-mono">
         source → app/src/app/opengraph-image.tsx
       </p>
     </div>

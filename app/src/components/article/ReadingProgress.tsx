@@ -35,7 +35,8 @@ export function ReadingProgress() {
     <div className="fixed top-0 left-0 right-0 z-50">
       <Progress
         value={progress}
-        className="h-1 rounded-none bg-zinc-900 [&>div]:bg-white/40 [&>div]:shadow-[0_0_10px_rgba(255,255,255,0.2)] [&>div]:transition-transform [&>div]:duration-150 [&>div]:ease-out"
+        className="h-1 rounded-none [&>div]:bg-[var(--brand-ink)]/40 [&>div]:transition-transform [&>div]:duration-150 [&>div]:ease-out"
+        style={{ backgroundColor: "var(--brand-cream-subtle)" }}
       />
     </div>
   );

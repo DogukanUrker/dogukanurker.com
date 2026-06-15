@@ -16,48 +16,46 @@ import { CodeBlock } from "@/components/mdx/CodeBlock";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { Metadata, Viewport } from "next";
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
+import { Metadata } from "next";
 import React from "react";
 
 const components = {
   ImageWithCaption,
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="mb-6 mt-8 text-4xl font-bold text-zinc-100" {...props} />
+    <h1 className="mb-6 mt-8 text-4xl font-bold" style={{ color: "var(--brand-ink)" }} {...props} />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mb-4 mt-8 text-3xl font-semibold text-zinc-100" {...props} />
+    <h2 className="mb-4 mt-8 text-3xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="mb-3 mt-6 text-2xl font-semibold text-zinc-200" {...props} />
+    <h3 className="mb-3 mt-6 text-2xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
   ),
   h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="mb-2 mt-4 text-xl font-semibold text-zinc-200" {...props} />
+    <h4 className="mb-2 mt-4 text-xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mb-4 leading-7 text-zinc-300" {...props} />
+    <p className="mb-4 leading-7" style={{ color: "var(--brand-muted)" }} {...props} />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="text-zinc-100 underline decoration-zinc-500/50 underline-offset-4 transition-colors hover:text-zinc-50 hover:decoration-zinc-400"
+      className="underline underline-offset-4 transition-colors"
+      style={{ color: "var(--brand-ink)", textDecorationColor: "var(--brand-border)" }}
       {...props}
     />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="mb-4 ml-6 list-disc space-y-2 text-zinc-300" {...props} />
+    <ul className="mb-4 ml-6 list-disc space-y-2" style={{ color: "var(--brand-muted)" }} {...props} />
   ),
   ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
-    <ol className="mb-4 ml-6 list-decimal space-y-2 text-zinc-300" {...props} />
+    <ol className="mb-4 ml-6 list-decimal space-y-2" style={{ color: "var(--brand-muted)" }} {...props} />
   ),
   li: (props: React.LiHTMLAttributes<HTMLLIElement>) => (
     <li className="leading-7" {...props} />
   ),
   blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="my-6 border-l-4 border-zinc-700 pl-6 italic text-zinc-400"
+      className="my-6 border-l-4 pl-6 italic"
+      style={{ borderColor: "var(--brand-border)", color: "var(--brand-dim)" }}
       {...props}
     />
   ),
@@ -68,7 +66,7 @@ const components = {
     if (!props.className) {
       return (
         <code
-          className="rounded bg-zinc-800 px-1.5 py-0.5 text-sm text-zinc-300"
+          className="rounded px-1.5 py-0.5 text-sm" style={{ backgroundColor: "var(--brand-cream-subtle)", color: "var(--brand-ink)" }}
           {...props}
         />
       );
@@ -82,21 +80,21 @@ const components = {
   ),
   th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="border border-zinc-800 bg-zinc-900 px-4 py-2 text-left font-semibold text-zinc-200"
+      className="border px-4 py-2 text-left font-semibold" style={{ borderColor: "var(--brand-border)", backgroundColor: "var(--brand-cream-subtle)", color: "var(--brand-ink)" }}
       {...props}
     />
   ),
   td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-    <td className="border border-zinc-800 px-4 py-2 text-zinc-300" {...props} />
+    <td className="border px-4 py-2" style={{ borderColor: "var(--brand-border)", color: "var(--brand-muted)" }} {...props} />
   ),
-  hr: () => <hr className="my-8 border-zinc-800" />,
+  hr: () => <hr className="my-8" style={{ borderColor: "var(--brand-border)" }} />,
   img: (props: React.ImgHTMLAttributes<HTMLImageElement> & { src: string }) => (
     <Image
       src={props.src}
       alt={props.alt || "Article image"}
       width={800}
       height={600}
-      className="my-6 rounded-lg border border-zinc-800"
+      className="my-6 rounded-lg border" style={{ borderColor: "var(--brand-border)" }}
     />
   ),
 };
@@ -185,14 +183,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const headings = extractHeadings(post.content);
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen" style={{ backgroundColor: "var(--brand-cream)" }}>
       <ReadingProgress />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <Link
             href="/article"
-            className="text-sm text-zinc-400 transition-colors hover:text-zinc-100"
+            className="text-sm transition-colors" style={{ color: "var(--brand-muted)" }}
           >
             Back to Articles
           </Link>
@@ -201,18 +199,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
 
         <header className="mb-12 space-y-6 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl" style={{ color: "var(--brand-ink)" }}>
             {post.title}
           </h1>
 
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm" style={{ color: "var(--brand-dim)" }}>
             {formatDate(post.date)} • {post.readingTime}
           </p>
         </header>
 
         {post.bannerImage && (
           <div className="mb-12">
-            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl border border-zinc-800/50 shadow-2xl">
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-2xl" style={{ border: "1px solid var(--brand-border)" }}>
               <Image
                 src={post.bannerImage}
                 alt={post.title}
@@ -220,14 +218,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 priority
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-cream)]/10 to-transparent" />
             </div>
           </div>
         )}
 
         <div className="flex gap-12">
           <article className="min-w-0 flex-1">
-            <div className="prose prose-invert max-w-none">
+            <div className="prose max-w-none">
               <MDXRemote
                 source={post.content}
                 components={components}

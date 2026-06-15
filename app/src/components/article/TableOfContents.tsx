@@ -78,7 +78,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <nav className="hidden xl:sticky xl:top-16 xl:block xl:max-h-[calc(100vh-5rem)] xl:overflow-y-auto">
       <div>
-        <h3 className="mb-4 text-sm font-semibold text-zinc-100">
+        <h3 className="mb-4 text-sm font-semibold text-[var(--brand-ink)]">
           On This Page
         </h3>
         <ul className="space-y-2 text-sm">
@@ -90,8 +90,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
               <li key={heading.id} style={{ paddingLeft }}>
                 <a
                   href={`#${heading.id}`}
-                  className={`block py-1 transition-colors hover:text-zinc-100 ${
-                    isActive ? "font-medium text-zinc-100" : "text-zinc-500"
+                  className={`block py-1 transition-colors hover:text-[var(--brand-ink)] ${
+                    isActive ? "font-medium text-[var(--brand-ink)]" : "text-[var(--brand-muted)]"
                   }`}
                   onClick={(e) => {
                     e.preventDefault();

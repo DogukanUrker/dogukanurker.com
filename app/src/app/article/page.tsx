@@ -1,11 +1,7 @@
 import { getAllPosts, formatDate } from "@/lib/article";
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata, Viewport } from "next";
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Articles",
@@ -44,17 +40,17 @@ export default async function ArticlesPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="min-h-screen bg-zinc-950 px-4 py-16 sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-16 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--brand-cream)" }}>
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl" style={{ color: "var(--brand-ink)" }}>
             Articles
           </h1>
         </div>
 
         {posts.length === 0 ? (
           <div className="flex min-h-[400px] items-center justify-center">
-            <p className="text-zinc-500">No posts yet. Check back soon!</p>
+            <p style={{ color: "var(--brand-muted)" }}>No posts yet. Check back soon!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
@@ -76,15 +72,15 @@ export default async function ArticlesPage() {
                     </div>
                   )}
 
-                  <h2 className="text-2xl font-semibold text-zinc-100 transition-colors group-hover:text-zinc-50">
+                  <h2 className="text-2xl font-semibold transition-colors" style={{ color: "var(--brand-ink)" }}>
                     {post.title}
                   </h2>
 
-                  <p className="line-clamp-2 text-base leading-relaxed text-zinc-400 group-hover:text-zinc-300">
+                  <p className="line-clamp-2 text-base leading-relaxed" style={{ color: "var(--brand-muted)" }}>
                     {post.description}
                   </p>
 
-                  <p className="text-sm text-zinc-500">
+                  <p className="text-sm" style={{ color: "var(--brand-dim)" }}>
                     {formatDate(post.date)} • {post.readingTime}
                   </p>
                 </article>

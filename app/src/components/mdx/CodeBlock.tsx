@@ -29,16 +29,16 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
   };
 
   return (
-    <div className="group relative my-6 overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900">
+    <div className="group relative my-6 overflow-x-auto rounded-lg border border-[var(--brand-border)] bg-[var(--brand-cream-subtle)]">
       <button
         onClick={handleCopy}
-        className="absolute right-3 top-3 z-10 rounded-md bg-zinc-800 p-2 opacity-0 transition-all hover:bg-zinc-700 group-hover:opacity-100"
+        className="absolute right-3 top-3 z-10 rounded-md border border-[var(--brand-border)] bg-[var(--brand-cream)] p-2 opacity-0 transition-all hover:bg-[var(--brand-cream-subtle)] group-hover:opacity-100"
         aria-label="Copy code"
       >
         {copied ? (
-          <Check className="h-4 w-4 text-green-400" />
+          <Check className="h-4 w-4 text-green-700" />
         ) : (
-          <Copy className="h-4 w-4 text-zinc-400" />
+          <Copy className="h-4 w-4 text-[var(--brand-muted)]" />
         )}
       </button>
       <pre className={`p-4 text-sm ${className || ""}`}>
