@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 
 // ── Next.js file-based OG image metadata ──────────────────────────────────
-export const alt = "Doğukan Ürker | Software Engineer";
+export const alt = "Doğukan Ürker | Full-Stack Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
