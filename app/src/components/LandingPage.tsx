@@ -70,14 +70,11 @@ export default function LandingPage() {
   const [cursorEnabled, setCursorEnabled] = useState(false);
   const shouldReduce = useReducedMotion();
 
-  // Set the html background to cream so mobile Safari's overscroll area
-  // matches the page instead of showing the default dark root background.
+  // Adds .cream-bg to <html> so globals.css can paint both html + body cream,
+  // fixing mobile Safari rubber-band overscroll showing the dark root bg.
   useEffect(() => {
-    const prev = document.documentElement.style.backgroundColor;
-    document.documentElement.style.backgroundColor = "#f3f1ea";
-    return () => {
-      document.documentElement.style.backgroundColor = prev;
-    };
+    document.documentElement.classList.add("cream-bg");
+    return () => document.documentElement.classList.remove("cream-bg");
   }, []);
 
   // Detect mobile to push the name's hidden position further off-screen.

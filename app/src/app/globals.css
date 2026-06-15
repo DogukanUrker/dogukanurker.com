@@ -17,6 +17,13 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 4rem;
+    /* Fallback so the dark root background never bleeds through overscroll */
+    background-color: #0a0a0f;
+}
+
+html.cream-bg,
+html.cream-bg body {
+    background-color: #f3f1ea;
 }
 
 body {
