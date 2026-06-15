@@ -3,33 +3,37 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 
 // ── Next.js file-based OG image metadata ──────────────────────────────────
-export const alt = "Doğukan Ürker | Software Engineer";
+export const alt = "Doğukan Ürker | Full-Stack Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// ── Design tokens — keep in sync with --brand-* CSS vars in globals.css ───
+// ── Design tokens ─────────────────────────────────────────────────────────
 const WHITE = "#ffffff";
 const INK = "#16140d";
 const MUTED = "#5c5a52";
 const DIM = "#8a877e";
+const HAIRLINE = "#dcd8cd"; // --brand-border
 
 // ── Copy — update here when the landing page copy changes ─────────────────
-const NAME = "Doğukan Ürker";
+const FIRST = "Doğukan";
+const LAST = "Ürker";
+const NAME = `${FIRST} ${LAST}`;
 const ROLE = "full-stack engineer @ sensity.ai";
 const LOCATION = "izmir, türkiye";
 
-// Photo column width (px). Adjust to taste.
-const PHOTO_WIDTH = 440;
+// Square portrait size (px). The photo is rendered as a square (no crop) to
+// match the landing hero — never a tall full-bleed strip.
+const PHOTO_SIZE = 430;
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
-// Fetch a glyph-subset of Fraunces Italic from Google Fonts.
-// The `text` param keeps the download small. Falls back to Georgia on error.
+// Fetch a glyph-subset of upright Fraunces from Google Fonts. The `text`
+// param keeps the download tiny. Falls back to Georgia on error.
 async function loadFraunces(): Promise<ArrayBuffer | null> {
   const subset = [NAME, ROLE, LOCATION].join(" ");
   try {
     const css = await fetch(
-      `https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&display=block&text=${encodeURIComponent(subset)}`,
+      `https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500&display=block&text=${encodeURIComponent(subset)}`,
       { headers: { "User-Agent": "Mozilla/5.0" } },
     ).then((r) => r.text());
     const fontUrl = css.match(/src: url\(([^)]+)\)/)?.[1];
@@ -40,8 +44,8 @@ async function loadFraunces(): Promise<ArrayBuffer | null> {
   }
 }
 
-// Read the portrait from the public folder and return a data-URI.
-// Returns null gracefully if the file doesn't exist yet.
+// Read the portrait from /public and return a data-URI. Returns null
+// gracefully if the file doesn't exist yet (image still renders, text-only).
 async function loadPhoto(): Promise<string | null> {
   try {
     const buf = await readFile(join(process.cwd(), "public", "dogukan.jpg"));
@@ -66,58 +70,91 @@ export default async function Image() {
         display: "flex",
         width: "100%",
         height: "100%",
+        alignItems: "center",
         backgroundColor: WHITE,
       }}
     >
-      {/* ── Left: name + role + location ──────────────────────────────── */}
+      {/* ── Left: stacked name + role + location ──────────────────────── */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 28,
           flex: 1,
-          padding: "72px 64px 72px 80px",
+          padding: "0 64px 0 88px",
         }}
       >
-        <span
+        {/* name — upright Fraunces, intentionally stacked on two lines to
+              echo the landing hero */}
+        <div
           style={{
-            fontFamily: serifStack,
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: 128,
-            color: INK,
-            lineHeight: 1.08,
-            letterSpacing: "-0.03em",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: 36,
           }}
         >
-          {NAME}
-        </span>
+          <span
+            style={{
+              fontFamily: serifStack,
+              fontWeight: 500,
+              fontSize: 122,
+              color: INK,
+              lineHeight: 0.92,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            {FIRST}
+          </span>
+          <span
+            style={{
+              fontFamily: serifStack,
+              fontWeight: 500,
+              fontSize: 122,
+              color: INK,
+              lineHeight: 0.92,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            {LAST}
+          </span>
+        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <span style={{ fontSize: 22, color: MUTED }}>{ROLE}</span>
-          <span style={{ fontSize: 17, color: DIM, letterSpacing: "0.04em" }}>
+        {/* role + location */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <span style={{ fontSize: 24, color: MUTED }}>{ROLE}</span>
+          <span style={{ fontSize: 18, color: DIM, letterSpacing: "0.04em" }}>
             {LOCATION}
           </span>
         </div>
       </div>
 
-      {/* ── Right: portrait photo ─────────────────────────────────────── */}
+      {/* ── Right: square grayscale portrait ──────────────────────────── */}
       {photoSrc && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={photoSrc}
-          alt=""
+        <div
           style={{
-            width: PHOTO_WIDTH,
-            height: 630,
-            objectFit: "cover",
-            objectPosition: "center top",
-            display: "block",
-            flexShrink: 0,
-            filter: "grayscale(100%)",
+            display: "flex",
+            alignItems: "center",
+            height: "100%",
+            paddingRight: 88,
           }}
-        />
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={photoSrc}
+            alt=""
+            width={PHOTO_SIZE}
+            height={PHOTO_SIZE}
+            style={{
+              width: PHOTO_SIZE,
+              height: PHOTO_SIZE,
+              objectFit: "cover",
+              objectPosition: "center",
+              display: "block",
+              flexShrink: 0,
+              filter: "grayscale(100%)",
+            }}
+          />
+        </div>
       )}
     </div>,
     {
@@ -127,8 +164,8 @@ export default async function Image() {
             {
               name: "Fraunces",
               data: frauncesData,
-              style: "italic",
-              weight: 400,
+              style: "normal",
+              weight: 500,
             },
           ]
         : [],
