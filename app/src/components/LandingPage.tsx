@@ -223,7 +223,7 @@ export default function LandingPage() {
             scrolls past the ğ glyph that bleeds in from the hero above. */}
         <span id="about" className="absolute top-24" aria-hidden />
         <motion.p
-          className="font-serif text-center max-w-[21ch]"
+          className="font-serif text-center max-w-[23ch]"
           style={
             {
               fontSize: "clamp(26px, 3.6vw, 54px)",
@@ -256,10 +256,12 @@ export default function LandingPage() {
               className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full"
             />
           </a>
-          {" — fastapi services, react frontends. off the clock i"}{" "}
+          {
+            " — owning features end to end: backend, frontend, tests, deploys. off the clock i"
+          }{" "}
           <strong className="font-semibold">build in public</strong>:
-          open-source tools, a homelab running local llms, and whatever i&apos;m
-          curious about.{" "}
+          open-source tools, a local-llm homelab, and whatever i&apos;m curious
+          about.{" "}
           <em style={{ color: "var(--brand-muted)" }}>
             coding since 12, still chasing the same feeling.
           </em>
