@@ -128,7 +128,12 @@ export default function LandingPage() {
       <nav
         aria-label="primary navigation"
         className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:py-5 md:px-10"
-        style={{ backgroundColor: "var(--brand-cream)" }}
+        style={{
+          backgroundColor: "rgba(243, 241, 234, 0.85)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(220, 216, 205, 0.6)",
+        }}
       >
         <div className="flex items-center gap-4">
           <span
