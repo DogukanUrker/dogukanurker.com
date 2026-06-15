@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     "web apps",
   ],
   openGraph: {
-    title: "Doğukan Ürker | Software Engineer",
+    title: "Doğukan Ürker | Full-Stack Engineer",
     description: "Software engineer building modern web applications.",
     url: "https://dogukanurker.com",
     siteName: "Doğukan Ürker Portfolio",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@dogukanurker",
-    title: "Doğukan Ürker | Software Engineer",
+    title: "Doğukan Ürker | Full-Stack Engineer",
     description: "Software engineer building modern web applications.",
     // twitter:image is auto-generated from app/src/app/opengraph-image.tsx
   },
