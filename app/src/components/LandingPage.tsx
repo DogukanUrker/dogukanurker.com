@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
@@ -70,6 +70,18 @@ export default function LandingPage() {
   const [cursorEnabled, setCursorEnabled] = useState(false);
   const shouldReduce = useReducedMotion();
 
+  // Detect mobile to push the name's hidden position further off-screen.
+  // On small screens the text is smaller, so "108%" isn't enough to hide it
+  // below the viewport edge — use a much larger translate instead.
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
   // Cubic bezier typed as a tuple — required by framer-motion's Easing type
   const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -84,8 +96,9 @@ export default function LandingPage() {
   // y-translate on the h1 gives the physical rise feel.
   // The clip lives on the wrapper (below) so it can open its top beyond
   // the wrapper’s own box — giving the accents room without a state toggle.
+  // On mobile we use a larger translate so the text starts fully off-screen.
   const nameVariants = {
-    hidden: { y: "108%" },
+    hidden: { y: isMobile ? "250%" : "108%" },
     visible: {
       y: "0%",
       transition: { duration: 1.0, ease: expo, delay: 0.25 },
