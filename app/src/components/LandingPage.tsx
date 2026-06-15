@@ -171,7 +171,7 @@ export default function LandingPage() {
              tall diacritics (ğ / ü) are never clipped at rest. */}
         <div
           className={`absolute left-0 right-0 pointer-events-none
-            bottom-10 sm:-bottom-2
+            bottom-5 sm:-bottom-2
             ${
               nameRevealed || shouldReduce
                 ? "overflow-visible"
