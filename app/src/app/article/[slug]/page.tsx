@@ -16,7 +16,11 @@ import { CodeBlock } from "@/components/mdx/CodeBlock";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+};
 import React from "react";
 
 const components = {
