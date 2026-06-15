@@ -1,7 +1,11 @@
 import { getAllPosts, formatDate } from "@/lib/article";
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+};
 
 export const metadata: Metadata = {
   title: "Articles",
