@@ -176,10 +176,10 @@ export default function LandingPage() {
           // -600 px sides allow the name to bleed past viewport edges.
           initial={
             shouldReduce
-              ? { clipPath: "inset(-30px -600px 0px -600px)" }
-              : { clipPath: "inset(0px -600px 0px -600px)" }
+              ? { clipPath: "inset(-30px -600px -40px -600px)" }
+              : { clipPath: "inset(0px -600px -40px -600px)" }
           }
-          animate={{ clipPath: "inset(-30px -600px 0px -600px)" }}
+          animate={{ clipPath: "inset(-30px -600px -40px -600px)" }}
           transition={{ duration: 1.25, ease: "linear" }}
           aria-hidden
         >
