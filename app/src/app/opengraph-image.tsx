@@ -12,9 +12,7 @@ const WHITE = "#ffffff";
 const INK = "#16140d";
 const MUTED = "#5c5a52";
 const DIM = "#8a877e";
-const HAIRLINE = "#dcd8cd"; // --brand-border
 
-// ── Copy — update here when the landing page copy changes ─────────────────
 const FIRST = "Doğukan";
 const LAST = "Ürker";
 const NAME = `${FIRST} ${LAST}`;
@@ -90,6 +88,7 @@ export default async function Image() {
           style={{
             display: "flex",
             flexDirection: "column",
+            gap: 10,
             marginBottom: 36,
           }}
         >
