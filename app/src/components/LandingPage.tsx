@@ -83,10 +83,13 @@ export default function LandingPage() {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  // Cubic bezier typed as a tuple — required by framer-motion's Easing type
+  // Cubic bezier typed as a tuple — required by framer-motion’s Easing type
   const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-  // Portrait and nav links both start 0.5 s after page load.
+  // Overdamped spring for Y-axis entrances — natural deceleration, no bounce.
+  const spring = { type: "spring" as const, stiffness: 100, damping: 22 };
+
+  // Portrait: clipPath reveal uses duration-based easing to avoid spring overshoot on clip edges.
   const portraitVariants = {
     hidden: { clipPath: "inset(100% 0% 0% 0%)" },
     visible: {
@@ -95,43 +98,40 @@ export default function LandingPage() {
     },
   };
 
-  // y-translate on the h1 gives the physical rise feel.
-  // The clip lives on the wrapper (below) so it can open its top beyond
-  // the wrapper’s own box — giving the accents room without a state toggle.
-  // On mobile we use a larger translate so the text starts fully off-screen.
-  // Starts immediately with the navbar (delay: 0).
+  // Hero name rises from below with spring physics for a physical, weighted feel.
+  // On mobile we use a larger initial offset so the text starts fully off-screen.
   const nameVariants = {
     hidden: { y: isMobile ? "250%" : "108%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.3, ease: expo, delay: 0 },
+      transition: { ...spring, delay: 0 },
     },
   };
 
+  // Scroll-triggered intro — expo easing consistent with all other animations.
   const introVariants = {
     hidden: { opacity: 0, y: 28 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.9, ease: "easeOut" as const },
+      transition: { duration: 0.9, ease: expo },
     },
   };
 
-  // Navbar slides in from the top immediately on load (same time as hero name).
+  // Navbar slides in from the top with spring physics, same wave as the hero name.
   const navVariants = {
     hidden: { y: "-100%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.3, ease: expo, delay: 0 },
+      transition: { ...spring, delay: 0 },
     },
   };
 
-  // Nav links (about / resume) fade in 0.5 s after load, same wave as the portrait.
+  // Nav links: opacity-only fade — the nav slide already provides directional context.
   const navLinksVariants = {
-    hidden: { opacity: 0, y: -10 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: { duration: 0.9, ease: expo, delay: 0.5 },
     },
   };
@@ -237,7 +237,7 @@ export default function LandingPage() {
               : { clipPath: "inset(0px -600px -40px -600px)" }
           }
           animate={{ clipPath: "inset(-30px -600px -40px -600px)" }}
-          transition={{ duration: 1.6, ease: "linear" }}
+          transition={{ duration: 1.6, ease: expo }}
           aria-hidden
         >
           <motion.h1
@@ -262,6 +262,32 @@ export default function LandingPage() {
             Doğukan Ürker
           </motion.h1>
         </motion.div>
+
+        {/* Scroll cue — animated fill/drain line on the left, desktop only */}
+        {!shouldReduce && (
+          <motion.div
+            className="absolute left-6 md:left-10 bottom-12 hidden sm:block pointer-events-none select-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
+            aria-hidden
+          >
+            <div className="w-px h-12 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                style={{ backgroundColor: "var(--brand-dim)" }}
+                animate={{ y: ["-100%", "0%", "0%", "100%"] }}
+                transition={{
+                  duration: 2.2,
+                  times: [0, 0.35, 0.65, 1],
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 0.5,
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
       </section>
 
       {/* ── Intro ────────────────────────────────────────────────────────── */}
