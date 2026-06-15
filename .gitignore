@@ -43,3 +43,4 @@ token.txt
 .idea
 app/const.ts
 app/bun.lock
+/.claude
