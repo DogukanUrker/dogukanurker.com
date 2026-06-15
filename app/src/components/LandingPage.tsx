@@ -115,6 +115,14 @@ export default function LandingPage() {
     },
   };
 
+  const navVariants = {
+    hidden: { y: "-100%" },
+    visible: {
+      y: "0%",
+      transition: { duration: 1.0, ease: expo, delay: 0.25 },
+    },
+  };
+
   return (
     <main
       className={`relative w-full min-h-screen overflow-x-hidden${cursorEnabled ? " cursor-none" : ""}`}
@@ -126,7 +134,7 @@ export default function LandingPage() {
       <Cursor onEnable={setCursorEnabled} />
 
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <nav
+      <motion.nav
         aria-label="primary navigation"
         className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:py-5 md:px-10"
         style={{
@@ -134,6 +142,9 @@ export default function LandingPage() {
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
         }}
+        variants={navVariants}
+        initial={shouldReduce ? "visible" : "hidden"}
+        animate="visible"
       >
         <div className="flex items-center gap-4">
           <span
@@ -164,7 +175,7 @@ export default function LandingPage() {
             sensity.ai
           </UnderlineLink>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative h-[100svh] flex flex-col items-center justify-center">
