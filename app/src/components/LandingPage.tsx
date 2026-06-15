@@ -114,7 +114,7 @@ export default function LandingPage() {
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
       <nav
         aria-label="primary navigation"
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-5 md:px-10"
+        className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:py-5 md:px-10"
         style={{ backgroundColor: "var(--brand-cream)" }}
       >
         <div className="flex items-center gap-4">
@@ -135,6 +135,15 @@ export default function LandingPage() {
         <div className="flex items-center gap-6">
           <UnderlineLink href="#about">about</UnderlineLink>
           <UnderlineLink href="/cv">resume</UnderlineLink>
+        </div>
+        {/* Mobile-only role subtitle — sits below the first row */}
+        <div
+          className="w-full mt-1 md:hidden text-xs tracking-wide leading-relaxed"
+          style={{ color: "var(--brand-muted)" }}
+        >
+          full-stack engineer
+          <br />@{" "}
+          <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
         </div>
       </nav>
 
