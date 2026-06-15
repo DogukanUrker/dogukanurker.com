@@ -172,7 +172,7 @@ export default function LandingPage() {
              room at rest. Both transitions finish at the same time so the
              clip is already open when the text lands — no pop. */}
         <motion.div
-          className="absolute left-0 right-0 pointer-events-none bottom-10 sm:-bottom-2"
+          className="absolute left-0 right-0 pointer-events-none bottom-2 sm:-bottom-2"
           // -600 px sides allow the name to bleed past viewport edges.
           initial={
             shouldReduce
