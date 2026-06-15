@@ -314,6 +314,16 @@ export default function CVPage() {
     setLoaded(true);
   }, []);
 
+  // Set the html background to cream so mobile Safari's overscroll area
+  // matches the page instead of showing the default dark root background.
+  useEffect(() => {
+    const prev = document.documentElement.style.backgroundColor;
+    document.documentElement.style.backgroundColor = "#f3f1ea";
+    return () => {
+      document.documentElement.style.backgroundColor = prev;
+    };
+  }, []);
+
   return (
     <>
       <style>{cvStyles}</style>
