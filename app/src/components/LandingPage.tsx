@@ -165,7 +165,7 @@ export default function LandingPage() {
 
   return (
     <main
-      className={`relative w-full min-h-screen overflow-x-hidden${cursorEnabled ? " cursor-none" : ""}`}
+      className={`relative w-full min-h-screen overflow-x-clip${cursorEnabled ? " cursor-none" : ""}`}
       style={{
         backgroundColor: "var(--brand-cream)",
         color: "var(--brand-ink)",
@@ -223,7 +223,7 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative h-[100svh] flex flex-col items-center justify-center">
+      <section className="sticky top-0 h-[100svh] flex flex-col items-center justify-center">
         {/* Portrait */}
         <div
           className="group relative z-10"
@@ -317,7 +317,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Intro ────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
+      <section
+        className="relative z-10 min-h-screen flex items-center justify-center px-6 py-24"
+        style={{
+          backgroundColor: "var(--brand-cream)",
+          boxShadow: "0 -32px 80px 0 rgba(22, 20, 13, 0.07)",
+        }}
+      >
         {/* Offset anchor: 96 px into the section so clicking "about" in the nav
             scrolls past the ğ glyph that bleeds in from the hero above. */}
         <span id="about" className="absolute top-24" aria-hidden />
