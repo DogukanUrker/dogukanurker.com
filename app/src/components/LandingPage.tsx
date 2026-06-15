@@ -141,9 +141,10 @@ export default function LandingPage() {
           className="w-full mt-1 md:hidden text-xs tracking-wide leading-relaxed"
           style={{ color: "var(--brand-muted)" }}
         >
-          full-stack engineer
-          <br />@{" "}
-          <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
+          full-stack engineer @{" "}
+          <UnderlineLink href="https://sensity.ai" className="text-xs">
+            sensity.ai
+          </UnderlineLink>
         </div>
       </nav>
 
