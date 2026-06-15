@@ -319,10 +319,7 @@ export default function LandingPage() {
       {/* ── Intro ────────────────────────────────────────────────────────── */}
       <section
         className="relative z-10 min-h-screen flex items-center justify-center px-6 py-24"
-        style={{
-          backgroundColor: "var(--brand-cream)",
-          boxShadow: "0 -32px 80px 0 rgba(22, 20, 13, 0.07)",
-        }}
+        style={{ backgroundColor: "var(--brand-cream)" }}
       >
         {/* Offset anchor: 96 px into the section so clicking "about" in the nav
             scrolls past the ğ glyph that bleeds in from the hero above. */}
@@ -375,9 +372,9 @@ export default function LandingPage() {
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <motion.footer
-        className="flex flex-col items-center gap-3 pb-10 px-6
+        className="relative z-10 flex flex-col items-center gap-3 pb-10 px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10"
-        style={{ color: "var(--brand-muted)" }}
+        style={{ color: "var(--brand-muted)", backgroundColor: "var(--brand-cream)" }}
         variants={footerVariants}
         initial={shouldReduce ? "visible" : "hidden"}
         whileInView="visible"
