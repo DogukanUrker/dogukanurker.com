@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import getClientPromise from "@/lib/mongodb";
 import { headers } from "next/headers";
 
+export const maxDuration = 60;
+
 interface AnalyticsData {
   userId: string;
   sessionId: string;

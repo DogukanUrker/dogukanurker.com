@@ -1,6 +1,9 @@
 import { MongoClient } from "mongodb";
 
-const options = {};
+const options = {
+  family: 4,
+  serverSelectionTimeoutMS: 10000,
+};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -12,7 +15,9 @@ function getClientPromise(): Promise<MongoClient> {
 
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
+    throw new Error(
+      "Please define the MONGODB_URI environment variable inside .env.local",
+    );
   }
 
   if (process.env.NODE_ENV === "development") {
