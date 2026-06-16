@@ -518,7 +518,7 @@ export default function LandingPage() {
               variants={portraitVariants}
             >
               <Image
-                src="/me.webp"
+                src="/me.jpg"
                 alt="Doğukan Ürker"
                 fill
                 priority
