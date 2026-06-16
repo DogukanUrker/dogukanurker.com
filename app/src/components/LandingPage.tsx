@@ -358,16 +358,16 @@ export default function LandingPage() {
     restDelta: 0.001,
   });
 
-  const footerLocationOpacity = useTransform(smoothFooterProgress, [0, 0.5], [0, 1]);
-  const footerLocationY = useTransform(smoothFooterProgress, [0, 0.5], [16, 0]);
-  const footerMailOpacity = useTransform(smoothFooterProgress, [0.1, 0.6], [0, 1]);
-  const footerMailY = useTransform(smoothFooterProgress, [0.1, 0.6], [16, 0]);
-  const footerGithubOpacity = useTransform(smoothFooterProgress, [0.2, 0.7], [0, 1]);
-  const footerGithubY = useTransform(smoothFooterProgress, [0.2, 0.7], [16, 0]);
-  const footerTwitterOpacity = useTransform(smoothFooterProgress, [0.3, 0.8], [0, 1]);
-  const footerTwitterY = useTransform(smoothFooterProgress, [0.3, 0.8], [16, 0]);
-  const footerLinkedinOpacity = useTransform(smoothFooterProgress, [0.4, 0.9], [0, 1]);
-  const footerLinkedinY = useTransform(smoothFooterProgress, [0.4, 0.9], [16, 0]);
+  const footerLocationOpacity = useTransform(smoothFooterProgress, [0, 0.3], [0, 1]);
+  const footerLocationY = useTransform(smoothFooterProgress, [0, 0.3], [16, 0]);
+  const footerMailOpacity = useTransform(smoothFooterProgress, [0.05, 0.35], [0, 1]);
+  const footerMailY = useTransform(smoothFooterProgress, [0.05, 0.35], [16, 0]);
+  const footerGithubOpacity = useTransform(smoothFooterProgress, [0.1, 0.4], [0, 1]);
+  const footerGithubY = useTransform(smoothFooterProgress, [0.1, 0.4], [16, 0]);
+  const footerTwitterOpacity = useTransform(smoothFooterProgress, [0.15, 0.45], [0, 1]);
+  const footerTwitterY = useTransform(smoothFooterProgress, [0.15, 0.45], [16, 0]);
+  const footerLinkedinOpacity = useTransform(smoothFooterProgress, [0.2, 0.5], [0, 1]);
+  const footerLinkedinY = useTransform(smoothFooterProgress, [0.2, 0.5], [16, 0]);
 
   // memoized dynamic name variants to prevent recalculation shifts on re-renders
   const nameWrapperVariants = useMemo(
