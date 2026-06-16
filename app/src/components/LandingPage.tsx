@@ -22,7 +22,12 @@ interface UnderlineLinkProps {
   className?: string;
 }
 
-function UnderlineLink({ href, onClick, children, className = "" }: UnderlineLinkProps) {
+function UnderlineLink({
+  href,
+  onClick,
+  children,
+  className = "",
+}: UnderlineLinkProps) {
   const base =
     "group relative inline-flex items-center text-sm tracking-wide " +
     "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
@@ -188,7 +193,7 @@ function Word({ word, index, total, progress, shouldReduce }: WordProps) {
           viewBox="0 0 200 200"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="inline-block transition-colors duration-300"
+          className="inline-block transition-colors duration-300 relative top-[0.1em]"
         >
           <path
             d="M122 130H71.5C70.67 130 70 129.33 70 128.5V77.9999C70 73.5799 73.58 69.9999 78 69.9999H128.5C129.33 69.9999 130 70.6699 130 71.4999V122C130 126.42 126.42 130 122 130Z"
@@ -268,7 +273,6 @@ const portraitVariants = {
   },
 };
 
-
 interface HeroNameProps {
   shouldReduce: boolean | null;
 }
@@ -283,13 +287,16 @@ function HeroName({ shouldReduce }: HeroNameProps) {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  const nameVariants = useMemo(() => ({
-    hidden: { y: isMobile ? "250%" : "108%" },
-    visible: {
-      y: "0%",
-      transition: { ...spring },
-    },
-  }), [isMobile]);
+  const nameVariants = useMemo(
+    () => ({
+      hidden: { y: isMobile ? "250%" : "108%" },
+      visible: {
+        y: "0%",
+        transition: { ...spring },
+      },
+    }),
+    [isMobile],
+  );
 
   return (
     <motion.div
@@ -376,16 +383,44 @@ export default function LandingPage() {
     restDelta: 0.001,
   });
 
-  const footerLocationOpacity = useTransform(smoothFooterProgress, [0, 0.3], [0, 1]);
+  const footerLocationOpacity = useTransform(
+    smoothFooterProgress,
+    [0, 0.3],
+    [0, 1],
+  );
   const footerLocationY = useTransform(smoothFooterProgress, [0, 0.3], [16, 0]);
-  const footerMailOpacity = useTransform(smoothFooterProgress, [0.05, 0.35], [0, 1]);
+  const footerMailOpacity = useTransform(
+    smoothFooterProgress,
+    [0.05, 0.35],
+    [0, 1],
+  );
   const footerMailY = useTransform(smoothFooterProgress, [0.05, 0.35], [16, 0]);
-  const footerGithubOpacity = useTransform(smoothFooterProgress, [0.1, 0.4], [0, 1]);
+  const footerGithubOpacity = useTransform(
+    smoothFooterProgress,
+    [0.1, 0.4],
+    [0, 1],
+  );
   const footerGithubY = useTransform(smoothFooterProgress, [0.1, 0.4], [16, 0]);
-  const footerTwitterOpacity = useTransform(smoothFooterProgress, [0.15, 0.45], [0, 1]);
-  const footerTwitterY = useTransform(smoothFooterProgress, [0.15, 0.45], [16, 0]);
-  const footerLinkedinOpacity = useTransform(smoothFooterProgress, [0.2, 0.5], [0, 1]);
-  const footerLinkedinY = useTransform(smoothFooterProgress, [0.2, 0.5], [16, 0]);
+  const footerTwitterOpacity = useTransform(
+    smoothFooterProgress,
+    [0.15, 0.45],
+    [0, 1],
+  );
+  const footerTwitterY = useTransform(
+    smoothFooterProgress,
+    [0.15, 0.45],
+    [16, 0],
+  );
+  const footerLinkedinOpacity = useTransform(
+    smoothFooterProgress,
+    [0.2, 0.5],
+    [0, 1],
+  );
+  const footerLinkedinY = useTransform(
+    smoothFooterProgress,
+    [0.2, 0.5],
+    [16, 0],
+  );
 
   // memoized dynamic name variants to prevent recalculation shifts on re-renders
   const nameWrapperVariants = useMemo(
@@ -536,7 +571,10 @@ export default function LandingPage() {
         </motion.section>
       </motion.div>
 
-      <section id="about-mobile" className="relative min-h-[80dvh] sm:min-h-dvh flex items-center justify-center px-6 py-24">
+      <section
+        id="about-mobile"
+        className="relative min-h-[80dvh] sm:min-h-dvh flex items-center justify-center px-6 py-24"
+      >
         <motion.p
           ref={paragraphRef}
           className="font-serif text-center max-w-[23ch]"
@@ -573,52 +611,69 @@ export default function LandingPage() {
       >
         <motion.span
           className="text-sm"
-          style={shouldReduce ? undefined : {
-            opacity: footerLocationOpacity,
-            y: footerLocationY,
-          }}
+          style={
+            shouldReduce
+              ? undefined
+              : {
+                  opacity: footerLocationOpacity,
+                  y: footerLocationY,
+                }
+          }
         >
           izmir, türkiye
         </motion.span>
-        <nav
-          aria-label="social links"
-          className="flex items-center gap-5"
-        >
+        <nav aria-label="social links" className="flex items-center gap-5">
           <motion.span
-            style={shouldReduce ? undefined : {
-              opacity: footerMailOpacity,
-              y: footerMailY,
-            }}
+            style={
+              shouldReduce
+                ? undefined
+                : {
+                    opacity: footerMailOpacity,
+                    y: footerMailY,
+                  }
+            }
           >
             <UnderlineLink href="mailto:dogukanurker@icloud.com">
               mail
             </UnderlineLink>
           </motion.span>
           <motion.span
-            style={shouldReduce ? undefined : {
-              opacity: footerGithubOpacity,
-              y: footerGithubY,
-            }}
+            style={
+              shouldReduce
+                ? undefined
+                : {
+                    opacity: footerGithubOpacity,
+                    y: footerGithubY,
+                  }
+            }
           >
             <UnderlineLink href="https://github.com/dogukanurker">
               github
             </UnderlineLink>
           </motion.span>
           <motion.span
-            style={shouldReduce ? undefined : {
-              opacity: footerTwitterOpacity,
-              y: footerTwitterY,
-            }}
+            style={
+              shouldReduce
+                ? undefined
+                : {
+                    opacity: footerTwitterOpacity,
+                    y: footerTwitterY,
+                  }
+            }
           >
             <UnderlineLink href="https://twitter.com/dogukanurker">
               twitter
             </UnderlineLink>
           </motion.span>
           <motion.span
-            style={shouldReduce ? undefined : {
-              opacity: footerLinkedinOpacity,
-              y: footerLinkedinY,
-            }}
+            style={
+              shouldReduce
+                ? undefined
+                : {
+                    opacity: footerLinkedinOpacity,
+                    y: footerLinkedinY,
+                  }
+            }
           >
             <UnderlineLink href="https://linkedin.com/in/dogukanurker">
               linkedin
