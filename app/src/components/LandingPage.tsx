@@ -486,8 +486,7 @@ export default function LandingPage() {
         </motion.section>
       </motion.div>
 
-      {/* ── Intro ────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-dvh flex items-center justify-center px-6 py-24">
+      <section id="about" className="relative min-h-[80dvh] flex items-center justify-center px-6 py-24">
         <motion.p
           ref={paragraphRef}
           className="font-serif text-center max-w-[23ch]"
@@ -516,7 +515,6 @@ export default function LandingPage() {
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer
-        id="about"
         className="flex flex-col items-center gap-3 pb-[calc(3rem+env(safe-area-inset-bottom))] px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
         style={{ color: "var(--brand-muted)" }}
