@@ -336,9 +336,6 @@ export default function LandingPage() {
     }
   };
 
-  const { scrollY } = useScroll();
-  const cueOpacity = useTransform(scrollY, [0, 100], [1, 0]);
-
   const { scrollYProgress: heroScrollProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -545,29 +542,6 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
 
-          {/* Scroll cue - fades in at top, fades out on scroll */}
-          {!shouldReduce && (
-            <motion.div
-              className="absolute left-6 md:left-10 bottom-12 hidden sm:block pointer-events-none select-none"
-              style={{ opacity: cueOpacity }}
-              aria-hidden
-            >
-              <div className="w-px h-12 overflow-hidden">
-                <motion.div
-                  className="w-full h-full"
-                  style={{ backgroundColor: "var(--brand-dim)" }}
-                  animate={{ y: ["-100%", "0%", "0%", "100%"] }}
-                  transition={{
-                    duration: 2.2,
-                    times: [0, 0.35, 0.65, 1],
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 0.5,
-                  }}
-                />
-              </div>
-            </motion.div>
-          )}
         </motion.section>
       </motion.div>
 
