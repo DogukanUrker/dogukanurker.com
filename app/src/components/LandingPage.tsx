@@ -456,7 +456,7 @@ export default function LandingPage() {
         {/* ── Nav ─────────────────────────────────────────────────────────── */}
         <motion.nav
           aria-label="primary navigation"
-          className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:py-5 md:px-10"
+          className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:py-5 md:px-10 select-none"
           style={{
             backgroundColor: "rgba(243, 241, 234, 0.85)",
             backdropFilter: "blur(12px)",
@@ -504,7 +504,7 @@ export default function LandingPage() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <motion.section
           ref={heroRef}
-          className="relative h-[100svh] flex flex-col items-center justify-center"
+          className="relative h-[100svh] flex flex-col items-center justify-center select-none"
           variants={heroSectionVariants}
         >
           {/* Portrait */}
@@ -606,7 +606,7 @@ export default function LandingPage() {
         id="about-desktop"
         ref={footerRef}
         className="flex flex-col items-center gap-3 pb-[calc(3rem+env(safe-area-inset-bottom))] px-6
-          sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
+          sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10 select-none"
         style={{ color: "var(--brand-muted)" }}
       >
         <motion.span
