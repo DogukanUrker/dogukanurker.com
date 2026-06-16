@@ -33,8 +33,8 @@ export function Cursor({ onEnable }: CursorProps) {
 
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.5 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.5 });
+  const sx = useSpring(x, { stiffness: 750, damping: 44, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 750, damping: 44, mass: 0.4 });
 
   // velocity tracking state (mutable refs to avoid re-renders)
   const trail = useRef<{ t: number; x: number; y: number }[]>([]);
@@ -42,15 +42,15 @@ export function Cursor({ onEnable }: CursorProps) {
   const rafId = useRef<number | null>(null);
   const scaleMotion = useMotionValue(1);
   const scaleSpring = useSpring(scaleMotion, {
-    stiffness: 300,
-    damping: 25,
-    mass: 0.4,
+    stiffness: 450,
+    damping: 28,
+    mass: 0.3,
   });
 
   const variantScale = useMotionValue(1);
   const variantScaleSpring = useSpring(variantScale, {
-    stiffness: 300,
-    damping: 25,
+    stiffness: 550,
+    damping: 30,
   });
 
   const scale = useTransform(
