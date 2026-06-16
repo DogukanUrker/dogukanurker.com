@@ -46,7 +46,7 @@ async function loadFraunces(): Promise<ArrayBuffer | null> {
 // gracefully if the file doesn't exist yet (image still renders, text-only).
 async function loadPhoto(): Promise<string | null> {
   try {
-    const buf = await readFile(join(process.cwd(), "public", "dogukan.jpg"));
+    const buf = await readFile(join(process.cwd(), "public", "me.webp"));
     return `data:image/jpeg;base64,${buf.toString("base64")}`;
   } catch {
     return null;

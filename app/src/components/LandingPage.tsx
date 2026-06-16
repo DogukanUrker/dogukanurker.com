@@ -518,7 +518,7 @@ export default function LandingPage() {
               variants={portraitVariants}
             >
               <Image
-                src="/dogukan.jpg"
+                src="/me.webp"
                 alt="Doğukan Ürker"
                 fill
                 priority
@@ -541,7 +541,6 @@ export default function LandingPage() {
               <HeroName shouldReduce={shouldReduce} />
             </motion.div>
           </motion.div>
-
         </motion.section>
       </motion.div>
 
