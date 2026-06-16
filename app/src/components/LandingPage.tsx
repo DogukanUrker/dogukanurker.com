@@ -165,7 +165,7 @@ export default function LandingPage() {
 
   return (
     <main
-      className={`relative w-full min-h-screen overflow-x-clip${cursorEnabled ? " cursor-none" : ""}`}
+      className={`relative w-full min-h-screen overflow-x-hidden${cursorEnabled ? " cursor-none" : ""}`}
       style={{
         backgroundColor: "var(--brand-cream)",
         color: "var(--brand-ink)",
@@ -223,7 +223,7 @@ export default function LandingPage() {
       </motion.nav>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="sticky top-0 h-[100svh] flex flex-col items-center justify-center">
+      <section className="relative h-[100svh] flex flex-col items-center justify-center">
         {/* Portrait */}
         <div
           className="group relative z-10"
@@ -317,10 +317,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Intro ────────────────────────────────────────────────────────── */}
-      <section
-        className="relative z-10 min-h-screen flex items-center justify-center px-6 py-24"
-        style={{ backgroundColor: "var(--brand-cream)" }}
-      >
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
         {/* Offset anchor: 96 px into the section so clicking "about" in the nav
             scrolls past the ğ glyph that bleeds in from the hero above. */}
         <span id="about" className="absolute top-24" aria-hidden />
@@ -372,9 +369,9 @@ export default function LandingPage() {
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <motion.footer
-        className="relative z-10 flex flex-col items-center gap-3 pb-10 px-6
+        className="flex flex-col items-center gap-3 pb-10 px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10"
-        style={{ color: "var(--brand-muted)", backgroundColor: "var(--brand-cream)" }}
+        style={{ color: "var(--brand-muted)" }}
         variants={footerVariants}
         initial={shouldReduce ? "visible" : "hidden"}
         whileInView="visible"
