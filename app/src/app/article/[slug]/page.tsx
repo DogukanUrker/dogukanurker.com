@@ -116,7 +116,7 @@ export async function generateMetadata({
   }
 
   const articleUrl = `https://dogukanurker.com/article/${slug}`;
-  const ogImage = post.bannerImage || "https://dogukanurker.com/ogImage.png";
+  const ogImage = post.bannerImage || "https://dogukanurker.com/opengraph-image";
 
   return {
     title: post.title,

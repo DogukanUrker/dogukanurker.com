@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: 'https://dogukanurker.com/ogImage.png',
+        url: 'https://dogukanurker.com/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'Dogukan Urker - Articles',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Articles | Dogukan Urker",
     description: "Explore articles about software engineering, web development, and programming best practices.",
-    images: ['https://dogukanurker.com/ogImage.png'],
+    images: ['https://dogukanurker.com/opengraph-image'],
     creator: '@dogukanurker',
     site: '@dogukanurker',
   },
