@@ -250,19 +250,6 @@ const portraitVariants = {
   },
 };
 
-// footer: stagger location + each social link in from below as the section enters view.
-const footerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-const footerItemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: expo },
-  },
-};
 
 interface HeroNameProps {
   shouldReduce: boolean | null;
@@ -313,6 +300,7 @@ export default function LandingPage() {
 
   const heroRef = useRef<HTMLElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
 
   const scrollToAbout = () => {
     const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
@@ -358,6 +346,28 @@ export default function LandingPage() {
     damping: 30,
     restDelta: 0.001,
   });
+
+  const { scrollYProgress: footerScrollProgress } = useScroll({
+    target: footerRef,
+    offset: ["start end", "end end"],
+  });
+
+  const smoothFooterProgress = useSpring(footerScrollProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const footerLocationOpacity = useTransform(smoothFooterProgress, [0, 0.3], [0, 1]);
+  const footerLocationY = useTransform(smoothFooterProgress, [0, 0.3], [16, 0]);
+  const footerMailOpacity = useTransform(smoothFooterProgress, [0.05, 0.35], [0, 1]);
+  const footerMailY = useTransform(smoothFooterProgress, [0.05, 0.35], [16, 0]);
+  const footerGithubOpacity = useTransform(smoothFooterProgress, [0.1, 0.4], [0, 1]);
+  const footerGithubY = useTransform(smoothFooterProgress, [0.1, 0.4], [16, 0]);
+  const footerTwitterOpacity = useTransform(smoothFooterProgress, [0.15, 0.45], [0, 1]);
+  const footerTwitterY = useTransform(smoothFooterProgress, [0.15, 0.45], [16, 0]);
+  const footerLinkedinOpacity = useTransform(smoothFooterProgress, [0.2, 0.5], [0, 1]);
+  const footerLinkedinY = useTransform(smoothFooterProgress, [0.2, 0.5], [16, 0]);
 
   // memoized dynamic name variants to prevent recalculation shifts on re-renders
   const nameWrapperVariants = useMemo(
@@ -538,48 +548,65 @@ export default function LandingPage() {
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer
         id="about-desktop"
+        ref={footerRef}
         className="flex flex-col items-center gap-3 pb-[calc(3rem+env(safe-area-inset-bottom))] px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
         style={{ color: "var(--brand-muted)" }}
       >
         <motion.span
           className="text-sm"
-          variants={footerItemVariants}
-          initial={shouldReduce ? "visible" : "hidden"}
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
+          style={shouldReduce ? undefined : {
+            opacity: footerLocationOpacity,
+            y: footerLocationY,
+          }}
         >
           izmir, türkiye
         </motion.span>
-        <motion.nav
+        <nav
           aria-label="social links"
           className="flex items-center gap-5"
-          variants={footerVariants}
-          initial={shouldReduce ? "visible" : "hidden"}
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
         >
-          <motion.span variants={footerItemVariants}>
+          <motion.span
+            style={shouldReduce ? undefined : {
+              opacity: footerMailOpacity,
+              y: footerMailY,
+            }}
+          >
             <UnderlineLink href="mailto:dogukanurker@icloud.com">
               mail
             </UnderlineLink>
           </motion.span>
-          <motion.span variants={footerItemVariants}>
+          <motion.span
+            style={shouldReduce ? undefined : {
+              opacity: footerGithubOpacity,
+              y: footerGithubY,
+            }}
+          >
             <UnderlineLink href="https://github.com/dogukanurker">
               github
             </UnderlineLink>
           </motion.span>
-          <motion.span variants={footerItemVariants}>
+          <motion.span
+            style={shouldReduce ? undefined : {
+              opacity: footerTwitterOpacity,
+              y: footerTwitterY,
+            }}
+          >
             <UnderlineLink href="https://twitter.com/dogukanurker">
               twitter
             </UnderlineLink>
           </motion.span>
-          <motion.span variants={footerItemVariants}>
+          <motion.span
+            style={shouldReduce ? undefined : {
+              opacity: footerLinkedinOpacity,
+              y: footerLinkedinY,
+            }}
+          >
             <UnderlineLink href="https://linkedin.com/in/dogukanurker">
               linkedin
             </UnderlineLink>
           </motion.span>
-        </motion.nav>
+        </nav>
       </footer>
     </main>
   );
