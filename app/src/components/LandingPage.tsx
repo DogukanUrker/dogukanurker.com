@@ -378,7 +378,7 @@ export default function LandingPage() {
         variants={footerVariants}
         initial={shouldReduce ? "visible" : "hidden"}
         whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
+        viewport={{ once: true, margin: "100px" }}
       >
         <motion.span className="text-sm" variants={footerItemVariants}>
           izmir, türkiye
