@@ -83,43 +83,83 @@ export default function LandingPage() {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  // Cubic bezier typed as a tuple — required by framer-motion's Easing type
+  // Scroll cue: appears after 1.8 s, fades out when scrolled, fades back in on return.
+  const [cueVisible, setCueVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setCueVisible(true), 1800);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  // Cubic bezier typed as a tuple — required by framer-motion’s Easing type
   const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
+  // Overdamped spring for Y-axis entrances — natural deceleration, no bounce.
+  const spring = { type: "spring" as const, stiffness: 100, damping: 22 };
+
+  // Portrait: clipPath reveal uses duration-based easing to avoid spring overshoot on clip edges.
   const portraitVariants = {
     hidden: { clipPath: "inset(100% 0% 0% 0%)" },
     visible: {
       clipPath: "inset(0% 0% 0% 0%)",
-      transition: { duration: 1.1, ease: expo },
+      transition: { duration: 1.4, ease: expo, delay: 0.5 },
     },
   };
 
-  // y-translate on the h1 gives the physical rise feel.
-  // The clip lives on the wrapper (below) so it can open its top beyond
-  // the wrapper’s own box — giving the accents room without a state toggle.
-  // On mobile we use a larger translate so the text starts fully off-screen.
+  // Hero name rises from below with spring physics for a physical, weighted feel.
+  // On mobile we use a larger initial offset so the text starts fully off-screen.
   const nameVariants = {
     hidden: { y: isMobile ? "250%" : "108%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.0, ease: expo, delay: 0.25 },
+      transition: { ...spring, delay: 0 },
     },
   };
 
+  // Scroll-triggered intro — expo easing consistent with all other animations.
   const introVariants = {
     hidden: { opacity: 0, y: 28 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.9, ease: "easeOut" as const },
+      transition: { duration: 0.9, ease: expo },
     },
   };
 
+  // Navbar slides in from the top with spring physics, same wave as the hero name.
   const navVariants = {
     hidden: { y: "-100%" },
     visible: {
       y: "0%",
-      transition: { duration: 1.0, ease: expo, delay: 0.25 },
+      transition: { ...spring, delay: 0 },
+    },
+  };
+
+  // Nav links: opacity-only fade — the nav slide already provides directional context.
+  const navLinksVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.9, ease: expo, delay: 0.5 },
+    },
+  };
+
+  // Footer: stagger location + each social link in from below as the section enters view.
+  const footerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.08 } },
+  };
+  const footerItemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: expo },
     },
   };
 
@@ -161,10 +201,15 @@ export default function LandingPage() {
             <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
           </span>
         </div>
-        <div className="flex items-center gap-6">
+        <motion.div
+          className="flex items-center gap-6"
+          variants={navLinksVariants}
+          initial={shouldReduce ? "visible" : "hidden"}
+          animate="visible"
+        >
           <UnderlineLink href="#about">about</UnderlineLink>
           <UnderlineLink href="/cv">resume</UnderlineLink>
-        </div>
+        </motion.div>
         {/* Mobile-only role subtitle — sits below the first row */}
         <div
           className="w-full mt-1 md:hidden text-xs tracking-wide leading-relaxed"
@@ -219,7 +264,7 @@ export default function LandingPage() {
               : { clipPath: "inset(0px -600px -40px -600px)" }
           }
           animate={{ clipPath: "inset(-30px -600px -40px -600px)" }}
-          transition={{ duration: 1.25, ease: "linear" }}
+          transition={{ duration: 1.6, ease: expo }}
           aria-hidden
         >
           <motion.h1
@@ -244,6 +289,31 @@ export default function LandingPage() {
             Doğukan Ürker
           </motion.h1>
         </motion.div>
+
+        {/* Scroll cue — fades in at 1.8 s, out when scrolled, back in on return */}
+        {!shouldReduce && (
+          <motion.div
+            className="absolute left-6 md:left-10 bottom-12 hidden sm:block pointer-events-none select-none"
+            animate={{ opacity: cueVisible && !scrolled ? 1 : 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            aria-hidden
+          >
+            <div className="w-px h-12 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                style={{ backgroundColor: "var(--brand-dim)" }}
+                animate={{ y: ["-100%", "0%", "0%", "100%"] }}
+                transition={{
+                  duration: 2.2,
+                  times: [0, 0.35, 0.65, 1],
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 0.5,
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
       </section>
 
       {/* ── Intro ────────────────────────────────────────────────────────── */}
@@ -298,27 +368,33 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer
+      <motion.footer
         className="flex flex-col items-center gap-3 pb-10 px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10"
         style={{ color: "var(--brand-muted)" }}
+        variants={footerVariants}
+        initial={shouldReduce ? "visible" : "hidden"}
+        whileInView="visible"
+        viewport={{ once: true, margin: "100px" }}
       >
-        <span className="text-sm">izmir, türkiye</span>
+        <motion.span className="text-sm" variants={footerItemVariants}>
+          izmir, türkiye
+        </motion.span>
         <nav aria-label="social links" className="flex items-center gap-5">
-          <UnderlineLink href="mailto:dogukanurker@icloud.me">
-            mail
-          </UnderlineLink>
-          <UnderlineLink href="https://github.com/dogukanurker">
-            github
-          </UnderlineLink>
-          <UnderlineLink href="https://twitter.com/dogukanurker">
-            twitter
-          </UnderlineLink>
-          <UnderlineLink href="https://linkedin.com/in/dogukanurker">
-            linkedin
-          </UnderlineLink>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="mailto:dogukanurker@icloud.me">mail</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://github.com/dogukanurker">github</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://twitter.com/dogukanurker">twitter</UnderlineLink>
+          </motion.span>
+          <motion.span variants={footerItemVariants}>
+            <UnderlineLink href="https://linkedin.com/in/dogukanurker">linkedin</UnderlineLink>
+          </motion.span>
         </nav>
-      </footer>
+      </motion.footer>
     </main>
   );
 }
