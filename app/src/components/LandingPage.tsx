@@ -16,20 +16,19 @@ import { Cursor } from "@/components/Cursor";
 // ─── Shared underline-link ─────────────────────────────────────────────────
 
 interface UnderlineLinkProps {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   children: React.ReactNode;
   className?: string;
 }
 
-function UnderlineLink({ href, children, className = "" }: UnderlineLinkProps) {
-  const isExternal = href.startsWith("http") || href.startsWith("//");
-  const isHash = href.startsWith("#");
-
+function UnderlineLink({ href, onClick, children, className = "" }: UnderlineLinkProps) {
   const base =
     "group relative inline-flex items-center text-sm tracking-wide " +
     "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
     "rounded-sm focus-visible:outline-none focus-visible:ring-2 " +
     "focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 " +
+    "bg-transparent border-none p-0 cursor-pointer " +
     className;
 
   const underline = (
@@ -38,6 +37,20 @@ function UnderlineLink({ href, children, className = "" }: UnderlineLinkProps) {
       className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full group-focus-visible:w-full"
     />
   );
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} data-cursor="link" className={base}>
+        {children}
+        {underline}
+      </button>
+    );
+  }
+
+  if (!href) return null;
+
+  const isExternal = href.startsWith("http") || href.startsWith("//");
+  const isHash = href.startsWith("#");
 
   if (isExternal) {
     return (
@@ -301,6 +314,15 @@ export default function LandingPage() {
   const heroRef = useRef<HTMLElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
 
+  const scrollToAbout = () => {
+    const isMobileViewport = window.matchMedia("(max-width: 639px)").matches;
+    const targetId = isMobileViewport ? "about-mobile" : "about-desktop";
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const { scrollY } = useScroll();
   const cueOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
@@ -401,7 +423,7 @@ export default function LandingPage() {
             className="flex items-center gap-6"
             variants={navLinksVariants}
           >
-            <UnderlineLink href="#about">about</UnderlineLink>
+            <UnderlineLink onClick={scrollToAbout}>about</UnderlineLink>
             <UnderlineLink href="/cv">resume</UnderlineLink>
           </motion.div>
           {/* mobile-only role subtitle - sits below the first row */}
@@ -486,7 +508,7 @@ export default function LandingPage() {
         </motion.section>
       </motion.div>
 
-      <section id="about" className="relative min-h-[80dvh] flex items-center justify-center px-6 py-24">
+      <section id="about-mobile" className="relative min-h-[80dvh] sm:min-h-dvh flex items-center justify-center px-6 py-24">
         <motion.p
           ref={paragraphRef}
           className="font-serif text-center max-w-[23ch]"
@@ -515,6 +537,7 @@ export default function LandingPage() {
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer
+        id="about-desktop"
         className="flex flex-col items-center gap-3 pb-[calc(3rem+env(safe-area-inset-bottom))] px-6
           sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
         style={{ color: "var(--brand-muted)" }}
