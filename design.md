@@ -72,18 +72,8 @@ never hardcode hexes (except the accent blue, which is intentionally a one-off).
 
 - The accent is **scarce by design**. On the landing page it appears only as the
   hover color of the `sensity.ai` link (which also carries a custom glyph).
-- Do not introduce additional accent colors. If a new app needs a state color
-  (success/error), keep it muted and earthy, never neon — see the syntax
-  palette below for the sanctioned extended hues.
-
-### Sanctioned extended palette (use sparingly, e.g. code/syntax/data viz)
-
-Warm, desaturated, "ink on cream" friendly:
-
-```
-red    #a72828   blue   #1e4d7c   orange #b25900
-green  #2b7040   purple #8f3b76
-```
+- Do not introduce additional accent colors. If a new surface ever needs a state
+  color, keep it muted and earthy, never neon.
 
 ### Rules
 
@@ -102,11 +92,13 @@ sans** for UI/body.
 
 ### 3.1 Families
 
-| Role                     | Family                              | Notes                                                                 |
-| ------------------------ | ----------------------------------- | --------------------------------------------------------------------- |
-| **Display / Serif**      | **Fraunces** (variable, `opsz` axis, normal + italic) | The signature. Used for the giant name and the about paragraph. Optical sizing **on**. Fallback: `Georgia, serif`. |
-| **Body / UI / Sans**     | **Inter** (applied globally on `<body>`) | All nav, footer, link, and interface text. Fallback: `Arial, Helvetica, sans-serif`. |
-| Mono (code only)         | Geist Mono                          | Code blocks / technical surfaces only.                                |
+| Role                | Family                                                | Notes                                                                                                              |
+| ------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Display / Serif** | **Fraunces** (variable, `opsz` axis, normal + italic) | The signature. Used for the giant name and the about paragraph. Optical sizing **on**. Fallback: `Georgia, serif`. |
+| **UI / Sans**       | **Inter**                                             | Everything that isn't display serif: nav name, role line, links, footer. Fallback: `Arial, Helvetica, sans-serif`. |
+
+Two families, nothing more. Fraunces is the voice; Inter is the quiet
+functional label.
 
 Implementation notes (Next.js / `next/font`):
 
@@ -125,12 +117,8 @@ const fraunces = Fraunces({
   require `ğ ü ş ı ç ö`.
 - Set `fontOpticalSizing: "auto"` on serif display elements so large sizes get
   the proper high-contrast cut.
-
-> Historical note: `globals.css` declares `Space Grotesk` for `body` and
-> `@import`s Playfair Display / Instrument Serif, but the rendered body font is
-> **Inter** (the `next/font` class on `<body>` wins), and the rendered serif is
-> **Fraunces** (via `--font-fraunces`). For new work, standardize on
-> **Fraunces + Inter** — that is what actually ships.
+- Inter is applied once at the app root (on `<body>`); the landing page never
+  re-declares a sans — non-serif text simply inherits it.
 
 ### 3.2 Type scale & usage
 
@@ -205,7 +193,6 @@ link with glyph.)
   Hairlines (`--brand-border`) only when a divider is truly needed.
 - **Safe-area aware.** Bottom spacing respects the notch:
   `pb-[calc(3rem+env(safe-area-inset-bottom))]`.
-- **Radius token** when boxes are unavoidable: `--radius: 0.5rem`.
 
 ### Navigation
 
@@ -388,7 +375,7 @@ BORDER       #dcd8cd (hairline)
 ACCENT       #373CE0 (electric blue — one use only)
 
 DISPLAY FONT Fraunces (serif, opsz, italic), fontOpticalSizing:auto, latin-ext
-BODY FONT    Inter (sans)             mono: Geist Mono (code only)
+UI FONT      Inter (sans)
 
 DISPLAY SIZE clamp() fluid, tracking-tighter, line-height 0.95
 BODY PROSE   Fraunces 340 weight, line-height 1.22, max-w-23ch, centered
