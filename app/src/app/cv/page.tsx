@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   motion,
@@ -274,27 +274,39 @@ const experience: Job[] = [
 interface Project {
   name: string;
   subtitle: string;
-  stats?: string;
   description: string;
   href?: string;
+  // github repo name (lowercase) — live stars/forks are pulled from the api.
+  repo?: string;
+  showForks?: boolean;
+  // non-github stat, e.g. package-registry downloads.
+  extra?: string;
+  // shown until the api responds (and if it ever fails).
+  fallbackStars?: number;
+  fallbackForks?: number;
 }
 
 const projects: Project[] = [
   {
     name: "Tamga",
     subtitle: "open-source python logging library",
-    stats: "24k+ downloads on pypi · 71 stars",
     description:
       "colorful tailwind-inspired console output, file/json logging with rotation, sqlite and mongodb integration, and email notifications for critical logs — used across personal projects and in production at gdg yaşar.",
     href: "https://github.com/dogukanurker/tamga",
+    repo: "tamga",
+    extra: "24k+ downloads on pypi",
+    fallbackStars: 71,
   },
   {
     name: "FlaskBlog",
     subtitle: "full-stack blogging platform",
-    stats: "190 stars · 78 forks",
     description:
       "self-hostable flask blog with authentication, post management, and a responsive ui; adopted for real-world deployments.",
     href: "https://github.com/dogukanurker/flaskBlog",
+    repo: "flaskblog",
+    showForks: true,
+    fallbackStars: 190,
+    fallbackForks: 78,
   },
   {
     name: "BenchKit",
@@ -306,10 +318,10 @@ const projects: Project[] = [
   {
     name: "DogiZed",
     subtitle: "theme for the zed editor",
-    stats: "30k+ downloads on the zed marketplace",
     description:
       "minimalist dark/light dual theme with pure black and white backgrounds and vibrant syntax.",
     href: "https://github.com/dogukanurker/dogized",
+    extra: "30k+ downloads on the zed marketplace",
   },
   {
     name: "Kira",
@@ -318,6 +330,31 @@ const projects: Project[] = [
       'telegram frontend, a local 14b llm via ollama, running on my homeserver — designed around a "dumb llm, smart tooling" architecture: the model only classifies intent while every action, api call, and scheduled task runs in python.',
   },
 ];
+
+// live repo metrics keyed by lowercased repo name.
+type RepoStats = { stars: number; forks: number };
+
+// build the "· stars · forks" line, preferring live numbers, falling back to the
+// static ones so the row is never empty or jumps to nothing on api failure.
+function statsFor(
+  p: Project,
+  live: Record<string, RepoStats> | null,
+): string | null {
+  const parts: string[] = [];
+  if (p.extra) parts.push(p.extra);
+  if (p.repo) {
+    const s = live?.[p.repo];
+    const stars = s ? s.stars : p.fallbackStars;
+    const forks = s ? s.forks : p.fallbackForks;
+    if (typeof stars === "number") {
+      parts.push(`${stars.toLocaleString("en-US")} stars`);
+    }
+    if (p.showForks && typeof forks === "number") {
+      parts.push(`${forks.toLocaleString("en-US")} forks`);
+    }
+  }
+  return parts.length > 0 ? parts.join(" · ") : null;
+}
 
 const skills: { term: string; def: string }[] = [
   { term: "languages", def: "python, typescript, javascript, html, css" },
@@ -441,9 +478,48 @@ function HeadRow({
 
 export default function CVPage() {
   const [cursorEnabled, setCursorEnabled] = useState(false);
+  const [repoStats, setRepoStats] = useState<Record<string, RepoStats> | null>(
+    null,
+  );
   const shouldReduce = useReducedMotion();
 
   const print = () => window.print();
+
+  // pull live stars/forks from github so the numbers stay current; the static
+  // fallbacks render until this resolves, and on any failure we keep them.
+  useEffect(() => {
+    let active = true;
+    const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY?.trim();
+    fetch("https://api.github.com/users/dogukanurker/repos?per_page=100", {
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("github"))))
+      .then(
+        (
+          data: {
+            name: string;
+            stargazers_count: number;
+            forks_count: number;
+          }[],
+        ) => {
+          if (!active || !Array.isArray(data)) return;
+          const map: Record<string, RepoStats> = {};
+          for (const r of data) {
+            map[r.name.toLowerCase()] = {
+              stars: r.stargazers_count,
+              forks: r.forks_count,
+            };
+          }
+          setRepoStats(map);
+        },
+      )
+      .catch(() => {
+        /* keep static fallbacks */
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <>
@@ -488,7 +564,7 @@ export default function CVPage() {
               style={{ color: "var(--brand-muted)" }}
             >
               <span>full-stack engineer @</span>
-              <SensityLink className="text-sm" />
+              <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
             </span>
           </div>
           <div className="flex items-center gap-6">
@@ -501,7 +577,9 @@ export default function CVPage() {
             style={{ color: "var(--brand-muted)" }}
           >
             <span>full-stack engineer @</span>
-            <SensityLink className="text-xs" />
+            <UnderlineLink href="https://sensity.ai" className="text-xs">
+              sensity.ai
+            </UnderlineLink>
           </div>
         </motion.nav>
 
@@ -662,7 +740,9 @@ export default function CVPage() {
               shouldReduce={shouldReduce}
             >
               <div className="flex flex-col gap-9">
-                {projects.map((project) => (
+                {projects.map((project) => {
+                  const stat = statsFor(project, repoStats);
+                  return (
                   <div key={project.name} className="cv-item">
                     <HeadRow
                       title={
@@ -678,9 +758,9 @@ export default function CVPage() {
                       }
                       subtitle={project.subtitle}
                       right={
-                        project.stats ? (
+                        stat ? (
                           <span style={{ color: "var(--brand-dim)" }}>
-                            {project.stats}
+                            {stat}
                           </span>
                         ) : undefined
                       }
@@ -696,7 +776,8 @@ export default function CVPage() {
                       {project.description}
                     </p>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </Section>
 
@@ -780,8 +861,8 @@ export default function CVPage() {
 }
 
 // ─── Print / PDF ────────────────────────────────────────────────────────────
-// Faithful to the brand on paper: cream field, warm ink type, Fraunces headings.
-// Site chrome (nav, footer, cursor) is dropped; items never split across pages.
+// Clean white paper with warm ink type and Fraunces headings. Site chrome
+// (nav, footer, cursor) is dropped; items never split across pages.
 
 const printStyles = `
   @media print {
@@ -791,12 +872,13 @@ const printStyles = `
     }
 
     html, body {
-      background: var(--brand-cream) !important;
+      background: #ffffff !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
     .cv-root {
+      background: #ffffff !important;
       min-height: 0 !important;
     }
 
