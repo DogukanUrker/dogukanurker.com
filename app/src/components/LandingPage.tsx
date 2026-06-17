@@ -193,7 +193,7 @@ function Word({ word, index, total, progress, shouldReduce }: WordProps) {
           viewBox="0 0 200 200"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="inline-block transition-colors duration-300 relative top-[0.1em]"
+          className="inline-block relative top-[0.1em]"
         >
           <path
             d="M122 130H71.5C70.67 130 70 129.33 70 128.5V77.9999C70 73.5799 73.58 69.9999 78 69.9999H128.5C129.33 69.9999 130 70.6699 130 71.4999V122C130 126.42 126.42 130 122 130Z"
