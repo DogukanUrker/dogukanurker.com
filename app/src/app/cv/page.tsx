@@ -39,13 +39,6 @@ const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: expo } },
 };
 
-// giant name rises into a mask. offset clears the line box + descender padding
-// so nothing peeks below the mask before it animates in.
-const nameRise: Variants = {
-  hidden: { y: "120%" },
-  visible: { y: "0%", transition: { ...spring } },
-};
-
 // section reveal on scroll.
 const sectionReveal: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -592,24 +585,20 @@ export default function CVPage() {
             animate="visible"
             variants={containerVariants}
           >
-            <div className="overflow-hidden">
-              <motion.h1
-                variants={shouldReduce ? fadeUp : nameRise}
-                className="cv-name font-serif tracking-tighter"
-                style={{
-                  fontSize: "clamp(40px, 11vw, 92px)",
-                  fontWeight: 400,
-                  lineHeight: 0.95,
-                  // room for the descender (ğ) so the mask doesn't clip it.
-                  paddingBottom: "0.3em",
-                  color: "var(--brand-ink)",
-                  fontOpticalSizing: "auto",
-                  margin: 0,
-                }}
-              >
-                Doğukan Ürker
-              </motion.h1>
-            </div>
+            <motion.h1
+              variants={fadeUp}
+              className="cv-name font-serif tracking-tighter"
+              style={{
+                fontSize: "clamp(40px, 11vw, 92px)",
+                fontWeight: 400,
+                lineHeight: 0.95,
+                color: "var(--brand-ink)",
+                fontOpticalSizing: "auto",
+                margin: 0,
+              }}
+            >
+              Doğukan Ürker
+            </motion.h1>
 
             <motion.div
               variants={fadeUp}
