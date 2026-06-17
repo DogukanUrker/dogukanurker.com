@@ -647,7 +647,12 @@ export default function CVPage() {
                 if (w.accent) {
                   return (
                     <span key={i}>
-                      <SensityLink className="align-baseline" />{" "}
+                      <motion.span
+                        variants={shouldReduce ? undefined : wordItem}
+                        className="inline-block align-baseline"
+                      >
+                        <SensityLink />
+                      </motion.span>{" "}
                     </span>
                   );
                 }
