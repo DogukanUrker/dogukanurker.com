@@ -1,254 +1,291 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useState } from "react";
+import Link from "next/link";
+import {
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
+import { Cursor } from "@/components/Cursor";
 
-const cvStyles = `
-  .cv-page {
-    --cv-bg: var(--brand-cream);
-    --cv-bg-subtle: var(--brand-cream-subtle);
-    --cv-fg: var(--brand-ink);
-    --cv-fg-muted: var(--brand-muted);
-    --cv-fg-dim: var(--brand-dim);
-    --cv-accent: var(--brand-ink);
-    --cv-border: var(--brand-border);
-    background-color: var(--cv-bg);
-    color: var(--cv-fg);
-    min-height: 100vh;
-    padding: 80px 24px 120px;
+// ─── Motion constants (shared with the landing page) ────────────────────────
+
+// expo-out cubic bezier — clip/opacity reveals, no overshoot.
+const expo = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+// overdamped spring — Y-axis entrances, natural deceleration, no bounce.
+const spring = { type: "spring" as const, stiffness: 100, damping: 22 };
+
+// page-level entrance: stagger the header pieces on mount.
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.08 },
+  },
+};
+
+// nav slides in from the top.
+const navVariants: Variants = {
+  hidden: { y: -100 },
+  visible: {
+    y: 0,
+    transition: { ...spring, staggerChildren: 0.1 },
+  },
+};
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: expo } },
+};
+
+// giant name rises into a mask.
+const nameRise: Variants = {
+  hidden: { y: "110%" },
+  visible: { y: "0%", transition: { ...spring } },
+};
+
+// section reveal on scroll.
+const sectionReveal: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: expo } },
+};
+
+// per-word fade for the intro paragraph (the signature reveal, on mount).
+const wordContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.012, delayChildren: 0.3 } },
+};
+const wordItem: Variants = {
+  hidden: { opacity: 0.12 },
+  visible: { opacity: 1, transition: { duration: 0.5, ease: expo } },
+};
+
+// ─── Shared underline link ──────────────────────────────────────────────────
+
+interface UnderlineLinkProps {
+  href?: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+  className?: string;
+}
+
+function UnderlineLink({
+  href,
+  onClick,
+  children,
+  className = "",
+}: UnderlineLinkProps) {
+  const base =
+    "group relative inline-flex items-center text-sm tracking-wide " +
+    "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
+    "rounded-sm focus-visible:outline-none focus-visible:ring-2 " +
+    "focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 " +
+    "bg-transparent border-none p-0 cursor-pointer " +
+    className;
+
+  const underline = (
+    <span
+      aria-hidden
+      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full group-focus-visible:w-full"
+    />
+  );
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} data-cursor="link" className={base}>
+        {children}
+        {underline}
+      </button>
+    );
   }
 
-  .cv-container {
-    max-width: 720px;
-    margin: 0 auto;
+  if (!href) return null;
+
+  const isExternal = href.startsWith("http") || href.startsWith("//");
+  const isMail = href.startsWith("mailto:");
+
+  if (isExternal || isMail) {
+    return (
+      <a
+        href={href}
+        target={isMail ? undefined : "_blank"}
+        rel={isMail ? undefined : "noopener noreferrer"}
+        data-cursor="link"
+        className={base}
+      >
+        {children}
+        {underline}
+      </a>
+    );
   }
 
-  .cv-name {
-    font-family: var(--font-fraunces), Georgia, serif;
-    font-style: italic;
-    font-size: clamp(2.8rem, 8vw, 4.5rem);
-    font-weight: 400;
-    line-height: 1.05;
-    color: var(--cv-fg);
-    letter-spacing: -0.02em;
-    margin: 0 0 24px;
-  }
+  return (
+    <Link href={href} data-cursor="link" className={base}>
+      {children}
+      {underline}
+    </Link>
+  );
+}
 
-  .cv-section-heading {
-    font-family: var(--font-fraunces), Georgia, serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--cv-fg);
-    margin: 0 0 32px;
-  }
+// ─── Primary brand link: the one accent moment (sensity.ai) ─────────────────
 
-  .cv-divider {
-    border: none;
-    border-top: 1px solid var(--cv-border);
-    margin: 56px 0 36px;
-  }
+function SensityLink({ className = "" }: { className?: string }) {
+  return (
+    <a
+      href="https://sensity.ai"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cursor="link"
+      className={
+        "group relative inline-flex items-center gap-[0.15em] font-semibold " +
+        "text-[var(--brand-ink)] hover:text-[#373CE0] transition-colors duration-300 " +
+        className
+      }
+    >
+      <svg
+        width="0.75em"
+        height="0.75em"
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="inline-block relative top-[0.08em]"
+        aria-hidden
+      >
+        <path
+          d="M122 130H71.5C70.67 130 70 129.33 70 128.5V77.9999C70 73.5799 73.58 69.9999 78 69.9999H128.5C129.33 69.9999 130 70.6699 130 71.4999V122C130 126.42 126.42 130 122 130Z"
+          fill="currentColor"
+        />
+        <path
+          d="M38 140H8C3.58 140 0 136.42 0 132V7.99994C0 3.57994 3.58 -6.10352e-05 8 -6.10352e-05H132C136.42 -6.10352e-05 140 3.57994 140 7.99994V37.9999C140 39.0999 139.1 39.9999 138 39.9999H44C41.79 39.9999 40 41.7899 40 43.9999V138C40 139.1 39.1 140 38 140Z"
+          fill="currentColor"
+        />
+        <path
+          d="M162 59.9999H192C196.42 59.9999 200 63.5799 200 67.9999V192C200 196.42 196.42 200 192 200H68C63.58 200 60 196.42 60 192V162C60 160.9 60.9 160 62 160H156C158.21 160 160 158.21 160 156V61.9999C160 60.8999 160.89 59.9999 162 59.9999Z"
+          fill="currentColor"
+        />
+      </svg>
+      <span>sensity.ai</span>
+    </a>
+  );
+}
 
-  .cv-mono {
-    font-family: var(--font-geist-mono), 'Courier New', Courier, monospace;
-    font-size: 12px;
-    color: var(--cv-fg-dim);
-    line-height: 1.6;
-  }
+// ─── Content ────────────────────────────────────────────────────────────────
 
-  .cv-link {
-    color: var(--cv-fg-muted);
-    text-decoration: none;
-    transition: color 0.15s ease-out, text-decoration-color 0.15s ease-out;
-    text-underline-offset: 3px;
-  }
+// intro words — bold = ink emphasis, italic = muted serif, accent = sensity link
+interface Word {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  accent?: boolean;
+}
 
-  .cv-link:hover {
-    color: var(--cv-accent);
-    text-decoration: underline;
-    text-decoration-color: var(--cv-accent);
-  }
+const introWords: Word[] = [
+  { text: "full-stack" },
+  { text: "engineer" },
+  { text: "at" },
+  { text: "sensity.ai", accent: true },
+  { text: "—" },
+  { text: "building" },
+  { text: "detection" },
+  { text: "for" },
+  { text: "deepfakes", bold: true },
+  { text: "&", bold: true },
+  { text: "ai-generated", bold: true },
+  { text: "media.", bold: true },
+  { text: "off" },
+  { text: "the" },
+  { text: "clock" },
+  { text: "i" },
+  { text: "co-lead" },
+  { text: "engineering" },
+  { text: "for" },
+  { text: "gdg" },
+  { text: "on" },
+  { text: "campus" },
+  { text: "yaşar" },
+  { text: "and" },
+  { text: "maintain" },
+  { text: "open-source" },
+  { text: "tools" },
+  { text: "with" },
+  { text: "54k+" },
+  { text: "combined" },
+  { text: "downloads.", bold: true },
+  { text: "coding", italic: true },
+  { text: "since", italic: true },
+  { text: "12,", italic: true },
+  { text: "still", italic: true },
+  { text: "chasing", italic: true },
+  { text: "the", italic: true },
+  { text: "same", italic: true },
+  { text: "feeling.", italic: true },
+];
 
-  .cv-link:focus-visible {
-    outline: 2px solid var(--cv-accent);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
+interface Job {
+  company: string;
+  companyHref?: string;
+  role: string;
+  period: string;
+  location: string;
+  bullets: string[];
+}
 
-  .cv-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .cv-dates {
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 560px) {
-    .cv-name { font-size: 2.5rem; }
-    .cv-dates { text-align: left; }
-  }
-
-  .cv-chip {
-    font-family: var(--font-geist-mono), 'Courier New', Courier, monospace;
-    font-size: 11px;
-    color: var(--cv-fg-dim);
-    background: var(--cv-bg-subtle);
-    border: 1px solid var(--cv-border);
-    padding: 3px 8px;
-    border-radius: 3px;
-    white-space: nowrap;
-  }
-
-  .cv-export-btn {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    background: var(--cv-accent);
-    color: var(--brand-cream);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: var(--font-geist-mono), 'Courier New', Courier, monospace;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    transition: opacity 0.15s ease-out;
-  }
-
-  .cv-export-btn:hover { opacity: 0.85; }
-
-  .cv-export-btn:focus-visible {
-    outline: 2px solid var(--cv-accent);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-
-  .cv-skills-grid {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px 20px;
-  }
-
-  @media (max-width: 420px) {
-    .cv-skills-grid {
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
-  }
-
-  @media print {
-    .cv-page {
-      --cv-accent: #111111;
-      background-color: #ffffff !important;
-      color: #111111 !important;
-      padding: 0 !important;
-      min-height: unset;
-    }
-
-    .cv-container {
-      max-width: 100% !important;
-      padding: 24px 40px !important;
-    }
-
-    .cv-name {
-      font-family: Georgia, 'Times New Roman', serif !important;
-      font-size: 2.2rem !important;
-      color: #1a1a1a !important;
-    }
-
-    .cv-section-heading {
-      font-family: Georgia, 'Times New Roman', serif !important;
-      font-size: 1rem !important;
-      color: #1a1a1a !important;
-    }
-
-    .cv-divider {
-      border-top-color: #cccccc !important;
-      margin: 36px 0 20px !important;
-    }
-
-    .cv-mono {
-      color: #555555 !important;
-    }
-
-    .cv-link {
-      color: #333333 !important;
-      text-decoration: none !important;
-    }
-
-    .cv-chip {
-      background: #f0f0f0 !important;
-      border-color: #cccccc !important;
-      color: #555555 !important;
-    }
-
-    .cv-export-btn {
-      display: none !important;
-    }
-
-    body {
-      background: #ffffff !important;
-      font-family: Arial, Helvetica, sans-serif !important;
-    }
-
-    @page {
-      margin: 0;
-      size: A4;
-    }
-  }
-`;
-
-const experience = [
+const experience: Job[] = [
   {
     company: "Sensity AI",
     companyHref: "https://www.sensity.ai",
-    role: "Full-Stack Engineer",
-    period: "Aug 2025 - Present",
-    location: "Remote (EU)",
+    role: "full-stack engineer",
+    period: "aug 2025 – present",
+    location: "remote (eu)",
     bullets: [
-      "Ship full-stack features across FastAPI microservices and a React & Vue frontend",
-      "Contribute to migrating legacy Django services onto the modern FastAPI stack",
-      "Work on internal review platforms, developer-facing tooling, and integration testing",
-      "Review PRs across both frontend and backend",
+      "ship full-stack features across FastAPI microservices and a React & Vue frontend",
+      "help migrate legacy Django services onto the modern FastAPI stack",
+      "build internal review platforms, developer-facing tooling, and integration tests",
+      "review pull requests across both frontend and backend",
     ],
   },
   {
     company: "Sensity AI",
     companyHref: "https://www.sensity.ai",
-    role: "Backend Intern",
-    period: "Mar 2025 - Aug 2025",
-    location: "Remote (EU)",
+    role: "backend intern",
+    period: "mar 2025 – aug 2025",
+    location: "remote (eu)",
     bullets: [
-      "5-month backend internship focused on FastAPI microservices; converted to full-time engineering.",
+      "five-month backend internship focused on FastAPI microservices; converted to full-time engineering",
     ],
   },
   {
     company: "GDG on Campus Yaşar University",
     companyHref: "https://www.gdgoncampusyu.com/",
-    role: "Software Team, Core Member",
-    period: "Sep 2024 - Present",
-    location: "İzmir",
+    role: "software team, core member",
+    period: "sep 2024 – present",
+    location: "izmir",
     bullets: [
-      "Co-lead a 6-engineer software team; own architecture and task distribution alongside the team lead",
-      "Designed the monorepo from scratch: 4 FastAPI microservices (user, form, mail, event) and 3 React frontends",
-      "Defined team conventions: tooling (uv, bun, Ruff, Biome), directory structure, Git workflow, conventional commits, squash-merge policy",
-      "Break down initiatives into issues, distribute tasks, review PRs, mentor contributors",
-      "Stack: Python 3.14, FastAPI, Motor (MongoDB), React 19, TypeScript, Vite, TailwindCSS",
+      "co-lead a six-engineer software team; own architecture and task distribution alongside the team lead",
+      "designed the monorepo from scratch: 4 FastAPI microservices (user, form, mail, event) and 3 React frontends",
+      "defined team conventions: tooling (uv, bun, Ruff, Biome), directory structure, git workflow, conventional commits, squash-merge policy",
+      "break initiatives into issues, distribute tasks, review pull requests, mentor contributors",
+      "stack: Python 3.14, FastAPI, Motor (MongoDB), React 19, TypeScript, Vite, TailwindCSS",
     ],
   },
 ];
 
-const projects = [
+interface Project {
+  name: string;
+  subtitle: string;
+  stats?: string;
+  description: string;
+  href?: string;
+}
+
+const projects: Project[] = [
   {
     name: "Tamga",
     subtitle: "open-source python logging library",
     stats: "24k+ downloads on pypi · 71 stars",
     description:
-      "colorful tailwind-inspired console output, file/json logging with rotation, sqlite and mongodb integration, email notifications for critical logs. used across personal projects and in production at gdg yaşar.",
+      "colorful tailwind-inspired console output, file/json logging with rotation, sqlite and mongodb integration, and email notifications for critical logs — used across personal projects and in production at gdg yaşar.",
     href: "https://github.com/dogukanurker/tamga",
   },
   {
@@ -256,394 +293,544 @@ const projects = [
     subtitle: "full-stack blogging platform",
     stats: "190 stars · 78 forks",
     description:
-      "self-hostable flask blog with authentication, post management, and responsive ui; adopted for real-world deployments.",
+      "self-hostable flask blog with authentication, post management, and a responsive ui; adopted for real-world deployments.",
     href: "https://github.com/dogukanurker/flaskBlog",
   },
   {
     name: "BenchKit",
     subtitle: "cli tool for benchmarking local llms",
-    stats: null,
     description:
-      "ran 30+ open-weight models from 9 families on a single rtx 3060 12gb and published a public humaneval leaderboard. built for people running llms at home on constrained gpus.",
+      "ran 30+ open-weight models from 9 families on a single rtx 3060 12gb and published a public humaneval leaderboard — built for people running llms at home on constrained gpus.",
     href: "https://github.com/dogukanurker/benchkit",
   },
   {
     name: "DogiZed",
     subtitle: "theme for the zed editor",
-    stats: "30k+ downloads on the zed extension marketplace",
+    stats: "30k+ downloads on the zed marketplace",
     description:
-      "minimalist dark/light dual theme with pure black/white backgrounds and vibrant syntax.",
+      "minimalist dark/light dual theme with pure black and white backgrounds and vibrant syntax.",
     href: "https://github.com/dogukanurker/dogized",
   },
   {
     name: "Kira",
     subtitle: "self-hosted personal assistant",
-    stats: null,
     description:
-      'telegram frontend, local 14b llm via ollama, running on my homeserver. designed around a "dumb llm, smart tooling" architecture: the model only classifies intent while every action, api call, and scheduled task runs in python.',
-    href: null,
+      'telegram frontend, a local 14b llm via ollama, running on my homeserver — designed around a "dumb llm, smart tooling" architecture: the model only classifies intent while every action, api call, and scheduled task runs in python.',
   },
 ];
 
-const skills = [
+const skills: { term: string; def: string }[] = [
   { term: "languages", def: "python, typescript, javascript, html, css" },
   {
     term: "backend",
     def: "fastapi, flask, django, motor, pydantic, async/await patterns",
   },
-  {
-    term: "frontend",
-    def: "react 19, vue, typescript, vite, tailwindcss, shadcn",
-  },
+  { term: "frontend", def: "react 19, vue, typescript, vite, tailwindcss, shadcn" },
   {
     term: "ai / ml",
     def: "ollama, local llm deployment, prompt engineering, benchmarking, pytorch",
   },
-  {
-    term: "infrastructure",
-    def: "docker, tailscale, makefile, systemd, debian",
-  },
+  { term: "infrastructure", def: "docker, tailscale, makefile, systemd, debian" },
   { term: "databases", def: "mongodb, sqlite" },
   { term: "tooling", def: "git, uv, bun, ruff, biome, zed, claude code" },
 ];
 
+const contacts = [
+  { label: "dogukanurker@icloud.com", href: "mailto:dogukanurker@icloud.com" },
+  { label: "github.com/dogukanurker", href: "https://github.com/dogukanurker" },
+  { label: "twitter.com/dogukanurker", href: "https://twitter.com/dogukanurker" },
+  {
+    label: "linkedin.com/in/dogukanurker",
+    href: "https://linkedin.com/in/dogukanurker",
+  },
+];
+
+// ─── Reusable section wrapper ───────────────────────────────────────────────
+
+function Section({
+  heading,
+  meta,
+  children,
+  shouldReduce,
+}: {
+  heading: string;
+  meta?: string;
+  children: React.ReactNode;
+  shouldReduce: boolean | null;
+}) {
+  return (
+    <motion.section
+      className="cv-section"
+      initial={shouldReduce ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once: true, margin: "-8% 0px" }}
+      variants={sectionReveal}
+    >
+      <hr
+        className="cv-rule"
+        style={{
+          border: "none",
+          borderTop: "1px solid var(--brand-border)",
+          margin: "0 0 28px",
+        }}
+      />
+      <div className="mb-7">
+        <h2
+          className="font-serif lowercase"
+          style={{
+            fontSize: "clamp(22px, 3.4vw, 30px)",
+            fontWeight: 420,
+            lineHeight: 1.1,
+            color: "var(--brand-ink)",
+            fontOpticalSizing: "auto",
+            letterSpacing: "-0.01em",
+            margin: 0,
+          }}
+        >
+          {heading}
+        </h2>
+        {meta && (
+          <p
+            className="mt-1.5 text-sm tracking-wide"
+            style={{ color: "var(--brand-dim)" }}
+          >
+            {meta}
+          </p>
+        )}
+      </div>
+      {children}
+    </motion.section>
+  );
+}
+
+// row: a title block on the left, dates/meta on the right.
+function HeadRow({
+  title,
+  subtitle,
+  right,
+}: {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  right?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+      <div className="min-w-0">
+        <h3
+          className="text-base font-medium tracking-tight"
+          style={{ color: "var(--brand-ink)" }}
+        >
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="text-sm" style={{ color: "var(--brand-muted)" }}>
+            {subtitle}
+          </p>
+        )}
+      </div>
+      {right && (
+        <div className="shrink-0 text-sm tracking-wide sm:text-right">
+          {right}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Page ───────────────────────────────────────────────────────────────────
+
 export default function CVPage() {
-  const [loaded, setLoaded] = useState(false);
+  const [cursorEnabled, setCursorEnabled] = useState(false);
+  const shouldReduce = useReducedMotion();
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
-
+  const print = () => window.print();
 
   return (
     <>
-      <style>{cvStyles}</style>
+      <style>{printStyles}</style>
+
       <main
-        className="cv-page"
+        className={`cv-root relative min-h-screen w-full overflow-x-hidden${
+          cursorEnabled ? " cursor-none" : ""
+        }`}
         style={{
-          opacity: loaded ? 1 : 0,
-          transition: "opacity 600ms ease-out",
+          backgroundColor: "var(--brand-cream)",
+          color: "var(--brand-ink)",
         }}
       >
-        <div className="cv-container">
-          {/* header */}
-          <header>
-            <h1 className="cv-name">Doğukan Ürker</h1>
+        <Cursor onEnable={setCursorEnabled} />
 
-            <div
-              className="cv-row"
-              style={{ marginBottom: "32px", alignItems: "flex-start" }}
+        {/* ── Nav ──────────────────────────────────────────────────────── */}
+        <motion.nav
+          aria-label="primary navigation"
+          className="cv-chrome fixed left-0 right-0 top-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:px-10 md:py-5 select-none"
+          style={{
+            backgroundColor: "rgba(243, 241, 234, 0.85)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            willChange: "transform",
+          }}
+          initial={shouldReduce ? "visible" : "hidden"}
+          animate="visible"
+          variants={navVariants}
+        >
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              data-cursor="link"
+              className="text-sm font-medium tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 rounded-sm"
+              style={{ color: "var(--brand-ink)" }}
             >
-              <div>
-                <p
-                  style={{
-                    color: "var(--cv-fg)",
-                    fontSize: "1rem",
-                    marginBottom: "4px",
-                  }}
-                >
-                  Full-Stack Engineer
-                </p>
-                <p className="cv-mono">İzmir, Turkey</p>
-              </div>
+              Doğukan Ürker
+            </Link>
+            <span
+              className="hidden items-center gap-1 text-sm md:inline-flex"
+              style={{ color: "var(--brand-muted)" }}
+            >
+              <span>full-stack engineer @</span>
+              <SensityLink className="text-sm" />
+            </span>
+          </div>
+          <div className="flex items-center gap-6">
+            <UnderlineLink href="/">home</UnderlineLink>
+            <UnderlineLink onClick={print}>print</UnderlineLink>
+          </div>
+          {/* mobile role subtitle on a second row */}
+          <div
+            className="mt-1 flex w-full items-center gap-1 text-xs leading-relaxed tracking-wide md:hidden"
+            style={{ color: "var(--brand-muted)" }}
+          >
+            <span>full-stack engineer @</span>
+            <SensityLink className="text-xs" />
+          </div>
+        </motion.nav>
 
-              <nav
-                aria-label="contact links"
+        {/* ── Document ─────────────────────────────────────────────────── */}
+        <div className="cv-doc mx-auto max-w-2xl px-6 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-32 sm:px-10 sm:pt-40">
+          {/* Header / letterhead */}
+          <motion.header
+            initial={shouldReduce ? "visible" : "hidden"}
+            animate="visible"
+            variants={containerVariants}
+          >
+            <div className="overflow-hidden pb-1">
+              <motion.h1
+                variants={shouldReduce ? fadeUp : nameRise}
+                className="cv-name font-serif tracking-tighter"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  gap: "4px",
+                  fontSize: "clamp(40px, 11vw, 92px)",
+                  fontWeight: 400,
+                  lineHeight: 0.95,
+                  color: "var(--brand-ink)",
+                  fontOpticalSizing: "auto",
+                  margin: 0,
                 }}
               >
-                {[
-                  {
-                    label: "github.com/dogukanurker",
-                    href: "https://github.com/dogukanurker",
-                  },
-                  {
-                    label: "twitter.com/dogukanurker",
-                    href: "https://twitter.com/dogukanurker",
-                  },
-                  {
-                    label: "linkedin.com/in/dogukanurker",
-                    href: "https://linkedin.com/in/dogukanurker",
-                  },
-                  {
-                    label: "dogukanurker@icloud.com",
-                    href: "mailto:dogukanurker@icloud.com",
-                  },
-                ].map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target={
-                      link.href.startsWith("mailto") ? undefined : "_blank"
-                    }
-                    rel="noopener noreferrer"
-                    className="cv-link cv-mono"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
+                Doğukan Ürker
+              </motion.h1>
             </div>
 
-            <blockquote
-              style={{
-                borderLeft: "2px solid var(--cv-accent)",
-                paddingLeft: "20px",
-                margin: "0",
-                color: "var(--cv-fg-muted)",
-                fontSize: "0.9375rem",
-                lineHeight: "1.75",
-                fontStyle: "italic",
-              }}
+            <motion.div
+              variants={fadeUp}
+              className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
             >
-              20-year-old full-stack engineer at Sensity AI, working on deepfake
-              and AI-generated content detection. Off the clock, I co-lead
-              engineering for GDG on Campus Yaşar&apos;s software team and
-              maintain open-source tools with 54k+ combined downloads.
-            </blockquote>
-          </header>
-
-          {/* experience */}
-          <hr className="cv-divider" />
-          <section>
-            <h2 className="cv-section-heading">Experience</h2>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "44px" }}
-            >
-              {experience.map((job) => (
-                <div key={`${job.company}-${job.role}`}>
-                  <div className="cv-row" style={{ marginBottom: "12px" }}>
-                    <div>
-                      <h3
-                        style={{
-                          color: "var(--cv-fg)",
-                          fontSize: "0.9375rem",
-                          fontWeight: 500,
-                          marginBottom: "3px",
-                        }}
-                      >
-                        {job.companyHref ? (
-                          <a
-                            href={job.companyHref}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="cv-link"
-                            style={{ color: "var(--cv-fg)" }}
-                          >
-                            {job.company}
-                          </a>
-                        ) : (
-                          job.company
-                        )}
-                      </h3>
-                      <p
-                        style={{
-                          color: "var(--cv-fg-muted)",
-                          fontSize: "0.875rem",
-                        }}
-                      >
-                        {job.role}
-                      </p>
-                    </div>
-                    <div className="cv-dates">
-                      <p className="cv-mono">{job.period}</p>
-                      <p className="cv-mono">{job.location}</p>
-                    </div>
-                  </div>
-                  <ul
-                    style={{
-                      paddingLeft: "18px",
-                      margin: 0,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "6px",
-                    }}
-                  >
-                    {job.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        style={{
-                          color: "var(--cv-fg-muted)",
-                          fontSize: "0.875rem",
-                          lineHeight: "1.7",
-                        }}
-                      >
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* selected projects */}
-          <hr className="cv-divider" />
-          <section>
-            <div style={{ marginBottom: "32px" }}>
-              <h2 className="cv-section-heading" style={{ margin: "0 0 6px" }}>
-                Selected Projects
-              </h2>
-              <p className="cv-mono" style={{ color: "var(--cv-fg-dim)" }}>
-                selected from 105+ projects i&apos;ve built since i was 13
-              </p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {projects.map((project, index) => (
-                <div
-                  key={project.name}
-                  className="cv-project-row"
-                  style={{
-                    paddingBottom: index < projects.length - 1 ? "36px" : "0",
-                    marginBottom: index < projects.length - 1 ? "36px" : "0",
-                    borderBottom:
-                      index < projects.length - 1
-                        ? "1px solid var(--cv-border)"
-                        : "none",
-                  }}
-                >
-                  <div
-                    className="cv-row"
-                    style={{ marginBottom: "10px", alignItems: "flex-start" }}
-                  >
-                    <div>
-                      <h3
-                        style={{
-                          color: "var(--cv-fg)",
-                          fontSize: "0.9375rem",
-                          fontWeight: 500,
-                          marginBottom: "3px",
-                        }}
-                      >
-                        {project.href ? (
-                          <a
-                            href={project.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="cv-link"
-                            style={{ color: "var(--cv-fg)" }}
-                          >
-                            {project.name}
-                          </a>
-                        ) : (
-                          project.name
-                        )}
-                      </h3>
-                      <p
-                        style={{
-                          color: "var(--cv-fg-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
-                        {project.subtitle}
-                      </p>
-                    </div>
-                    {project.stats && (
-                      <span className="cv-chip">{project.stats}</span>
-                    )}
-                  </div>
-                  <p
-                    style={{
-                      color: "var(--cv-fg-muted)",
-                      fontSize: "0.875rem",
-                      lineHeight: "1.7",
-                      margin: "0",
-                    }}
-                  >
-                    {project.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* skills */}
-          <hr className="cv-divider" />
-          <section>
-            <h2 className="cv-section-heading">Skills</h2>
-            <dl className="cv-skills-grid" style={{ margin: 0 }}>
-              {skills.map(({ term, def }) => (
-                <Fragment key={term}>
-                  <dt
-                    className="cv-mono"
-                    style={{ color: "var(--cv-fg-dim)", paddingTop: "1px" }}
-                  >
-                    {term}
-                  </dt>
-                  <dd
-                    style={{
-                      color: "var(--cv-fg-muted)",
-                      fontSize: "0.875rem",
-                      lineHeight: "1.6",
-                      margin: 0,
-                    }}
-                  >
-                    {def}
-                  </dd>
-                </Fragment>
-              ))}
-            </dl>
-          </section>
-
-          {/* education */}
-          <hr className="cv-divider" />
-          <section>
-            <h2 className="cv-section-heading">Education</h2>
-            <div className="cv-row">
               <div>
-                <h3
-                  style={{
-                    color: "var(--cv-fg)",
-                    fontSize: "0.9375rem",
-                    fontWeight: 500,
-                    marginBottom: "3px",
-                  }}
-                >
-                  Yaşar University
-                </h3>
                 <p
-                  style={{
-                    color: "var(--cv-fg-muted)",
-                    fontSize: "0.875rem",
-                  }}
+                  className="text-base"
+                  style={{ color: "var(--brand-ink)" }}
                 >
-                  B.Sc. Software Engineering
+                  full-stack engineer
+                </p>
+                <p
+                  className="text-sm tracking-wide"
+                  style={{ color: "var(--brand-muted)" }}
+                >
+                  izmir, türkiye
                 </p>
               </div>
-              <p className="cv-mono cv-dates">expected jun 2028</p>
-            </div>
-          </section>
+              <nav
+                aria-label="contact links"
+                className="flex flex-col gap-1 sm:items-end"
+              >
+                {contacts.map((c) => (
+                  <UnderlineLink key={c.href} href={c.href}>
+                    {c.label}
+                  </UnderlineLink>
+                ))}
+              </nav>
+            </motion.div>
 
-          {/* languages */}
-          <hr className="cv-divider" />
-          <section>
-            <h2 className="cv-section-heading">Languages</h2>
-            <p style={{ color: "var(--cv-fg-muted)", fontSize: "0.875rem" }}>
-              Turkish{" "}
-              <span className="cv-mono" style={{ color: "var(--cv-fg-dim)" }}>
-                (native)
-              </span>{" "}
-              &middot; English{" "}
-              <span className="cv-mono" style={{ color: "var(--cv-fg-dim)" }}>
-                (C1)
-              </span>
-            </p>
-          </section>
+            {/* Intro — the signature word-by-word reveal */}
+            <motion.p
+              variants={shouldReduce ? fadeUp : wordContainer}
+              className="cv-intro mt-9 font-serif"
+              style={{
+                fontSize: "clamp(20px, 2.7vw, 30px)",
+                lineHeight: 1.32,
+                fontWeight: 360,
+                color: "var(--brand-ink)",
+                fontOpticalSizing: "auto",
+                maxWidth: "30ch",
+              }}
+            >
+              {introWords.map((w, i) => {
+                if (w.accent) {
+                  return (
+                    <span key={i}>
+                      <SensityLink className="align-baseline" />{" "}
+                    </span>
+                  );
+                }
+                let node: React.ReactNode = (
+                  <motion.span
+                    variants={shouldReduce ? undefined : wordItem}
+                    className="inline-block"
+                  >
+                    {w.text}
+                  </motion.span>
+                );
+                if (w.bold) {
+                  node = <strong className="font-semibold">{node}</strong>;
+                } else if (w.italic) {
+                  node = (
+                    <em style={{ color: "var(--brand-muted)" }}>{node}</em>
+                  );
+                }
+                return <span key={i}>{node} </span>;
+              })}
+            </motion.p>
+          </motion.header>
+
+          <div className="mt-14 flex flex-col gap-14">
+            {/* Experience */}
+            <Section heading="experience" shouldReduce={shouldReduce}>
+              <div className="flex flex-col gap-11">
+                {experience.map((job) => (
+                  <div key={`${job.company}-${job.role}`} className="cv-item">
+                    <HeadRow
+                      title={
+                        job.companyHref ? (
+                          <UnderlineLink href={job.companyHref}>
+                            <span style={{ color: "var(--brand-ink)" }}>
+                              {job.company}
+                            </span>
+                          </UnderlineLink>
+                        ) : (
+                          job.company
+                        )
+                      }
+                      subtitle={job.role}
+                      right={
+                        <div style={{ color: "var(--brand-muted)" }}>
+                          <p>{job.period}</p>
+                          <p style={{ color: "var(--brand-dim)" }}>
+                            {job.location}
+                          </p>
+                        </div>
+                      }
+                    />
+                    <ul className="mt-3 flex flex-col gap-2 pl-0">
+                      {job.bullets.map((b) => (
+                        <li
+                          key={b}
+                          className="flex gap-3 text-sm"
+                          style={{
+                            color: "var(--brand-muted)",
+                            lineHeight: 1.65,
+                          }}
+                        >
+                          <span
+                            aria-hidden
+                            className="select-none"
+                            style={{ color: "var(--brand-dim)" }}
+                          >
+                            —
+                          </span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            {/* Selected projects */}
+            <Section
+              heading="selected projects"
+              meta="a handful from 105+ things i've built since i was 13"
+              shouldReduce={shouldReduce}
+            >
+              <div className="flex flex-col gap-9">
+                {projects.map((project) => (
+                  <div key={project.name} className="cv-item">
+                    <HeadRow
+                      title={
+                        project.href ? (
+                          <UnderlineLink href={project.href}>
+                            <span style={{ color: "var(--brand-ink)" }}>
+                              {project.name}
+                            </span>
+                          </UnderlineLink>
+                        ) : (
+                          project.name
+                        )
+                      }
+                      subtitle={project.subtitle}
+                      right={
+                        project.stats ? (
+                          <span style={{ color: "var(--brand-dim)" }}>
+                            {project.stats}
+                          </span>
+                        ) : undefined
+                      }
+                    />
+                    <p
+                      className="mt-2.5 text-sm"
+                      style={{
+                        color: "var(--brand-muted)",
+                        lineHeight: 1.65,
+                        maxWidth: "62ch",
+                      }}
+                    >
+                      {project.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            {/* Skills */}
+            <Section heading="skills" shouldReduce={shouldReduce}>
+              <dl className="cv-skills grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-[140px_1fr]">
+                {skills.map(({ term, def }) => (
+                  <div key={term} className="contents">
+                    <dt
+                      className="text-sm tracking-wide"
+                      style={{ color: "var(--brand-dim)" }}
+                    >
+                      {term}
+                    </dt>
+                    <dd
+                      className="text-sm"
+                      style={{
+                        color: "var(--brand-muted)",
+                        lineHeight: 1.6,
+                        margin: 0,
+                      }}
+                    >
+                      {def}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Section>
+
+            {/* Education */}
+            <Section heading="education" shouldReduce={shouldReduce}>
+              <div className="cv-item">
+                <HeadRow
+                  title="Yaşar University"
+                  subtitle="b.sc. software engineering"
+                  right={
+                    <span style={{ color: "var(--brand-muted)" }}>
+                      expected jun 2028
+                    </span>
+                  }
+                />
+              </div>
+            </Section>
+
+            {/* Languages */}
+            <Section heading="languages" shouldReduce={shouldReduce}>
+              <p className="text-sm" style={{ color: "var(--brand-muted)" }}>
+                turkish{" "}
+                <span style={{ color: "var(--brand-dim)" }}>(native)</span>{" "}
+                &middot; english{" "}
+                <span style={{ color: "var(--brand-dim)" }}>(c1)</span>
+              </p>
+            </Section>
+          </div>
         </div>
 
-        {/* export pdf button */}
-        <button
-          className="cv-export-btn"
-          onClick={() => window.print()}
-          aria-label="export cv as pdf"
+        {/* ── Footer ───────────────────────────────────────────────────── */}
+        <footer
+          className="cv-chrome flex flex-col items-center gap-3 px-6 pb-[calc(3rem+env(safe-area-inset-bottom))] select-none sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
+          style={{ color: "var(--brand-muted)" }}
         >
-          export pdf
-        </button>
+          <span className="text-sm">izmir, türkiye</span>
+          <nav aria-label="social links" className="flex items-center gap-5">
+            <UnderlineLink href="mailto:dogukanurker@icloud.com">
+              mail
+            </UnderlineLink>
+            <UnderlineLink href="https://github.com/dogukanurker">
+              github
+            </UnderlineLink>
+            <UnderlineLink href="https://twitter.com/dogukanurker">
+              twitter
+            </UnderlineLink>
+            <UnderlineLink href="https://linkedin.com/in/dogukanurker">
+              linkedin
+            </UnderlineLink>
+          </nav>
+        </footer>
       </main>
     </>
   );
 }
+
+// ─── Print / PDF ────────────────────────────────────────────────────────────
+// Faithful to the brand on paper: cream field, warm ink type, Fraunces headings.
+// Site chrome (nav, footer, cursor) is dropped; items never split across pages.
+
+const printStyles = `
+  @media print {
+    @page {
+      margin: 14mm;
+      size: A4;
+    }
+
+    html, body {
+      background: var(--brand-cream) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .cv-root {
+      min-height: 0 !important;
+    }
+
+    .cv-chrome { display: none !important; }
+
+    .cv-doc {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .cv-name {
+      font-size: 2.4rem !important;
+    }
+
+    .cv-intro {
+      font-size: 1.05rem !important;
+      max-width: 100% !important;
+      line-height: 1.45 !important;
+    }
+
+    .cv-section { break-inside: avoid; }
+    .cv-item { break-inside: avoid; }
+
+    /* keep words at full opacity regardless of animation state */
+    .cv-intro span,
+    .cv-intro strong,
+    .cv-intro em { opacity: 1 !important; }
+
+    /* links read as plain ink on paper */
+    a { color: var(--brand-ink) !important; }
+    a span[aria-hidden] { display: none !important; }
+
+    .mt-14 { margin-top: 1.75rem !important; }
+    .gap-14 { gap: 1.75rem !important; }
+  }
+`;
