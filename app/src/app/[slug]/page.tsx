@@ -22,7 +22,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   try {
-    const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY || "";
+    const token = process.env.GITHUB_API_KEY ?? "";
     const data = await fetchRepos("dogukanurker", token);
     const currentRepo = data.find(
       (r) => r.name.toLowerCase() === slug.toLowerCase(),
