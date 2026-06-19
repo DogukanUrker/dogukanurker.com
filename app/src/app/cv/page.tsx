@@ -12,7 +12,6 @@ import { Cursor } from "@/components/Cursor";
 import {
   contacts,
   experience,
-  fetchRepoStats,
   introWords,
   projects,
   skills,
@@ -385,10 +384,11 @@ export default function CVPage() {
   // static fallbacks render until this resolves, and on failure we keep them.
   useEffect(() => {
     let active = true;
-    const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY?.trim();
-    fetchRepoStats(token).then((map) => {
-      if (active) setRepoStats(map);
-    });
+    fetch("/api/github/stats")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((map) => {
+        if (active) setRepoStats(map);
+      });
     return () => {
       active = false;
     };

@@ -33,9 +33,12 @@ export async function fetchRepos(
       headers: {
         Authorization: `Bearer ${token.trim()}`,
       },
+      next: { revalidate: 3600 },
     },
   );
-  let data: Repo[] = (await response.json())
+  const json: unknown = await response.json();
+  if (!Array.isArray(json)) return [];
+  let data: Repo[] = (json as Repo[])
     .sort((a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count)
     .sort(
       (a: Repo, b: Repo) =>

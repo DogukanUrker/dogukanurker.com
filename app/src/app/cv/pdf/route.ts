@@ -9,8 +9,7 @@ export async function GET() {
   // fonts are read from disk, so no origin/self-fetch is needed.
   registerCvFonts();
 
-  const token =
-    process.env.GITHUB_API_KEY ?? process.env.NEXT_PUBLIC_GITHUB_API_KEY;
+  const token = process.env.GITHUB_API_KEY;
   const stats = await fetchRepoStats(token);
 
   const pdf = await renderCvPdf(stats);
