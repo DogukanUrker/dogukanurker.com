@@ -219,11 +219,7 @@ function DownloadButton() {
   // underline doubles as a progress bar: fills while preparing, completes on
   // success, otherwise follows hover/focus like every other link.
   const underlineWidth =
-    state === "preparing"
-      ? "90%"
-      : state === "saved" || hover
-        ? "100%"
-        : "0%";
+    state === "preparing" ? "90%" : state === "saved" || hover ? "100%" : "0%";
 
   return (
     <button
@@ -554,7 +550,11 @@ export default function CVPage() {
         <div className="mt-14 flex flex-col gap-14">
           {/* Experience — revealed on load so mobile users see content below
               the name/about and know to keep scrolling. */}
-          <Section heading="experience" shouldReduce={shouldReduce} revealOnMount>
+          <Section
+            heading="experience"
+            shouldReduce={shouldReduce}
+            revealOnMount
+          >
             <div className="flex flex-col gap-11">
               {experience.map((job) => (
                 <div key={`${job.company}-${job.role}`}>
@@ -609,7 +609,7 @@ export default function CVPage() {
           {/* Selected projects */}
           <Section
             heading="selected projects"
-            meta="a handful from 105+ things i've built since i was 13"
+            meta="a handful from 105+ things i've built since i was 12"
             shouldReduce={shouldReduce}
           >
             <div className="flex flex-col gap-9">
