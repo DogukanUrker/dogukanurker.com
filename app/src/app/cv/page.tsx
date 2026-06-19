@@ -864,7 +864,7 @@ export default function CVPage() {
 const printStyles = `
   @media print {
     @page {
-      margin: 14mm;
+      margin: 10mm;
       size: A4;
     }
 
@@ -883,7 +883,9 @@ const printStyles = `
 
     .cv-doc {
       max-width: 100% !important;
-      padding: 0 !important;
+      /* container padding guarantees an x/y gap even if the print dialog
+         overrides the @page margin (e.g. "None"/"Minimum"). */
+      padding: 12mm 14mm !important;
       margin: 0 !important;
     }
 
