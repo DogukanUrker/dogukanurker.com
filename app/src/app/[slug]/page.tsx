@@ -13,40 +13,56 @@ interface PageProps {
   }>;
 }
 
+export async function generateStaticParams() {
+  try {
+    const token = process.env.GITHUB_API_KEY ?? "";
+    const data = await fetchRepos("dogukanurker", token);
+    return data.map((r) => ({
+      slug: r.name,
+    }));
+  } catch (error) {
+    console.error("Error generating static params for repos:", error);
+    return [];
+  }
+}
+
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
   if (!slug) {
     notFound();
-    return;
   }
+
+  let currentRepo = null;
+  let languagesData = null;
+  let contributorsData = null;
 
   try {
     const token = process.env.GITHUB_API_KEY ?? "";
     const data = await fetchRepos("dogukanurker", token);
-    const currentRepo = data.find(
+    currentRepo = data.find(
       (r) => r.name.toLowerCase() === slug.toLowerCase(),
-    );
+    ) ?? null;
 
-    if (!currentRepo) {
-      notFound();
-      return;
+    if (currentRepo) {
+      [languagesData, contributorsData] = await Promise.all([
+        fetchLanguages(currentRepo.languages_url, token),
+        fetchContributors(currentRepo.contributors_url, token),
+      ]);
     }
-
-    const [languagesData, contributorsData] = await Promise.all([
-      fetchLanguages(currentRepo.languages_url, token),
-      fetchContributors(currentRepo.contributors_url, token),
-    ]);
-
-    return (
-      <ProjectDetailsClient
-        repo={currentRepo}
-        languages={languagesData}
-        contributors={contributorsData}
-      />
-    );
   } catch (error) {
     console.error("Error fetching data:", error);
+  }
+
+  if (!currentRepo || !languagesData || !contributorsData) {
     notFound();
   }
+
+  return (
+    <ProjectDetailsClient
+      repo={currentRepo}
+      languages={languagesData}
+      contributors={contributorsData}
+    />
+  );
 }
