@@ -201,7 +201,7 @@ function SectionTitle({ children }: { children: string }) {
   return <Text style={s.sectionTitle}>{children}</Text>;
 }
 
-export function CvDocument({ stats }: CvProps) {
+function CvDocument({ stats }: CvProps) {
   return (
     <Document
       title={`${profile.name} — cv`}

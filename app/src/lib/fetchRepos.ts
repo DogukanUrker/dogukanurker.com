@@ -76,13 +76,3 @@ export async function fetchContributors(
   });
   return response.json();
 }
-
-export async function fetchReadme(
-  username: string,
-  repo: string,
-): Promise<string> {
-  const response = await fetch(
-    `https://raw.githubusercontent.com/${username}/${repo}/main/README.md`,
-  );
-  return response.text();
-}

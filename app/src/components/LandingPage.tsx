@@ -273,11 +273,7 @@ const portraitVariants = {
   },
 };
 
-interface HeroNameProps {
-  shouldReduce: boolean | null;
-}
-
-function HeroName({ shouldReduce }: HeroNameProps) {
+function HeroName() {
   const [isMobile, setIsMobile] = useState(true);
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 639px)");
@@ -538,7 +534,7 @@ export default function LandingPage() {
             aria-hidden
           >
             <motion.div style={{ y: nameY, opacity: nameOpacity }}>
-              <HeroName shouldReduce={shouldReduce} />
+              <HeroName />
             </motion.div>
           </motion.div>
         </motion.section>

@@ -178,26 +178,6 @@ function calculateTrend(
   return { value: Math.abs(percentChange), isPositive: percentChange >= 0 };
 }
 
-function getFirstDataDate(data: AnalyticsData): string {
-  if (!data.recentVisits || data.recentVisits.length === 0) {
-    return "No data available";
-  }
-
-  const earliestTimestamp = data.recentVisits
-    .map((visit) => new Date(visit.timestamp))
-    .reduce((earliest, current) => (current < earliest ? current : earliest));
-
-  return earliestTimestamp.toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Europe/Istanbul",
-  });
-}
-
 function getDateDifference(startDate: Date): string {
   const now = new Date();
   const diffInMs = now.getTime() - startDate.getTime();
