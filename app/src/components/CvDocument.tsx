@@ -159,7 +159,7 @@ function Header() {
     <View>
       <Text style={s.name}>{profile.name}</Text>
       <Text style={s.tagline}>
-        {profile.role}  ·  {profile.location}
+        {profile.role} · {profile.location}
       </Text>
       <Text style={s.contactRow}>
         {contacts.map((c, i) => (
@@ -216,7 +216,11 @@ export function CvDocument({ stats }: CvProps) {
         <View style={s.section}>
           <SectionTitle>experience</SectionTitle>
           {experience.map((job) => (
-            <View key={`${job.company}-${job.role}`} style={s.item} wrap={false}>
+            <View
+              key={`${job.company}-${job.role}`}
+              style={s.item}
+              wrap={false}
+            >
               <View style={s.rowBetween}>
                 {job.companyHref ? (
                   <Link src={job.companyHref} style={s.entryTitleLink}>
@@ -245,7 +249,7 @@ export function CvDocument({ stats }: CvProps) {
         <View style={s.section}>
           <SectionTitle>selected projects</SectionTitle>
           <Text style={s.sectionNote}>
-            a handful from 105+ things i&apos;ve built since i was 13
+            a handful from 105+ things i&apos;ve built since i was 12
           </Text>
           {projects.map((project) => {
             const stat = statsFor(project, stats);
