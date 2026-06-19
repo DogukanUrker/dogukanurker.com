@@ -1,3 +1,4 @@
+import path from "node:path";
 import {
   Document,
   Page,
@@ -22,22 +23,27 @@ import {
 } from "@/lib/cv";
 
 // ─── Fonts ──────────────────────────────────────────────────────────────────
-// IBM Plex Serif — a professional, fully Turkish-capable typeface. Served from
-// /public/fonts; registered once per origin so @react-pdf can fetch it at render.
+// IBM Plex Serif — a professional, fully Turkish-capable typeface. Read straight
+// from the bundled files on disk so rendering never depends on a network fetch
+// (which would break behind Vercel deployment protection, rate limits, etc.).
 
-const registeredOrigins = new Set<string>();
+let fontsRegistered = false;
 
-export function registerCvFonts(origin: string) {
-  if (registeredOrigins.has(origin)) return;
+function fontPath(file: string) {
+  return path.join(process.cwd(), "public", "fonts", file);
+}
+
+export function registerCvFonts() {
+  if (fontsRegistered) return;
 
   Font.register({
     family: "IBMPlexSerif",
     fonts: [
-      { src: `${origin}/fonts/IBMPlexSerif-Regular.ttf`, fontWeight: 400 },
-      { src: `${origin}/fonts/IBMPlexSerif-SemiBold.ttf`, fontWeight: 600 },
-      { src: `${origin}/fonts/IBMPlexSerif-Bold.ttf`, fontWeight: 700 },
+      { src: fontPath("IBMPlexSerif-Regular.ttf"), fontWeight: 400 },
+      { src: fontPath("IBMPlexSerif-SemiBold.ttf"), fontWeight: 600 },
+      { src: fontPath("IBMPlexSerif-Bold.ttf"), fontWeight: 700 },
       {
-        src: `${origin}/fonts/IBMPlexSerif-Italic.ttf`,
+        src: fontPath("IBMPlexSerif-Italic.ttf"),
         fontStyle: "italic",
         fontWeight: 400,
       },
@@ -47,7 +53,7 @@ export function registerCvFonts(origin: string) {
   // keep words intact — no automatic hyphenation breaks.
   Font.registerHyphenationCallback((word) => [word]);
 
-  registeredOrigins.add(origin);
+  fontsRegistered = true;
 }
 
 // ─── Palette ────────────────────────────────────────────────────────────────

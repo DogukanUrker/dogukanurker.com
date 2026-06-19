@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // bundle the CV pdf fonts into the route's serverless function so it can read
+  // them from disk (public/ assets aren't included in the function bundle).
+  outputFileTracingIncludes: {
+    "/cv/pdf": ["./public/fonts/**"],
+  },
   images: {
     remotePatterns: [
       {

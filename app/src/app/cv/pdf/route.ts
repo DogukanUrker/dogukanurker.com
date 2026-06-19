@@ -1,22 +1,13 @@
-import { NextRequest } from "next/server";
 import { fetchRepoStats } from "@/lib/cv";
 import { registerCvFonts, renderCvPdf } from "@/components/CvDocument";
 
-// needs the node runtime for @react-pdf/renderer (fontkit, buffers).
+// needs the node runtime for @react-pdf/renderer (fontkit, fs, buffers).
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
-  // resolve the deployment origin so @react-pdf can fetch the bundled fonts
-  // from /public/fonts (works in dev, self-hosted, and serverless alike).
-  const url = new URL(req.url);
-  const host =
-    req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? url.host;
-  const proto =
-    req.headers.get("x-forwarded-proto") ?? url.protocol.replace(":", "");
-  const origin = `${proto}://${host}`;
-
-  registerCvFonts(origin);
+export async function GET() {
+  // fonts are read from disk, so no origin/self-fetch is needed.
+  registerCvFonts();
 
   const token =
     process.env.GITHUB_API_KEY ?? process.env.NEXT_PUBLIC_GITHUB_API_KEY;
