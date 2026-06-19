@@ -73,12 +73,15 @@ const s = StyleSheet.create({
 
   // header
   name: {
-    fontSize: 23,
+    fontSize: 22,
     fontWeight: 700,
     letterSpacing: 0.2,
-    marginBottom: 3,
+    // explicit so the big name doesn't inherit the page's small line box
+    // (which would let the tagline overlap it).
+    lineHeight: 1.2,
+    marginBottom: 7,
   },
-  tagline: { fontSize: 10, color: sub, marginBottom: 6 },
+  tagline: { fontSize: 10, lineHeight: 1.3, color: sub, marginBottom: 7 },
   contactRow: { flexDirection: "row", flexWrap: "wrap", fontSize: 9, color: dim },
   contactLink: { color: accent, textDecoration: "none" },
   contactSep: { color: dim },
