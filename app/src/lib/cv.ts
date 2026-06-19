@@ -214,7 +214,7 @@ export const contacts = [
 
 // ─── GitHub stats ───────────────────────────────────────────────────────────
 
-export const GITHUB_USER = "dogukanurker";
+const GITHUB_USER = "dogukanurker";
 
 // live repo metrics keyed by lowercased repo name.
 export type RepoStats = { stars: number; forks: number };
