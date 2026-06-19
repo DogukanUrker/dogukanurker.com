@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { Cursor } from "@/components/Cursor";
 import {
   contacts,
@@ -170,6 +175,106 @@ function SensityLink({ className = "" }: { className?: string }) {
   );
 }
 
+// ─── Download CV button ─────────────────────────────────────────────────────
+// Fetches the server-rendered pdf as a blob and saves it directly — the user
+// never leaves the page. The label crossfades through its states with the same
+// spring/word-reveal motion as the rest of the site, and the signature
+// underline grows left-to-right as a progress indicator while it works.
+
+type DownloadState = "idle" | "preparing" | "saved";
+
+const downloadLabels: Record<DownloadState, string> = {
+  idle: "download",
+  preparing: "preparing…",
+  saved: "saved",
+};
+
+function DownloadButton() {
+  const shouldReduce = useReducedMotion();
+  const [state, setState] = useState<DownloadState>("idle");
+  const [hover, setHover] = useState(false);
+
+  const handleDownload = async () => {
+    if (state !== "idle") return;
+    setState("preparing");
+    try {
+      const res = await fetch("/cv/pdf");
+      if (!res.ok) throw new Error("pdf request failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "dogukan-urker-cv.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      setState("saved");
+      window.setTimeout(() => setState("idle"), 1800);
+    } catch {
+      setState("idle");
+    }
+  };
+
+  // underline doubles as a progress bar: fills while preparing, completes on
+  // success, otherwise follows hover/focus like every other link.
+  const underlineWidth =
+    state === "preparing"
+      ? "90%"
+      : state === "saved" || hover
+        ? "100%"
+        : "0%";
+
+  return (
+    <button
+      type="button"
+      onClick={handleDownload}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+      data-cursor="link"
+      aria-label="download cv as pdf"
+      aria-busy={state === "preparing"}
+      className="group relative inline-flex items-center text-sm tracking-wide transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 bg-transparent border-none p-0 cursor-pointer"
+      style={{
+        color:
+          state === "idle" && !hover
+            ? "var(--brand-muted)"
+            : "var(--brand-ink)",
+      }}
+    >
+      <span className="relative inline-block">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={state}
+            className="inline-block whitespace-nowrap"
+            initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 7 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={shouldReduce ? { opacity: 0 } : { opacity: 0, y: -7 }}
+            transition={{ duration: 0.28, ease: expo }}
+          >
+            {downloadLabels[state]}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      <motion.span
+        aria-hidden
+        className="absolute -bottom-0.5 left-0 h-px bg-[var(--brand-ink)]"
+        initial={false}
+        animate={{ width: underlineWidth }}
+        transition={
+          shouldReduce
+            ? { duration: 0 }
+            : state === "preparing"
+              ? { duration: 1.4, ease: expo }
+              : { duration: 0.3, ease: "easeOut" }
+        }
+      />
+    </button>
+  );
+}
+
 // ─── Reusable section wrapper ───────────────────────────────────────────────
 
 function Section({
@@ -270,9 +375,6 @@ export default function CVPage() {
   );
   const shouldReduce = useReducedMotion();
 
-  // download the server-generated, screen-independent pdf.
-  const openPdf = () => window.open("/cv/pdf", "_blank", "noopener");
-
   // pull live stars/forks from github so the on-page numbers stay current; the
   // static fallbacks render until this resolves, and on failure we keep them.
   useEffect(() => {
@@ -331,7 +433,7 @@ export default function CVPage() {
         </div>
         <div className="flex items-center gap-6">
           <UnderlineLink href="/">home</UnderlineLink>
-          <UnderlineLink onClick={openPdf}>pdf</UnderlineLink>
+          <DownloadButton />
         </div>
         {/* mobile role subtitle on a second row */}
         <div
