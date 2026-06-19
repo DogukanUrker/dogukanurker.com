@@ -184,7 +184,7 @@ type DownloadState = "idle" | "preparing" | "saved";
 
 const downloadLabels: Record<DownloadState, string> = {
   idle: "download",
-  preparing: "preparing…",
+  preparing: "downloading",
   saved: "saved",
 };
 
@@ -193,10 +193,15 @@ function DownloadButton() {
   const [state, setState] = useState<DownloadState>("idle");
   const [hover, setHover] = useState(false);
 
-  const handleDownload = async () => {
+  const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (state !== "idle") return;
+    e.currentTarget.blur();
+    setHover(false);
     setState("preparing");
     try {
+      // DEBUG: artificial delay to preview the downloading animation
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
       const res = await fetch("/cv/pdf");
       if (!res.ok) throw new Error("pdf request failed");
       const blob = await res.blob();
@@ -218,7 +223,7 @@ function DownloadButton() {
   // underline doubles as a progress bar: fills while preparing, completes on
   // success, otherwise follows hover/focus like every other link.
   const underlineWidth =
-    state === "preparing" ? "90%" : state === "saved" || hover ? "100%" : "0%";
+    state === "preparing" || state === "saved" || hover ? "100%" : "0%";
 
   return (
     <button
@@ -254,7 +259,31 @@ function DownloadButton() {
             exit={shouldReduce ? { opacity: 0 } : { opacity: 0, y: -7 }}
             transition={{ duration: 0.28, ease: expo }}
           >
-            {downloadLabels[state]}
+            {state === "preparing" ? (
+              Array.from(downloadLabels.preparing).map((char, index) => (
+                <motion.span
+                  key={index}
+                  className="inline-block"
+                  animate={shouldReduce ? {} : { y: [0, -3, 0, 0] }}
+                  transition={
+                    shouldReduce
+                      ? {}
+                      : {
+                          duration: 1.5,
+                          times: [0, 0.15, 0.3, 1],
+                          repeat: Infinity,
+                          repeatType: "loop",
+                          ease: "easeInOut",
+                          delay: index * 0.08,
+                        }
+                  }
+                >
+                  {char}
+                </motion.span>
+              ))
+            ) : (
+              downloadLabels[state]
+            )}
             <motion.span
               aria-hidden
               className="absolute -bottom-0.5 left-0 h-px bg-[var(--brand-ink)]"
