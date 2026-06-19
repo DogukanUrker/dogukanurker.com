@@ -2,12 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Cursor } from "@/components/Cursor";
+import {
+  contacts,
+  experience,
+  fetchRepoStats,
+  introWords,
+  projects,
+  skills,
+  statsFor,
+  type RepoStats,
+} from "@/lib/cv";
 
 // ─── Motion constants (shared with the landing page) ────────────────────────
 
@@ -164,218 +170,6 @@ function SensityLink({ className = "" }: { className?: string }) {
   );
 }
 
-// ─── Content ────────────────────────────────────────────────────────────────
-
-// intro words — bold = ink emphasis, italic = muted serif, accent = sensity link
-interface Word {
-  text: string;
-  bold?: boolean;
-  italic?: boolean;
-  accent?: boolean;
-}
-
-const introWords: Word[] = [
-  { text: "full-stack" },
-  { text: "engineer" },
-  { text: "at" },
-  { text: "sensity.ai", accent: true },
-  { text: "—" },
-  { text: "building" },
-  { text: "detection" },
-  { text: "for" },
-  { text: "deepfakes", bold: true },
-  { text: "&", bold: true },
-  { text: "ai-generated", bold: true },
-  { text: "media.", bold: true },
-  { text: "off" },
-  { text: "the" },
-  { text: "clock" },
-  { text: "i" },
-  { text: "co-lead" },
-  { text: "engineering" },
-  { text: "for" },
-  { text: "gdg" },
-  { text: "on" },
-  { text: "campus" },
-  { text: "yaşar" },
-  { text: "and" },
-  { text: "maintain" },
-  { text: "open-source" },
-  { text: "tools" },
-  { text: "with" },
-  { text: "54k+" },
-  { text: "combined" },
-  { text: "downloads.", bold: true },
-  { text: "coding", italic: true },
-  { text: "since", italic: true },
-  { text: "12,", italic: true },
-  { text: "still", italic: true },
-  { text: "chasing", italic: true },
-  { text: "the", italic: true },
-  { text: "same", italic: true },
-  { text: "feeling.", italic: true },
-];
-
-interface Job {
-  company: string;
-  companyHref?: string;
-  role: string;
-  period: string;
-  location: string;
-  bullets: string[];
-}
-
-const experience: Job[] = [
-  {
-    company: "Sensity AI",
-    companyHref: "https://www.sensity.ai",
-    role: "full-stack engineer",
-    period: "aug 2025 – present",
-    location: "remote (eu)",
-    bullets: [
-      "ship full-stack features across FastAPI microservices and a React & Vue frontend",
-      "help migrate legacy Django services onto the modern FastAPI stack",
-      "build internal review platforms, developer-facing tooling, and integration tests",
-      "review pull requests across both frontend and backend",
-    ],
-  },
-  {
-    company: "Sensity AI",
-    companyHref: "https://www.sensity.ai",
-    role: "backend intern",
-    period: "mar 2025 – aug 2025",
-    location: "remote (eu)",
-    bullets: [
-      "five-month backend internship focused on FastAPI microservices; converted to full-time engineering",
-    ],
-  },
-  {
-    company: "GDG on Campus Yaşar University",
-    companyHref: "https://www.gdgoncampusyu.com/",
-    role: "software team, core member",
-    period: "sep 2024 – present",
-    location: "izmir",
-    bullets: [
-      "co-lead a six-engineer software team; own architecture and task distribution alongside the team lead",
-      "designed the monorepo from scratch: 4 FastAPI microservices (user, form, mail, event) and 3 React frontends",
-      "defined team conventions: tooling (uv, bun, Ruff, Biome), directory structure, git workflow, conventional commits, squash-merge policy",
-      "break initiatives into issues, distribute tasks, review pull requests, mentor contributors",
-      "stack: Python 3.14, FastAPI, Motor (MongoDB), React 19, TypeScript, Vite, TailwindCSS",
-    ],
-  },
-];
-
-interface Project {
-  name: string;
-  subtitle: string;
-  description: string;
-  href?: string;
-  // github repo name (lowercase) — live stars/forks are pulled from the api.
-  repo?: string;
-  showForks?: boolean;
-  // non-github stat, e.g. package-registry downloads.
-  extra?: string;
-  // shown until the api responds (and if it ever fails).
-  fallbackStars?: number;
-  fallbackForks?: number;
-}
-
-const projects: Project[] = [
-  {
-    name: "Tamga",
-    subtitle: "open-source python logging library",
-    description:
-      "colorful tailwind-inspired console output, file/json logging with rotation, sqlite and mongodb integration, and email notifications for critical logs — used across personal projects and in production at gdg yaşar.",
-    href: "https://github.com/dogukanurker/tamga",
-    repo: "tamga",
-    extra: "24k+ downloads on pypi",
-    fallbackStars: 71,
-  },
-  {
-    name: "FlaskBlog",
-    subtitle: "full-stack blogging platform",
-    description:
-      "self-hostable flask blog with authentication, post management, and a responsive ui; adopted for real-world deployments.",
-    href: "https://github.com/dogukanurker/flaskBlog",
-    repo: "flaskblog",
-    showForks: true,
-    fallbackStars: 190,
-    fallbackForks: 78,
-  },
-  {
-    name: "BenchKit",
-    subtitle: "cli tool for benchmarking local llms",
-    description:
-      "ran 30+ open-weight models from 9 families on a single rtx 3060 12gb and published a public humaneval leaderboard — built for people running llms at home on constrained gpus.",
-    href: "https://github.com/dogukanurker/benchkit",
-  },
-  {
-    name: "DogiZed",
-    subtitle: "theme for the zed editor",
-    description:
-      "minimalist dark/light dual theme with pure black and white backgrounds and vibrant syntax.",
-    href: "https://github.com/dogukanurker/dogized",
-    extra: "30k+ downloads on the zed marketplace",
-  },
-  {
-    name: "Kira",
-    subtitle: "self-hosted personal assistant",
-    description:
-      'telegram frontend, a local 14b llm via ollama, running on my homeserver — designed around a "dumb llm, smart tooling" architecture: the model only classifies intent while every action, api call, and scheduled task runs in python.',
-  },
-];
-
-// live repo metrics keyed by lowercased repo name.
-type RepoStats = { stars: number; forks: number };
-
-// build the "· stars · forks" line, preferring live numbers, falling back to the
-// static ones so the row is never empty or jumps to nothing on api failure.
-function statsFor(
-  p: Project,
-  live: Record<string, RepoStats> | null,
-): string | null {
-  const parts: string[] = [];
-  if (p.extra) parts.push(p.extra);
-  if (p.repo) {
-    const s = live?.[p.repo];
-    const stars = s ? s.stars : p.fallbackStars;
-    const forks = s ? s.forks : p.fallbackForks;
-    if (typeof stars === "number") {
-      parts.push(`${stars.toLocaleString("en-US")} stars`);
-    }
-    if (p.showForks && typeof forks === "number") {
-      parts.push(`${forks.toLocaleString("en-US")} forks`);
-    }
-  }
-  return parts.length > 0 ? parts.join(" · ") : null;
-}
-
-const skills: { term: string; def: string }[] = [
-  { term: "languages", def: "python, typescript, javascript, html, css" },
-  {
-    term: "backend",
-    def: "fastapi, flask, django, motor, pydantic, async/await patterns",
-  },
-  { term: "frontend", def: "react 19, vue, typescript, vite, tailwindcss, shadcn" },
-  {
-    term: "ai / ml",
-    def: "ollama, local llm deployment, prompt engineering, benchmarking, pytorch",
-  },
-  { term: "infrastructure", def: "docker, tailscale, makefile, systemd, debian" },
-  { term: "databases", def: "mongodb, sqlite" },
-  { term: "tooling", def: "git, uv, bun, ruff, biome, zed, claude code" },
-];
-
-const contacts = [
-  { label: "dogukanurker@icloud.com", href: "mailto:dogukanurker@icloud.com" },
-  { label: "github.com/dogukanurker", href: "https://github.com/dogukanurker" },
-  { label: "twitter.com/dogukanurker", href: "https://twitter.com/dogukanurker" },
-  {
-    label: "linkedin.com/in/dogukanurker",
-    href: "https://linkedin.com/in/dogukanurker",
-  },
-];
-
 // ─── Reusable section wrapper ───────────────────────────────────────────────
 
 function Section({
@@ -398,7 +192,6 @@ function Section({
       variants={sectionReveal}
     >
       <hr
-        className="cv-rule"
         style={{
           border: "none",
           borderTop: "1px solid var(--brand-border)",
@@ -477,270 +270,240 @@ export default function CVPage() {
   );
   const shouldReduce = useReducedMotion();
 
-  const print = () => window.print();
+  // download the server-generated, screen-independent pdf.
+  const openPdf = () => window.open("/cv/pdf", "_blank", "noopener");
 
-  // pull live stars/forks from github so the numbers stay current; the static
-  // fallbacks render until this resolves, and on any failure we keep them.
+  // pull live stars/forks from github so the on-page numbers stay current; the
+  // static fallbacks render until this resolves, and on failure we keep them.
   useEffect(() => {
     let active = true;
     const token = process.env.NEXT_PUBLIC_GITHUB_API_KEY?.trim();
-    fetch("https://api.github.com/users/dogukanurker/repos?per_page=100", {
-      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    })
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("github"))))
-      .then(
-        (
-          data: {
-            name: string;
-            stargazers_count: number;
-            forks_count: number;
-          }[],
-        ) => {
-          if (!active || !Array.isArray(data)) return;
-          const map: Record<string, RepoStats> = {};
-          for (const r of data) {
-            map[r.name.toLowerCase()] = {
-              stars: r.stargazers_count,
-              forks: r.forks_count,
-            };
-          }
-          setRepoStats(map);
-        },
-      )
-      .catch(() => {
-        /* keep static fallbacks */
-      });
+    fetchRepoStats(token).then((map) => {
+      if (active) setRepoStats(map);
+    });
     return () => {
       active = false;
     };
   }, []);
 
   return (
-    <>
-      <style>{printStyles}</style>
+    <main
+      className={`cv-root relative min-h-screen w-full overflow-x-hidden${
+        cursorEnabled ? " cursor-none" : ""
+      }`}
+      style={{
+        backgroundColor: "var(--brand-cream)",
+        color: "var(--brand-ink)",
+      }}
+    >
+      <Cursor onEnable={setCursorEnabled} />
 
-      <main
-        className={`cv-root relative min-h-screen w-full overflow-x-hidden${
-          cursorEnabled ? " cursor-none" : ""
-        }`}
+      {/* ── Nav ──────────────────────────────────────────────────────── */}
+      <motion.nav
+        aria-label="primary navigation"
+        className="fixed left-0 right-0 top-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:px-10 md:py-5 select-none"
         style={{
-          backgroundColor: "var(--brand-cream)",
-          color: "var(--brand-ink)",
+          backgroundColor: "rgba(243, 241, 234, 0.85)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          willChange: "transform",
         }}
+        initial={shouldReduce ? "visible" : "hidden"}
+        animate="visible"
+        variants={navVariants}
       >
-        <Cursor onEnable={setCursorEnabled} />
-
-        {/* ── Nav ──────────────────────────────────────────────────────── */}
-        <motion.nav
-          aria-label="primary navigation"
-          className="cv-chrome fixed left-0 right-0 top-0 z-50 flex flex-wrap items-center justify-between px-6 py-4 md:px-10 md:py-5 select-none"
-          style={{
-            backgroundColor: "rgba(243, 241, 234, 0.85)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            willChange: "transform",
-          }}
-          initial={shouldReduce ? "visible" : "hidden"}
-          animate="visible"
-          variants={navVariants}
-        >
-          <div className="flex items-center gap-4">
-            <Link
-              href="/"
-              data-cursor="link"
-              className="text-sm font-medium tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 rounded-sm"
-              style={{ color: "var(--brand-ink)" }}
-            >
-              Doğukan Ürker
-            </Link>
-            <span
-              className="hidden items-center gap-1 text-sm md:inline-flex"
-              style={{ color: "var(--brand-muted)" }}
-            >
-              <span>full-stack engineer @</span>
-              <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
-            </span>
-          </div>
-          <div className="flex items-center gap-6">
-            <UnderlineLink href="/">home</UnderlineLink>
-            <UnderlineLink onClick={print}>print</UnderlineLink>
-          </div>
-          {/* mobile role subtitle on a second row */}
-          <div
-            className="mt-1 flex w-full items-center gap-1 text-xs leading-relaxed tracking-wide md:hidden"
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            data-cursor="link"
+            className="text-sm font-medium tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 rounded-sm"
+            style={{ color: "var(--brand-ink)" }}
+          >
+            Doğukan Ürker
+          </Link>
+          <span
+            className="hidden items-center gap-1 text-sm md:inline-flex"
             style={{ color: "var(--brand-muted)" }}
           >
             <span>full-stack engineer @</span>
-            <UnderlineLink href="https://sensity.ai" className="text-xs">
-              sensity.ai
-            </UnderlineLink>
-          </div>
-        </motion.nav>
+            <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
+          </span>
+        </div>
+        <div className="flex items-center gap-6">
+          <UnderlineLink href="/">home</UnderlineLink>
+          <UnderlineLink onClick={openPdf}>pdf</UnderlineLink>
+        </div>
+        {/* mobile role subtitle on a second row */}
+        <div
+          className="mt-1 flex w-full items-center gap-1 text-xs leading-relaxed tracking-wide md:hidden"
+          style={{ color: "var(--brand-muted)" }}
+        >
+          <span>full-stack engineer @</span>
+          <UnderlineLink href="https://sensity.ai" className="text-xs">
+            sensity.ai
+          </UnderlineLink>
+        </div>
+      </motion.nav>
 
-        {/* ── Document ─────────────────────────────────────────────────── */}
-        <div className="cv-doc mx-auto max-w-2xl px-6 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-32 sm:px-10 sm:pt-40">
-          {/* Header / letterhead */}
-          <motion.header
-            initial={shouldReduce ? "visible" : "hidden"}
-            animate="visible"
-            variants={containerVariants}
+      {/* ── Document ─────────────────────────────────────────────────── */}
+      <div className="mx-auto max-w-2xl px-6 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-32 sm:px-10 sm:pt-40">
+        {/* Header / letterhead */}
+        <motion.header
+          initial={shouldReduce ? "visible" : "hidden"}
+          animate="visible"
+          variants={containerVariants}
+        >
+          <motion.h1
+            variants={fadeUp}
+            className="cv-name font-serif tracking-tighter"
+            style={{
+              fontSize: "clamp(40px, 11vw, 92px)",
+              fontWeight: 400,
+              lineHeight: 0.95,
+              color: "var(--brand-ink)",
+              fontOpticalSizing: "auto",
+              margin: 0,
+            }}
           >
-            <motion.h1
-              variants={fadeUp}
-              className="cv-name font-serif tracking-tighter"
-              style={{
-                fontSize: "clamp(40px, 11vw, 92px)",
-                fontWeight: 400,
-                lineHeight: 0.95,
-                color: "var(--brand-ink)",
-                fontOpticalSizing: "auto",
-                margin: 0,
-              }}
-            >
-              Doğukan Ürker
-            </motion.h1>
+            Doğukan Ürker
+          </motion.h1>
 
-            <motion.div
-              variants={fadeUp}
-              className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
-            >
-              <div>
-                <p
-                  className="text-base"
-                  style={{ color: "var(--brand-ink)" }}
-                >
-                  full-stack engineer
-                </p>
-                <p
-                  className="text-sm tracking-wide"
-                  style={{ color: "var(--brand-muted)" }}
-                >
-                  izmir, türkiye
-                </p>
-              </div>
-              <nav
-                aria-label="contact links"
-                className="flex flex-col gap-1 sm:items-end"
+          <motion.div
+            variants={fadeUp}
+            className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+          >
+            <div>
+              <p className="text-base" style={{ color: "var(--brand-ink)" }}>
+                full-stack engineer
+              </p>
+              <p
+                className="text-sm tracking-wide"
+                style={{ color: "var(--brand-muted)" }}
               >
-                {contacts.map((c) => (
-                  <UnderlineLink key={c.href} href={c.href}>
-                    {c.label}
-                  </UnderlineLink>
-                ))}
-              </nav>
-            </motion.div>
-
-            {/* Intro — the signature word-by-word reveal */}
-            <motion.p
-              variants={shouldReduce ? fadeUp : wordContainer}
-              className="cv-intro mt-9 font-serif"
-              style={{
-                fontSize: "clamp(20px, 2.7vw, 30px)",
-                lineHeight: 1.32,
-                fontWeight: 360,
-                color: "var(--brand-ink)",
-                fontOpticalSizing: "auto",
-                maxWidth: "30ch",
-              }}
+                izmir, türkiye
+              </p>
+            </div>
+            <nav
+              aria-label="contact links"
+              className="flex flex-col gap-1 sm:items-end"
             >
-              {introWords.map((w, i) => {
-                if (w.accent) {
-                  return (
-                    <span key={i}>
-                      <motion.span
-                        variants={shouldReduce ? undefined : wordItem}
-                        className="inline-block align-baseline"
-                      >
-                        <SensityLink />
-                      </motion.span>{" "}
-                    </span>
-                  );
-                }
-                let node: React.ReactNode = (
-                  <motion.span
-                    variants={shouldReduce ? undefined : wordItem}
-                    className="inline-block"
-                  >
-                    {w.text}
-                  </motion.span>
+              {contacts.map((c) => (
+                <UnderlineLink key={c.href} href={c.href}>
+                  {c.label}
+                </UnderlineLink>
+              ))}
+            </nav>
+          </motion.div>
+
+          {/* Intro — the signature word-by-word reveal */}
+          <motion.p
+            variants={shouldReduce ? fadeUp : wordContainer}
+            className="cv-intro mt-9 font-serif"
+            style={{
+              fontSize: "clamp(20px, 2.7vw, 30px)",
+              lineHeight: 1.32,
+              fontWeight: 360,
+              color: "var(--brand-ink)",
+              fontOpticalSizing: "auto",
+              maxWidth: "30ch",
+            }}
+          >
+            {introWords.map((w, i) => {
+              if (w.accent) {
+                return (
+                  <span key={i}>
+                    <motion.span
+                      variants={shouldReduce ? undefined : wordItem}
+                      className="inline-block align-baseline"
+                    >
+                      <SensityLink />
+                    </motion.span>{" "}
+                  </span>
                 );
-                if (w.bold) {
-                  node = <strong className="font-semibold">{node}</strong>;
-                } else if (w.italic) {
-                  node = (
-                    <em style={{ color: "var(--brand-muted)" }}>{node}</em>
-                  );
-                }
-                return <span key={i}>{node} </span>;
-              })}
-            </motion.p>
-          </motion.header>
+              }
+              let node: React.ReactNode = (
+                <motion.span
+                  variants={shouldReduce ? undefined : wordItem}
+                  className="inline-block"
+                >
+                  {w.text}
+                </motion.span>
+              );
+              if (w.bold) {
+                node = <strong className="font-semibold">{node}</strong>;
+              } else if (w.italic) {
+                node = <em style={{ color: "var(--brand-muted)" }}>{node}</em>;
+              }
+              return <span key={i}>{node} </span>;
+            })}
+          </motion.p>
+        </motion.header>
 
-          <div className="mt-14 flex flex-col gap-14">
-            {/* Experience */}
-            <Section heading="experience" shouldReduce={shouldReduce}>
-              <div className="flex flex-col gap-11">
-                {experience.map((job) => (
-                  <div key={`${job.company}-${job.role}`} className="cv-item">
-                    <HeadRow
-                      title={
-                        job.companyHref ? (
-                          <UnderlineLink href={job.companyHref}>
-                            <span style={{ color: "var(--brand-ink)" }}>
-                              {job.company}
-                            </span>
-                          </UnderlineLink>
-                        ) : (
-                          job.company
-                        )
-                      }
-                      subtitle={job.role}
-                      right={
-                        <div style={{ color: "var(--brand-muted)" }}>
-                          <p>{job.period}</p>
-                          <p style={{ color: "var(--brand-dim)" }}>
-                            {job.location}
-                          </p>
-                        </div>
-                      }
-                    />
-                    <ul className="mt-3 flex flex-col gap-2 pl-0">
-                      {job.bullets.map((b) => (
-                        <li
-                          key={b}
-                          className="flex gap-3 text-sm"
-                          style={{
-                            color: "var(--brand-muted)",
-                            lineHeight: 1.65,
-                          }}
-                        >
-                          <span
-                            aria-hidden
-                            className="select-none"
-                            style={{ color: "var(--brand-dim)" }}
-                          >
-                            —
+        <div className="mt-14 flex flex-col gap-14">
+          {/* Experience */}
+          <Section heading="experience" shouldReduce={shouldReduce}>
+            <div className="flex flex-col gap-11">
+              {experience.map((job) => (
+                <div key={`${job.company}-${job.role}`}>
+                  <HeadRow
+                    title={
+                      job.companyHref ? (
+                        <UnderlineLink href={job.companyHref}>
+                          <span style={{ color: "var(--brand-ink)" }}>
+                            {job.company}
                           </span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </Section>
+                        </UnderlineLink>
+                      ) : (
+                        job.company
+                      )
+                    }
+                    subtitle={job.role}
+                    right={
+                      <div style={{ color: "var(--brand-muted)" }}>
+                        <p>{job.period}</p>
+                        <p style={{ color: "var(--brand-dim)" }}>
+                          {job.location}
+                        </p>
+                      </div>
+                    }
+                  />
+                  <ul className="mt-3 flex flex-col gap-2 pl-0">
+                    {job.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex gap-3 text-sm"
+                        style={{
+                          color: "var(--brand-muted)",
+                          lineHeight: 1.65,
+                        }}
+                      >
+                        <span
+                          aria-hidden
+                          className="select-none"
+                          style={{ color: "var(--brand-dim)" }}
+                        >
+                          —
+                        </span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Section>
 
-            {/* Selected projects */}
-            <Section
-              heading="selected projects"
-              meta="a handful from 105+ things i've built since i was 13"
-              shouldReduce={shouldReduce}
-            >
-              <div className="flex flex-col gap-9">
-                {projects.map((project) => {
-                  const stat = statsFor(project, repoStats);
-                  return (
-                  <div key={project.name} className="cv-item">
+          {/* Selected projects */}
+          <Section
+            heading="selected projects"
+            meta="a handful from 105+ things i've built since i was 13"
+            shouldReduce={shouldReduce}
+          >
+            <div className="flex flex-col gap-9">
+              {projects.map((project) => {
+                const stat = statsFor(project, repoStats);
+                return (
+                  <div key={project.name}>
                     <HeadRow
                       title={
                         project.href ? (
@@ -773,145 +536,83 @@ export default function CVPage() {
                       {project.description}
                     </p>
                   </div>
-                  );
-                })}
-              </div>
-            </Section>
+                );
+              })}
+            </div>
+          </Section>
 
-            {/* Skills */}
-            <Section heading="skills" shouldReduce={shouldReduce}>
-              <dl className="cv-skills grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-[140px_1fr]">
-                {skills.map(({ term, def }) => (
-                  <div key={term} className="contents">
-                    <dt
-                      className="text-sm tracking-wide"
-                      style={{ color: "var(--brand-dim)" }}
-                    >
-                      {term}
-                    </dt>
-                    <dd
-                      className="text-sm"
-                      style={{
-                        color: "var(--brand-muted)",
-                        lineHeight: 1.6,
-                        margin: 0,
-                      }}
-                    >
-                      {def}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Section>
+          {/* Skills */}
+          <Section heading="skills" shouldReduce={shouldReduce}>
+            <dl className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-[140px_1fr]">
+              {skills.map(({ term, def }) => (
+                <div key={term} className="contents">
+                  <dt
+                    className="text-sm tracking-wide"
+                    style={{ color: "var(--brand-dim)" }}
+                  >
+                    {term}
+                  </dt>
+                  <dd
+                    className="text-sm"
+                    style={{
+                      color: "var(--brand-muted)",
+                      lineHeight: 1.6,
+                      margin: 0,
+                    }}
+                  >
+                    {def}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Section>
 
-            {/* Education */}
-            <Section heading="education" shouldReduce={shouldReduce}>
-              <div className="cv-item">
-                <HeadRow
-                  title="Yaşar University"
-                  subtitle="b.sc. software engineering"
-                  right={
-                    <span style={{ color: "var(--brand-muted)" }}>
-                      expected jun 2028
-                    </span>
-                  }
-                />
-              </div>
-            </Section>
+          {/* Education */}
+          <Section heading="education" shouldReduce={shouldReduce}>
+            <HeadRow
+              title="Yaşar University"
+              subtitle="b.sc. software engineering"
+              right={
+                <span style={{ color: "var(--brand-muted)" }}>
+                  expected jun 2028
+                </span>
+              }
+            />
+          </Section>
 
-            {/* Languages */}
-            <Section heading="languages" shouldReduce={shouldReduce}>
-              <p className="text-sm" style={{ color: "var(--brand-muted)" }}>
-                turkish{" "}
-                <span style={{ color: "var(--brand-dim)" }}>(native)</span>{" "}
-                &middot; english{" "}
-                <span style={{ color: "var(--brand-dim)" }}>(c1)</span>
-              </p>
-            </Section>
-          </div>
+          {/* Languages */}
+          <Section heading="languages" shouldReduce={shouldReduce}>
+            <p className="text-sm" style={{ color: "var(--brand-muted)" }}>
+              turkish{" "}
+              <span style={{ color: "var(--brand-dim)" }}>(native)</span>{" "}
+              &middot; english{" "}
+              <span style={{ color: "var(--brand-dim)" }}>(c1)</span>
+            </p>
+          </Section>
         </div>
+      </div>
 
-        {/* ── Footer ───────────────────────────────────────────────────── */}
-        <footer
-          className="cv-chrome flex flex-col items-center gap-3 px-6 pb-[calc(3rem+env(safe-area-inset-bottom))] select-none sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
-          style={{ color: "var(--brand-muted)" }}
-        >
-          <span className="text-sm">izmir, türkiye</span>
-          <nav aria-label="social links" className="flex items-center gap-5">
-            <UnderlineLink href="mailto:dogukanurker@icloud.com">
-              mail
-            </UnderlineLink>
-            <UnderlineLink href="https://github.com/dogukanurker">
-              github
-            </UnderlineLink>
-            <UnderlineLink href="https://twitter.com/dogukanurker">
-              twitter
-            </UnderlineLink>
-            <UnderlineLink href="https://linkedin.com/in/dogukanurker">
-              linkedin
-            </UnderlineLink>
-          </nav>
-        </footer>
-      </main>
-    </>
+      {/* ── Footer ───────────────────────────────────────────────────── */}
+      <footer
+        className="flex flex-col items-center gap-3 px-6 pb-[calc(3rem+env(safe-area-inset-bottom))] select-none sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:pb-10"
+        style={{ color: "var(--brand-muted)" }}
+      >
+        <span className="text-sm">izmir, türkiye</span>
+        <nav aria-label="social links" className="flex items-center gap-5">
+          <UnderlineLink href="mailto:dogukanurker@icloud.com">
+            mail
+          </UnderlineLink>
+          <UnderlineLink href="https://github.com/dogukanurker">
+            github
+          </UnderlineLink>
+          <UnderlineLink href="https://twitter.com/dogukanurker">
+            twitter
+          </UnderlineLink>
+          <UnderlineLink href="https://linkedin.com/in/dogukanurker">
+            linkedin
+          </UnderlineLink>
+        </nav>
+      </footer>
+    </main>
   );
 }
-
-// ─── Print / PDF ────────────────────────────────────────────────────────────
-// Clean white paper with warm ink type and Fraunces headings. Site chrome
-// (nav, footer, cursor) is dropped; items never split across pages.
-
-const printStyles = `
-  @media print {
-    @page {
-      margin: 10mm;
-      size: A4;
-    }
-
-    html, body {
-      background: #ffffff !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    .cv-root {
-      background: #ffffff !important;
-      min-height: 0 !important;
-    }
-
-    .cv-chrome { display: none !important; }
-
-    .cv-doc {
-      max-width: 100% !important;
-      /* container padding guarantees an x/y gap even if the print dialog
-         overrides the @page margin (e.g. "None"/"Minimum"). */
-      padding: 12mm 14mm !important;
-      margin: 0 !important;
-    }
-
-    .cv-name {
-      font-size: 2.4rem !important;
-    }
-
-    .cv-intro {
-      font-size: 1.05rem !important;
-      max-width: 100% !important;
-      line-height: 1.45 !important;
-    }
-
-    .cv-section { break-inside: avoid; }
-    .cv-item { break-inside: avoid; }
-
-    /* keep words at full opacity regardless of animation state */
-    .cv-intro span,
-    .cv-intro strong,
-    .cv-intro em { opacity: 1 !important; }
-
-    /* links read as plain ink on paper */
-    a { color: var(--brand-ink) !important; }
-    a span[aria-hidden] { display: none !important; }
-
-    .mt-14 { margin-top: 1.75rem !important; }
-    .gap-14 { gap: 1.75rem !important; }
-  }
-`;
