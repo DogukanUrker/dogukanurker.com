@@ -38,12 +38,10 @@ export async function fetchRepos(
   );
   const json: unknown = await response.json();
   if (!Array.isArray(json)) return [];
-  let data: Repo[] = (json as Repo[])
-    .sort((a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count)
-    .sort(
-      (a: Repo, b: Repo) =>
-        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
-    );
+  let data: Repo[] = (json as Repo[]).sort(
+    (a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count,
+  );
+
 
   const flaskArticleRepo = data.find((repo) => repo.id === 566979145);
   if (flaskArticleRepo) {
