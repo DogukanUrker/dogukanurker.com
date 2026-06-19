@@ -82,7 +82,7 @@ const s = StyleSheet.create({
     marginBottom: 7,
   },
   tagline: { fontSize: 10, lineHeight: 1.3, color: sub, marginBottom: 7 },
-  contactRow: { flexDirection: "row", flexWrap: "wrap", fontSize: 9, color: dim },
+  contactRow: { fontSize: 9, lineHeight: 1.5, color: dim },
   contactLink: { color: accent, textDecoration: "none" },
   contactSep: { color: dim },
 
@@ -155,16 +155,16 @@ function Header() {
       <Text style={s.tagline}>
         {profile.role}  ·  {profile.location}
       </Text>
-      <View style={s.contactRow}>
+      <Text style={s.contactRow}>
         {contacts.map((c, i) => (
           <Text key={c.href}>
-            {i > 0 && <Text style={s.contactSep}>{"   ·   "}</Text>}
+            {i > 0 ? <Text style={s.contactSep}>{"   ·   "}</Text> : null}
             <Link src={c.href} style={s.contactLink}>
               {c.label}
             </Link>
           </Text>
         ))}
-      </View>
+      </Text>
     </View>
   );
 }
