@@ -282,18 +282,23 @@ function Section({
   meta,
   children,
   shouldReduce,
+  revealOnMount = false,
 }: {
   heading: string;
   meta?: string;
   children: React.ReactNode;
   shouldReduce: boolean | null;
+  // reveal immediately on load instead of waiting for scroll — used for the
+  // first section so mobile users see there's more below the fold.
+  revealOnMount?: boolean;
 }) {
   return (
     <motion.section
       className="cv-section"
       initial={shouldReduce ? "visible" : "hidden"}
-      whileInView="visible"
-      viewport={{ once: true, margin: "-8% 0px" }}
+      animate={revealOnMount ? "visible" : undefined}
+      whileInView={revealOnMount ? undefined : "visible"}
+      viewport={revealOnMount ? undefined : { once: true, margin: "-8% 0px" }}
       variants={sectionReveal}
     >
       <hr
@@ -542,8 +547,9 @@ export default function CVPage() {
         </motion.header>
 
         <div className="mt-14 flex flex-col gap-14">
-          {/* Experience */}
-          <Section heading="experience" shouldReduce={shouldReduce}>
+          {/* Experience — revealed on load so mobile users see content below
+              the name/about and know to keep scrolling. */}
+          <Section heading="experience" shouldReduce={shouldReduce} revealOnMount>
             <div className="flex flex-col gap-11">
               {experience.map((job) => (
                 <div key={`${job.company}-${job.role}`}>
