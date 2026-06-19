@@ -244,33 +244,38 @@ function DownloadButton() {
             : "var(--brand-ink)",
       }}
     >
-      <span className="relative inline-block">
+      <span className="relative inline-block whitespace-nowrap">
+        {/* invisible sizer: reserves the widest label's width so the
+            neighbouring nav link never shifts as the label changes */}
+        <span aria-hidden className="invisible">
+          {downloadLabels.preparing}
+        </span>
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={state}
-            className="inline-block whitespace-nowrap"
+            className="absolute left-0 top-0 inline-block whitespace-nowrap"
             initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 7 }}
             animate={{ opacity: 1, y: 0 }}
             exit={shouldReduce ? { opacity: 0 } : { opacity: 0, y: -7 }}
             transition={{ duration: 0.28, ease: expo }}
           >
             {downloadLabels[state]}
+            <motion.span
+              aria-hidden
+              className="absolute -bottom-0.5 left-0 h-px bg-[var(--brand-ink)]"
+              initial={false}
+              animate={{ width: underlineWidth }}
+              transition={
+                shouldReduce
+                  ? { duration: 0 }
+                  : state === "preparing"
+                    ? { duration: 1.4, ease: expo }
+                    : { duration: 0.3, ease: "easeOut" }
+              }
+            />
           </motion.span>
         </AnimatePresence>
       </span>
-      <motion.span
-        aria-hidden
-        className="absolute -bottom-0.5 left-0 h-px bg-[var(--brand-ink)]"
-        initial={false}
-        animate={{ width: underlineWidth }}
-        transition={
-          shouldReduce
-            ? { duration: 0 }
-            : state === "preparing"
-              ? { duration: 1.4, ease: expo }
-              : { duration: 0.3, ease: "easeOut" }
-        }
-      />
     </button>
   );
 }
