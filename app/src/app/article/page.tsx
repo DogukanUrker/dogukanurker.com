@@ -1,38 +1,41 @@
-import { getAllPosts, formatDate } from "@/lib/article";
-import Link from "next/link";
+import type { Metadata } from "next";
 import Image from "next/image";
-import { Metadata } from "next";
+import Link from "next/link";
+import { formatDate, getAllPosts } from "@/lib/article";
 
 export const metadata: Metadata = {
   title: "Articles",
-  description: "Explore articles about software engineering, web development, and programming best practices.",
+  description:
+    "Explore articles about software engineering, web development, and programming best practices.",
   openGraph: {
-    type: 'website',
+    type: "website",
     title: "Articles | Dogukan Urker",
-    description: "Explore articles about software engineering, web development, and programming best practices.",
-    url: 'https://dogukanurker.com/article',
-    siteName: 'Dogukan Urker',
-    locale: 'en_US',
+    description:
+      "Explore articles about software engineering, web development, and programming best practices.",
+    url: "https://dogukanurker.com/article",
+    siteName: "Dogukan Urker",
+    locale: "en_US",
     images: [
       {
-        url: 'https://dogukanurker.com/opengraph-image',
+        url: "https://dogukanurker.com/opengraph-image",
         width: 1200,
         height: 630,
-        alt: 'Dogukan Urker - Articles',
-        type: 'image/png',
+        alt: "Dogukan Urker - Articles",
+        type: "image/png",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: "Articles | Dogukan Urker",
-    description: "Explore articles about software engineering, web development, and programming best practices.",
-    images: ['https://dogukanurker.com/opengraph-image'],
-    creator: '@dogukanurker',
-    site: '@dogukanurker',
+    description:
+      "Explore articles about software engineering, web development, and programming best practices.",
+    images: ["https://dogukanurker.com/opengraph-image"],
+    creator: "@dogukanurker",
+    site: "@dogukanurker",
   },
   alternates: {
-    canonical: 'https://dogukanurker.com/article',
+    canonical: "https://dogukanurker.com/article",
   },
 };
 
@@ -40,17 +43,25 @@ export default async function ArticlesPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="min-h-screen px-4 py-16 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--brand-cream)" }}>
+    <div
+      className="min-h-screen px-4 py-16 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--brand-cream)" }}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl" style={{ color: "var(--brand-ink)" }}>
+          <h1
+            className="text-4xl font-bold tracking-tight sm:text-5xl"
+            style={{ color: "var(--brand-ink)" }}
+          >
             Articles
           </h1>
         </div>
 
         {posts.length === 0 ? (
           <div className="flex min-h-[400px] items-center justify-center">
-            <p style={{ color: "var(--brand-muted)" }}>No posts yet. Check back soon!</p>
+            <p style={{ color: "var(--brand-muted)" }}>
+              No posts yet. Check back soon!
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
@@ -72,11 +83,17 @@ export default async function ArticlesPage() {
                     </div>
                   )}
 
-                  <h2 className="text-2xl font-semibold transition-colors" style={{ color: "var(--brand-ink)" }}>
+                  <h2
+                    className="text-2xl font-semibold transition-colors"
+                    style={{ color: "var(--brand-ink)" }}
+                  >
                     {post.title}
                   </h2>
 
-                  <p className="line-clamp-2 text-base leading-relaxed" style={{ color: "var(--brand-muted)" }}>
+                  <p
+                    className="line-clamp-2 text-base leading-relaxed"
+                    style={{ color: "var(--brand-muted)" }}
+                  >
                     {post.description}
                   </p>
 

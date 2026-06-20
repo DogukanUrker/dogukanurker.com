@@ -1,0 +1,31 @@
+name: Biome CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        working-directory: app
+
+      - name: Check Formatting
+        run: bunx biome format .
+        working-directory: app
+
+      - name: Check Linting & Imports
+        run: bunx biome check --no-errors-on-unmatched --write=false
+        working-directory: app

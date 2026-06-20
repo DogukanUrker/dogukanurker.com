@@ -1,6 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
 
 // ── Next.js file-based OG image metadata ──────────────────────────────────
 export const alt = "Doğukan Ürker | Full-Stack Engineer";
@@ -137,7 +137,7 @@ export default async function Image() {
             paddingRight: 88,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* biome-ignore lint/performance/noImgElement: intentional ImageResponse <img> */}
           <img
             src={photoSrc}
             alt=""

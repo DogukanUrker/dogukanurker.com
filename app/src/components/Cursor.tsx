@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
 import {
   motion,
   useMotionValue,
-  useSpring,
   useReducedMotion,
+  useSpring,
   useTransform,
 } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CursorProps {
   onEnable?: (enabled: boolean) => void;
@@ -55,11 +55,12 @@ export function Cursor({ onEnable }: CursorProps) {
 
   const scale = useTransform(
     [scaleSpring, variantScaleSpring],
-    ([s, v]) => (s as number) * (v as number)
+    ([s, v]) => (s as number) * (v as number),
   );
 
   useEffect(() => {
-    const targetScale = variant === "photo" ? 70 / 9 : variant === "link" ? 46 / 9 : 1;
+    const targetScale =
+      variant === "photo" ? 70 / 9 : variant === "link" ? 46 / 9 : 1;
     variantScale.set(targetScale);
   }, [variant, variantScale]);
 

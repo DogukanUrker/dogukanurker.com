@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.2.0",
@@ -35,12 +37,10 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.5",
+    "@biomejs/biome": "2.5.0",
     "@types/node": "^26.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.1",
     "postcss": "^8.5.15",
     "tailwindcss": "^3.4.17",
     "typescript": "^6.0.3"

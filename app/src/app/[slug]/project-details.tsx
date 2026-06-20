@@ -1,12 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Link from "next/link";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { useState } from "react";
 import { Cursor } from "@/components/Cursor";
 import type { Contributor, Repo } from "@/lib/fetchRepos";
 
@@ -193,13 +189,12 @@ export function ProjectDetailsClient({
           className="flex flex-col gap-12"
         >
           {/* Back & Donate Actions */}
-          <motion.div variants={fadeUp} className="flex justify-between items-center">
-            <UnderlineLink href="/projects">
-              back to projects
-            </UnderlineLink>
-            <UnderlineLink href="/donate">
-              support
-            </UnderlineLink>
+          <motion.div
+            variants={fadeUp}
+            className="flex justify-between items-center"
+          >
+            <UnderlineLink href="/projects">back to projects</UnderlineLink>
+            <UnderlineLink href="/donate">support</UnderlineLink>
           </motion.div>
 
           {/* Header */}
@@ -237,10 +232,19 @@ export function ProjectDetailsClient({
 
           {/* Repo Info Grid */}
           <motion.section variants={fadeUp} className="space-y-6">
-            <hr style={{ border: "none", borderTop: "1px solid var(--brand-border)", margin: 0 }} />
+            <hr
+              style={{
+                border: "none",
+                borderTop: "1px solid var(--brand-border)",
+                margin: 0,
+              }}
+            />
             <dl className="grid grid-cols-[120px_1fr] gap-x-8 gap-y-3">
               <div className="contents">
-                <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                <dt
+                  className="text-sm tracking-wide lowercase"
+                  style={{ color: "var(--brand-dim)" }}
+                >
                   repository
                 </dt>
                 <dd className="text-sm lowercase">
@@ -250,34 +254,58 @@ export function ProjectDetailsClient({
                 </dd>
               </div>
               <div className="contents">
-                <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                <dt
+                  className="text-sm tracking-wide lowercase"
+                  style={{ color: "var(--brand-dim)" }}
+                >
                   stars
                 </dt>
-                <dd className="text-sm lowercase" style={{ color: "var(--brand-ink)" }}>
+                <dd
+                  className="text-sm lowercase"
+                  style={{ color: "var(--brand-ink)" }}
+                >
                   {repo.stargazers_count}
                 </dd>
               </div>
               <div className="contents">
-                <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                <dt
+                  className="text-sm tracking-wide lowercase"
+                  style={{ color: "var(--brand-dim)" }}
+                >
                   forks
                 </dt>
-                <dd className="text-sm lowercase" style={{ color: "var(--brand-ink)" }}>
+                <dd
+                  className="text-sm lowercase"
+                  style={{ color: "var(--brand-ink)" }}
+                >
                   {repo.forks}
                 </dd>
               </div>
               <div className="contents">
-                <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                <dt
+                  className="text-sm tracking-wide lowercase"
+                  style={{ color: "var(--brand-dim)" }}
+                >
                   license
                 </dt>
-                <dd className="text-sm lowercase" style={{ color: "var(--brand-ink)" }}>
+                <dd
+                  className="text-sm lowercase"
+                  style={{ color: "var(--brand-ink)" }}
+                >
                   {repo.license ? repo.license.spdx_id.toLowerCase() : "none"}
                 </dd>
               </div>
               <div className="contents">
-                <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                <dt
+                  className="text-sm tracking-wide lowercase"
+                  style={{ color: "var(--brand-dim)" }}
+                >
                   updated
                 </dt>
-                <dd className="text-sm lowercase" style={{ color: "var(--brand-ink)" }}>
+                <dd
+                  className="text-sm lowercase"
+                  style={{ color: "var(--brand-ink)" }}
+                >
                   {lastUpdated.toLowerCase()}
                 </dd>
               </div>
@@ -287,7 +315,13 @@ export function ProjectDetailsClient({
           {/* Languages Section */}
           {Object.keys(languages).length > 0 && (
             <motion.section variants={fadeUp} className="space-y-6">
-              <hr style={{ border: "none", borderTop: "1px solid var(--brand-border)", margin: 0 }} />
+              <hr
+                style={{
+                  border: "none",
+                  borderTop: "1px solid var(--brand-border)",
+                  margin: 0,
+                }}
+              />
               <h2
                 className="font-serif lowercase"
                 style={{
@@ -308,11 +342,20 @@ export function ProjectDetailsClient({
                     const percentage = ((bytes / totalBytes) * 100).toFixed(1);
                     return (
                       <div key={lang} className="contents">
-                        <dt className="text-sm tracking-wide lowercase" style={{ color: "var(--brand-dim)" }}>
+                        <dt
+                          className="text-sm tracking-wide lowercase"
+                          style={{ color: "var(--brand-dim)" }}
+                        >
                           {lang.toLowerCase()}
                         </dt>
-                        <dd className="text-sm lowercase" style={{ color: "var(--brand-muted)" }}>
-                          {percentage}% <span className="text-[var(--brand-dim)]">({(bytes / 1024).toFixed(1)} kb)</span>
+                        <dd
+                          className="text-sm lowercase"
+                          style={{ color: "var(--brand-muted)" }}
+                        >
+                          {percentage}%{" "}
+                          <span className="text-[var(--brand-dim)]">
+                            ({(bytes / 1024).toFixed(1)} kb)
+                          </span>
                         </dd>
                       </div>
                     );
@@ -324,7 +367,13 @@ export function ProjectDetailsClient({
           {/* Contributors Section */}
           {contributors.length > 0 && (
             <motion.section variants={fadeUp} className="space-y-6">
-              <hr style={{ border: "none", borderTop: "1px solid var(--brand-border)", margin: 0 }} />
+              <hr
+                style={{
+                  border: "none",
+                  borderTop: "1px solid var(--brand-border)",
+                  margin: 0,
+                }}
+              />
               <h2
                 className="font-serif lowercase"
                 style={{
@@ -348,7 +397,7 @@ export function ProjectDetailsClient({
                     data-cursor="link"
                     className="flex items-center gap-3 text-sm text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors group"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* biome-ignore lint/performance/noImgElement: intentional avatar <img> */}
                     <img
                       src={contributor.avatar_url}
                       alt={contributor.login}
@@ -359,7 +408,8 @@ export function ProjectDetailsClient({
                         {contributor.login.toLowerCase()}
                       </span>
                       <span className="text-xs lowercase text-[var(--brand-dim)]">
-                        {contributor.contributions} {contributor.contributions === 1 ? "commit" : "commits"}
+                        {contributor.contributions}{" "}
+                        {contributor.contributions === 1 ? "commit" : "commits"}
                       </span>
                     </div>
                   </a>

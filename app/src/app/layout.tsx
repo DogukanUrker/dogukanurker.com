@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Inter, Fraunces } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 
@@ -22,7 +22,6 @@ const fraunces = Fraunces({
   display: "swap",
   axes: ["opsz"],
 });
-
 
 export const metadata: Metadata = {
   title: "Doğukan",

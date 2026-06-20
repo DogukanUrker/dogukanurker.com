@@ -42,7 +42,6 @@ export async function fetchRepos(
     (a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count,
   );
 
-
   const flaskArticleRepo = data.find((repo) => repo.id === 566979145);
   if (flaskArticleRepo) {
     data = [flaskArticleRepo, ...data.filter((repo) => repo.id !== 566979145)];

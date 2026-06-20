@@ -1,8 +1,8 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
+import { slug } from "github-slugger";
 import matter from "gray-matter";
 import readingTime from "reading-time";
-import { slug } from "github-slugger";
 
 const contentDirectory = path.join(process.cwd(), "..", "content", "article");
 
@@ -32,7 +32,7 @@ export interface ArticleMetadata {
  * @param includeDrafts - Whether to include draft articles (default: false)
  */
 export async function getAllPosts(
-  includeDrafts: boolean = false
+  includeDrafts: boolean = false,
 ): Promise<ArticleMetadata[]> {
   try {
     if (!fs.existsSync(contentDirectory)) {
@@ -135,9 +135,8 @@ export function extractHeadings(content: string): Heading[] {
 
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   const headings: Heading[] = [];
-  let match;
 
-  while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
+  for (const match of contentWithoutCodeBlocks.matchAll(headingRegex)) {
     const level = match[1].length;
     const text = match[2].trim();
     const id = slug(text);
@@ -147,4 +146,3 @@ export function extractHeadings(content: string): Heading[] {
 
   return headings;
 }
-

@@ -1,16 +1,46 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import {
+  Activity,
+  ArrowDown,
+  ArrowUp,
+  BarChart3,
+  CheckCircle2,
+  Chrome,
+  CircleDot,
+  Clock,
+  ExternalLink,
+  Eye,
+  Gauge,
+  Globe,
+  Languages,
+  Lock,
+  MapPin,
+  Maximize2,
+  Monitor,
+  Moon,
+  MousePointer,
+  RefreshCw,
+  Smartphone,
+  Sun,
+  Tablet,
+  Timer,
+  TrendingUp,
+  Users,
+  Zap,
+} from "lucide-react";
 import Image from "next/image";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
   Table,
@@ -20,35 +50,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  RefreshCw,
-  Lock,
-  TrendingUp,
-  Users,
-  Eye,
-  Clock,
-  Zap,
-  Globe,
-  Monitor,
-  Smartphone,
-  Tablet,
-  Chrome,
-  CheckCircle2,
-  ArrowUp,
-  ArrowDown,
-  Activity,
-  BarChart3,
-  MousePointer,
-  Timer,
-  Gauge,
-  Moon,
-  Sun,
-  ExternalLink,
-  MapPin,
-  Languages,
-  Maximize2,
-  CircleDot,
-} from "lucide-react";
 
 interface AnalyticsData {
   overview: {
@@ -355,7 +356,8 @@ export default function AnalyticsPage() {
               Real-time insights and metrics
             </p>
             <p className="text-muted-foreground/70 text-xs md:text-sm mt-1">
-              Data since July 29, 2025 at 20:09 ({getDateDifference(new Date(2025, 6, 29, 20, 9))})
+              Data since July 29, 2025 at 20:09 (
+              {getDateDifference(new Date(2025, 6, 29, 20, 9))})
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2">

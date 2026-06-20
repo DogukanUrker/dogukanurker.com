@@ -1,53 +1,84 @@
-import {
-  getPostBySlug,
-  getAllPosts,
-  formatDate,
-  extractHeadings,
-} from "@/lib/article";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import { notFound } from "next/navigation";
-import Link from "next/link";
+import type { Metadata } from "next";
 import Image from "next/image";
-import { TableOfContents } from "@/components/article/TableOfContents";
-import { ReadingProgress } from "@/components/article/ReadingProgress";
-import { ShareButton } from "@/components/article/ShareButton";
-import { ImageWithCaption } from "@/components/mdx";
-import { CodeBlock } from "@/components/mdx/CodeBlock";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import type React from "react";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { Metadata } from "next";
-import React from "react";
+import { ReadingProgress } from "@/components/article/ReadingProgress";
+import { ShareButton } from "@/components/article/ShareButton";
+import { TableOfContents } from "@/components/article/TableOfContents";
+import { ImageWithCaption } from "@/components/mdx";
+import { CodeBlock } from "@/components/mdx/CodeBlock";
+import {
+  extractHeadings,
+  formatDate,
+  getAllPosts,
+  getPostBySlug,
+} from "@/lib/article";
 
 const components = {
   ImageWithCaption,
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="mb-6 mt-8 text-4xl font-bold" style={{ color: "var(--brand-ink)" }} {...props} />
+    <h1
+      className="mb-6 mt-8 text-4xl font-bold"
+      style={{ color: "var(--brand-ink)" }}
+      {...props}
+    />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mb-4 mt-8 text-3xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
+    <h2
+      className="mb-4 mt-8 text-3xl font-semibold"
+      style={{ color: "var(--brand-ink)" }}
+      {...props}
+    />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="mb-3 mt-6 text-2xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
+    <h3
+      className="mb-3 mt-6 text-2xl font-semibold"
+      style={{ color: "var(--brand-ink)" }}
+      {...props}
+    />
   ),
   h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="mb-2 mt-4 text-xl font-semibold" style={{ color: "var(--brand-ink)" }} {...props} />
+    <h4
+      className="mb-2 mt-4 text-xl font-semibold"
+      style={{ color: "var(--brand-ink)" }}
+      {...props}
+    />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mb-4 leading-7" style={{ color: "var(--brand-muted)" }} {...props} />
+    <p
+      className="mb-4 leading-7"
+      style={{ color: "var(--brand-muted)" }}
+      {...props}
+    />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       className="underline underline-offset-4 transition-colors"
-      style={{ color: "var(--brand-ink)", textDecorationColor: "var(--brand-border)" }}
+      style={{
+        color: "var(--brand-ink)",
+        textDecorationColor: "var(--brand-border)",
+      }}
       {...props}
     />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="mb-4 ml-6 list-disc space-y-2" style={{ color: "var(--brand-muted)" }} {...props} />
+    <ul
+      className="mb-4 ml-6 list-disc space-y-2"
+      style={{ color: "var(--brand-muted)" }}
+      {...props}
+    />
   ),
   ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
-    <ol className="mb-4 ml-6 list-decimal space-y-2" style={{ color: "var(--brand-muted)" }} {...props} />
+    <ol
+      className="mb-4 ml-6 list-decimal space-y-2"
+      style={{ color: "var(--brand-muted)" }}
+      {...props}
+    />
   ),
   li: (props: React.LiHTMLAttributes<HTMLLIElement>) => (
     <li className="leading-7" {...props} />
@@ -66,7 +97,11 @@ const components = {
     if (!props.className) {
       return (
         <code
-          className="rounded px-1.5 py-0.5 text-sm" style={{ backgroundColor: "var(--brand-cream-subtle)", color: "var(--brand-ink)" }}
+          className="rounded px-1.5 py-0.5 text-sm"
+          style={{
+            backgroundColor: "var(--brand-cream-subtle)",
+            color: "var(--brand-ink)",
+          }}
           {...props}
         />
       );
@@ -80,21 +115,36 @@ const components = {
   ),
   th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="border px-4 py-2 text-left font-semibold" style={{ borderColor: "var(--brand-border)", backgroundColor: "var(--brand-cream-subtle)", color: "var(--brand-ink)" }}
+      className="border px-4 py-2 text-left font-semibold"
+      style={{
+        borderColor: "var(--brand-border)",
+        backgroundColor: "var(--brand-cream-subtle)",
+        color: "var(--brand-ink)",
+      }}
       {...props}
     />
   ),
   td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-    <td className="border px-4 py-2" style={{ borderColor: "var(--brand-border)", color: "var(--brand-muted)" }} {...props} />
+    <td
+      className="border px-4 py-2"
+      style={{
+        borderColor: "var(--brand-border)",
+        color: "var(--brand-muted)",
+      }}
+      {...props}
+    />
   ),
-  hr: () => <hr className="my-8" style={{ borderColor: "var(--brand-border)" }} />,
+  hr: () => (
+    <hr className="my-8" style={{ borderColor: "var(--brand-border)" }} />
+  ),
   img: (props: React.ImgHTMLAttributes<HTMLImageElement> & { src: string }) => (
     <Image
       src={props.src}
       alt={props.alt || "Article image"}
       width={800}
       height={600}
-      className="my-6 rounded-lg border" style={{ borderColor: "var(--brand-border)" }}
+      className="my-6 rounded-lg border"
+      style={{ borderColor: "var(--brand-border)" }}
     />
   ),
 };
@@ -116,7 +166,8 @@ export async function generateMetadata({
   }
 
   const articleUrl = `https://dogukanurker.com/article/${slug}`;
-  const ogImage = post.bannerImage || "https://dogukanurker.com/opengraph-image";
+  const ogImage =
+    post.bannerImage || "https://dogukanurker.com/opengraph-image";
 
   return {
     title: post.title,
@@ -183,14 +234,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const headings = extractHeadings(post.content);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "var(--brand-cream)" }}>
+    <div
+      className="min-h-screen"
+      style={{ backgroundColor: "var(--brand-cream)" }}
+    >
       <ReadingProgress />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <Link
             href="/article"
-            className="text-sm transition-colors" style={{ color: "var(--brand-muted)" }}
+            className="text-sm transition-colors"
+            style={{ color: "var(--brand-muted)" }}
           >
             Back to Articles
           </Link>
@@ -199,7 +254,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
 
         <header className="mb-12 space-y-6 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl" style={{ color: "var(--brand-ink)" }}>
+          <h1
+            className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+            style={{ color: "var(--brand-ink)" }}
+          >
             {post.title}
           </h1>
 
@@ -210,7 +268,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {post.bannerImage && (
           <div className="mb-12">
-            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-2xl" style={{ border: "1px solid var(--brand-border)" }}>
+            <div
+              className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-2xl"
+              style={{ border: "1px solid var(--brand-border)" }}
+            >
               <Image
                 src={post.bannerImage}
                 alt={post.title}

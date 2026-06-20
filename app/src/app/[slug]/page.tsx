@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import {
   fetchContributors,
   fetchLanguages,
   fetchRepos,
 } from "@/lib/fetchRepos";
 import { ProjectDetailsClient } from "./project-details";
-import { notFound } from "next/navigation";
-
 
 interface PageProps {
   params: Promise<{
@@ -40,9 +39,8 @@ export default async function Page({ params }: PageProps) {
   try {
     const token = process.env.GITHUB_API_KEY ?? "";
     const data = await fetchRepos("dogukanurker", token);
-    currentRepo = data.find(
-      (r) => r.name.toLowerCase() === slug.toLowerCase(),
-    ) ?? null;
+    currentRepo =
+      data.find((r) => r.name.toLowerCase() === slug.toLowerCase()) ?? null;
 
     if (currentRepo) {
       [languagesData, contributorsData] = await Promise.all([

@@ -250,7 +250,9 @@ export async function fetchRepoStats(
     const res = await fetch(
       `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`,
       {
-        headers: token ? { Authorization: `Bearer ${token.trim()}` } : undefined,
+        headers: token
+          ? { Authorization: `Bearer ${token.trim()}` }
+          : undefined,
         // revalidate hourly on the server; ignored on the client.
         next: { revalidate: 3600 },
       },
