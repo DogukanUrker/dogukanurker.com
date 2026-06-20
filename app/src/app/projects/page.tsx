@@ -9,4 +9,3 @@ export default async function Projects() {
 
   return <ProjectsClient repos={repos} />;
 }
-

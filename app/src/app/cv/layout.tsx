@@ -13,10 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CVLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CVLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

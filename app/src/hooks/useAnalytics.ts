@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 function getUserId(): string {
   if (typeof window === "undefined") return "";
@@ -22,7 +22,7 @@ function getSessionId(): string {
   const lastActivity = sessionStorage.getItem("analytics_last_activity");
 
   if (stored && lastActivity) {
-    const timeSinceLastActivity = Date.now() - parseInt(lastActivity);
+    const timeSinceLastActivity = Date.now() - parseInt(lastActivity, 10);
     if (timeSinceLastActivity < SESSION_TIMEOUT) {
       sessionStorage.setItem("analytics_last_activity", Date.now().toString());
       return stored;

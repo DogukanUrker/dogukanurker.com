@@ -8,10 +8,10 @@ export default function OGImagePreview() {
         opengraph-image preview · 1200 × 630
       </p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* biome-ignore lint/performance/noImgElement: intentional preview <img> */}
       <img
         src="/opengraph-image"
-        alt="OG image preview"
+        alt="OG preview"
         width={1200}
         height={630}
         style={{ maxWidth: "100%", height: "auto", display: "block" }}

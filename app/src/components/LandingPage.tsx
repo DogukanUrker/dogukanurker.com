@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import {
+  type MotionValue,
   motion,
   useReducedMotion,
   useScroll,
-  useTransform,
   useSpring,
-  MotionValue,
+  useTransform,
 } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Cursor } from "@/components/Cursor";
 
 // ─── Shared underline-link ─────────────────────────────────────────────────

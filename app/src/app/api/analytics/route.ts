@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import getClientPromise from "@/lib/mongodb";
 import { headers } from "next/headers";
+import { type NextRequest, NextResponse } from "next/server";
+import getClientPromise from "@/lib/mongodb";
 
 export const maxDuration = 60;
 

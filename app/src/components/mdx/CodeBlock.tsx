@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { useState } from "react";
 
 interface CodeBlockProps {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
       }
       return "";
     };
-    
+
     const code = getText(children);
     await navigator.clipboard.writeText(code);
     setCopied(true);

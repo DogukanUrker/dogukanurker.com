@@ -1,12 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Link from "next/link";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { useState } from "react";
 import { Cursor } from "@/components/Cursor";
 import type { Repo } from "@/lib/fetchRepos";
 
@@ -102,7 +98,6 @@ function UnderlineLink({
   );
 }
 
-
 // ─── ProjectsClient ─────────────────────────────────────────────────────────
 
 interface ProjectsClientProps {
@@ -113,7 +108,10 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
   const [cursorEnabled, setCursorEnabled] = useState(false);
   const shouldReduce = useReducedMotion();
 
-  const totalStars = repos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+  const totalStars = repos.reduce(
+    (acc, repo) => acc + repo.stargazers_count,
+    0,
+  );
   const totalForks = repos.reduce((acc, repo) => acc + repo.forks, 0);
 
   return (
@@ -201,7 +199,9 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
             className="mt-6 text-sm tracking-wide lowercase"
             style={{ color: "var(--brand-muted)" }}
           >
-            a collection of open-source work &mdash; {totalStars} stars and {totalForks} forks across all repositories, with more than 60k downloads overall
+            a collection of open-source work &mdash; {totalStars} stars and{" "}
+            {totalForks} forks across all repositories, with more than 60k
+            downloads overall
           </motion.p>
         </motion.header>
 
@@ -214,11 +214,7 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
             variants={containerVariants}
           >
             {repos.map((repo) => (
-              <motion.div
-                key={repo.id}
-                variants={fadeUp}
-                className="group"
-              >
+              <motion.div key={repo.id} variants={fadeUp} className="group">
                 <hr
                   style={{
                     border: "none",
@@ -236,14 +232,21 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
                       </UnderlineLink>
                     </h2>
                     {repo.language && (
-                      <p className="text-xs mt-1 lowercase" style={{ color: "var(--brand-dim)" }}>
+                      <p
+                        className="text-xs mt-1 lowercase"
+                        style={{ color: "var(--brand-dim)" }}
+                      >
                         {repo.language.toLowerCase()}
                       </p>
                     )}
                   </div>
-                  <div className="shrink-0 text-sm tracking-wide sm:text-right mt-1 sm:mt-0 lowercase" style={{ color: "var(--brand-dim)" }}>
+                  <div
+                    className="shrink-0 text-sm tracking-wide sm:text-right mt-1 sm:mt-0 lowercase"
+                    style={{ color: "var(--brand-dim)" }}
+                  >
                     <span>
-                      {repo.stargazers_count} {repo.stargazers_count === 1 ? "star" : "stars"}
+                      {repo.stargazers_count}{" "}
+                      {repo.stargazers_count === 1 ? "star" : "stars"}
                     </span>
                     <span className="mx-2 select-none">&middot;</span>
                     <span>

@@ -1,22 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   AnimatePresence,
   motion,
   useReducedMotion,
   type Variants,
 } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Cursor } from "@/components/Cursor";
 import {
   contacts,
   experience,
   introWords,
   projects,
+  type RepoStats,
   skills,
   statsFor,
-  type RepoStats,
 } from "@/lib/cv";
 
 // ─── Motion constants (shared with the landing page) ────────────────────────
@@ -259,31 +259,29 @@ function DownloadButton() {
             exit={shouldReduce ? { opacity: 0 } : { opacity: 0, y: -7 }}
             transition={{ duration: 0.28, ease: expo }}
           >
-            {state === "preparing" ? (
-              Array.from(downloadLabels.preparing).map((char, index) => (
-                <motion.span
-                  key={index}
-                  className="inline-block"
-                  animate={shouldReduce ? {} : { y: [0, -3, 0, 0] }}
-                  transition={
-                    shouldReduce
-                      ? {}
-                      : {
-                          duration: 1.5,
-                          times: [0, 0.15, 0.3, 1],
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          ease: "easeInOut",
-                          delay: index * 0.08,
-                        }
-                  }
-                >
-                  {char}
-                </motion.span>
-              ))
-            ) : (
-              downloadLabels[state]
-            )}
+            {state === "preparing"
+              ? Array.from(downloadLabels.preparing).map((char, index) => (
+                  <motion.span
+                    key={index}
+                    className="inline-block"
+                    animate={shouldReduce ? {} : { y: [0, -3, 0, 0] }}
+                    transition={
+                      shouldReduce
+                        ? {}
+                        : {
+                            duration: 1.5,
+                            times: [0, 0.15, 0.3, 1],
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            ease: "easeInOut",
+                            delay: index * 0.08,
+                          }
+                    }
+                  >
+                    {char}
+                  </motion.span>
+                ))
+              : downloadLabels[state]}
             <motion.span
               aria-hidden
               className="absolute -bottom-0.5 left-0 h-px bg-[var(--brand-ink)]"

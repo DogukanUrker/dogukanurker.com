@@ -1,5 +1,5 @@
-import { fetchRepoStats } from "@/lib/cv";
 import { registerCvFonts, renderCvPdf } from "@/components/CvDocument";
+import { fetchRepoStats } from "@/lib/cv";
 
 // needs the node runtime for @react-pdf/renderer (fontkit, fs, buffers).
 export const runtime = "nodejs";

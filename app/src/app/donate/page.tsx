@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Link from "next/link";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { useState } from "react";
 import { Cursor } from "@/components/Cursor";
 
 // ─── Motion constants (shared with CV and landing page) ─────────────────────
@@ -258,28 +254,32 @@ const donations = [
     url: "https://github.com/sponsors/dogukanurker",
     subtitle: "sponsor open-source projects directly",
     type: "monthly / one-time",
-    description: "support me directly on github. you can choose a recurring sponsorship tier or make a one-time contribution. all sponsors are highlighted on my github profile.",
+    description:
+      "support me directly on github. you can choose a recurring sponsorship tier or make a one-time contribution. all sponsors are highlighted on my github profile.",
   },
   {
     name: "patreon",
     url: "https://patreon.com/dogukanurker",
     subtitle: "become a patron of my work",
     type: "monthly",
-    description: "support my ongoing projects on a recurring monthly basis. this helps cover homelab hardware costs, hosting fees, and domains.",
+    description:
+      "support my ongoing projects on a recurring monthly basis. this helps cover homelab hardware costs, hosting fees, and domains.",
   },
   {
     name: "ko-fi",
     url: "https://ko-fi.com/dogukanurker",
     subtitle: "buy a coffee or support monthly",
     type: "one-time / monthly",
-    description: "a friendly way to buy me a coffee. supports one-time contributions or monthly subscriptions with zero platform fees.",
+    description:
+      "a friendly way to buy me a coffee. supports one-time contributions or monthly subscriptions with zero platform fees.",
   },
   {
     name: "buy me a coffee",
     url: "https://buymeacoffee.com/dogukanurker",
     subtitle: "simple one-time donations",
     type: "one-time",
-    description: "quickly support my work by buying me a coffee or two. no account creation required for supporters.",
+    description:
+      "quickly support my work by buying me a coffee or two. no account creation required for supporters.",
   },
 ];
 

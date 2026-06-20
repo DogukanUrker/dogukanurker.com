@@ -1,25 +1,25 @@
 import path from "node:path";
 import {
   Document,
-  Page,
-  View,
-  Text,
-  Link,
-  StyleSheet,
   Font,
+  Link,
+  Page,
   renderToBuffer,
+  StyleSheet,
+  Text,
+  View,
 } from "@react-pdf/renderer";
 import {
-  profile,
-  introWords,
-  experience,
-  projects,
-  skills,
-  education,
-  languages,
   contacts,
-  statsFor,
+  education,
+  experience,
+  introWords,
+  languages,
+  profile,
+  projects,
   type RepoStats,
+  skills,
+  statsFor,
 } from "@/lib/cv";
 
 // ─── Fonts ──────────────────────────────────────────────────────────────────

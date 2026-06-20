@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Heading } from "@/lib/article";
+import type { Heading } from "@/lib/article";
 
 interface TableOfContentsProps {
   headings: Heading[];
@@ -91,15 +91,19 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                 <a
                   href={`#${heading.id}`}
                   className={`block py-1 transition-colors hover:text-[var(--brand-ink)] ${
-                    isActive ? "font-medium text-[var(--brand-ink)]" : "text-[var(--brand-muted)]"
+                    isActive
+                      ? "font-medium text-[var(--brand-ink)]"
+                      : "text-[var(--brand-muted)]"
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
                     const element = document.getElementById(heading.id);
                     if (element) {
                       const offset = 20;
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.scrollY - offset;
+                      const elementPosition =
+                        element.getBoundingClientRect().top;
+                      const offsetPosition =
+                        elementPosition + window.scrollY - offset;
 
                       window.scrollTo({
                         top: offsetPosition,
