@@ -27,5 +27,5 @@ jobs:
         working-directory: app
 
       - name: Check Linting & Imports
-        run: bunx biome check --no-errors-on-unmatched --write=false
+        run: bunx biome check --no-errors-on-unmatched
         working-directory: app
