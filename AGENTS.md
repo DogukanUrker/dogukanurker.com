@@ -1,14 +1,15 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents (Codex, Gemini CLI, Cursor,
+Claude Code, and others) when working with code in this repository.
 
 ## Keeping this file current
 
 After making any change that affects something documented here (commands,
 architecture, env vars, tooling, directory layout, conventions), re-read this
-file and update it so it stays accurate. Treat CLAUDE.md as part of the change:
+file and update it so it stays accurate. Treat AGENTS.md as part of the change:
 if your work makes a statement here outdated, fix it in the same effort. The
-same applies to `AGENTS.md`, which mirrors this content — keep the two in sync.
+same applies to `CLAUDE.md`, which mirrors this content — keep the two in sync.
 
 ## Repository layout
 
