@@ -751,6 +751,9 @@ export default function CVPage() {
           <UnderlineLink href="https://linkedin.com/in/dogukanurker">
             linkedin
           </UnderlineLink>
+          <UnderlineLink href="https://instagram.com/dogukanurker">
+            instagram
+          </UnderlineLink>
         </nav>
       </footer>
     </main>

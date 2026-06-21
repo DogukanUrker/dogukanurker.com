@@ -210,6 +210,10 @@ export const contacts = [
     label: "linkedin.com/in/dogukanurker",
     href: "https://linkedin.com/in/dogukanurker",
   },
+  {
+    label: "instagram.com/dogukanurker",
+    href: "https://instagram.com/dogukanurker",
+  },
 ];
 
 // ─── GitHub stats ───────────────────────────────────────────────────────────
