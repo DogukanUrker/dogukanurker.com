@@ -61,7 +61,8 @@ Next.js 16 App Router, React 19, React Server Components by default
   `date`, `description`, `bannerImage`, `draft`) and rendered with
   `next-mdx-remote`. `reading-time` computes read estimates; rehype plugins
   (`rehype-slug`, `rehype-autolink-headings`, `rehype-highlight`) handle headings
-  and code. Drafts are excluded unless explicitly requested. MDX components live
+  and code, while `remark-gfm` adds GitHub-Flavored Markdown tables and other GFM
+  syntax. Drafts are excluded unless explicitly requested. MDX components live
   in `src/components/mdx/`.
 
 - **CV** (`src/lib/cv.ts`, `src/app/cv/`): `cv.ts` holds the CV content as

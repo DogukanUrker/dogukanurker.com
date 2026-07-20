@@ -7,10 +7,11 @@ import type React from "react";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 import { ReadingProgress } from "@/components/article/ReadingProgress";
 import { ShareButton } from "@/components/article/ShareButton";
 import { TableOfContents } from "@/components/article/TableOfContents";
-import { ImageWithCaption } from "@/components/mdx";
+import { ImageWithCaption, YouTubeEmbed } from "@/components/mdx";
 import { CodeBlock } from "@/components/mdx/CodeBlock";
 import {
   extractHeadings,
@@ -21,6 +22,7 @@ import {
 
 const components = {
   ImageWithCaption,
+  YouTubeEmbed,
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className="mb-6 mt-8 text-4xl font-bold"
@@ -292,6 +294,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 components={components}
                 options={{
                   mdxOptions: {
+                    remarkPlugins: [remarkGfm],
                     rehypePlugins: [
                       rehypeHighlight,
                       rehypeSlug,

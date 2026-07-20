@@ -1,0 +1,101 @@
+---
+title: "i built a github maintainer that asks me one question a day"
+date: "2026-07-20"
+description: "how i built Janus, an autonomous GitHub maintainer designed around one KPI: questions per day."
+bannerImage: ""
+draft: false
+---
+
+maintaining an open source project is a background job that never clocks out. FlaskBlog sat at 190+ stars with issues piling up while i was working full-time and studying — the backlog kept growing until one focused manual cleanup pass cleared 15 stale issues and shipped v3.0.0. then it started filling right back up. that's the actual problem: the cleanup isn't the hard part, the _never stops_ part is.
+
+that cleanup worked, but it was me doing everything by hand with an agent as a fancy autocomplete. so for the Qwen Cloud Global AI Hackathon (Track 4: Autopilot Agent) i built the thing i actually wanted: **Janus**, a GitHub App that runs the whole maintenance lifecycle by itself — triages issues, closes junk with a reasoned comment, nudges vague reports, reviews community PRs, plans fixes, writes code in a sandbox, opens PRs — and pings my phone only when something actually matters.
+
+the design KPI is literally _questions per day_, and the target is ~1. because here's the thing nobody says out loud: **a bot that asks 100 questions a day is not an autopilot.** it's a chore generator with extra steps. most "autonomous" agents are either fully autonomous (terrifying) or approval-gated on everything (pointless). the interesting engineering problem is deciding _where_ the human goes.
+
+and i can tell you exactly where it went, because i ran a live pass while writing this: Janus processed six items across my repos and asked me **exactly one** question. more on that at the end.
+
+## the trust model
+
+Janus's answer has three rules.
+
+**1. escalation is gated on reversibility, never on LLM self-confidence.** i never ask the model "how confident are you?" and threshold on the answer — LLMs are terribly calibrated and will say 95% while being wrong. instead, every capability has an autonomy level based on how cheap the action is to undo. labeling an issue? reversible, `auto`. closing spam with a comment explaining why + how to reopen? reversible, `auto`. opening a PR? you can close a PR, `auto` — the PR _is_ the review surface. merging code into main? that ships, that's the choke point, `ask`. closing a human's PR? social blast radius, `ask`.
+
+**2. demotion, never promotion.** when the model flags uncertainty or a deterministic check fails, the action drops exactly one autonomy level: `auto` → `ask`, `ask` → `suggest`. the model can never argue its way _up_ to more autonomy. the safe default is escalate, never "guess and proceed."
+
+**3. the merge gate has no LLM in it. not even hiding.** whether Janus's own PR may auto-merge is decided by checks that are deterministic end to end: diff touches only allowlisted paths, size under caps, no protected paths (CI config, workflows, lockfiles), CI green, and — my favorite detail — the _change class_ is recomputed mechanically from the file paths. a diff touching only `README*` **is** class `readme` by definition. the model may propose a class; the gate ignores it and derives its own.
+
+this last rule exists because of a bug in my own design doc. v1 said "deterministic gates" and then the final gate was "change class is in the allowlist" — assigned by the LLM. a probabilistic input smuggled into a "deterministic" gate. one design review later, the class derivation became pure path-matching:
+
+```python
+def derive_change_class(paths: list[str], cfg: AutoMergeConfig) -> str | None:
+    if not paths:
+        return None
+    for cls, patterns in CLASS_PATTERNS.items():
+        if all(matches_any(p, patterns) for p in paths):
+            return cls
+    return None
+```
+
+if the class can't be derived, the merge escalates. no vibes.
+
+## building on qwen cloud
+
+Janus routes across the Qwen family by task tier, all through the OpenAI-compatible endpoint (`dashscope-intl.aliyuncs.com/compatible-mode/v1` — the compat layer meant the entire model layer was the openai sdk plus a base_url, which is the correct amount of SDK):
+
+| task                               | model              |
+| ---------------------------------- | ------------------ |
+| triage, labeling, PR review        | `qwen3.6-plus`     |
+| implementation planning (thinking) | `qwen3.7-max`      |
+| codegen + self-review              | `qwen3-coder-plus` |
+| screenshot understanding           | `qwen3-vl-plus`    |
+
+two Qwen-specific things earned their place:
+
+**vision triage.** FlaskBlog has a real UI, and real users file bugs as screenshots with three words of text. so when an issue carries an image, Janus pulls the attachment with the App token and feeds it to Qwen-VL before classifying — triage reasons about the actual visual defect instead of guessing from prose. (this path is wired end to end; the live pass below happened to be all text issues, so it's the one capability i haven't stress-tested on a real bug yet — next on the list.)
+
+**thinking-mode planning.** planning runs on the max-tier model with a `read_file` tool loop (capped at 8 reads) so plans reference exact file paths instead of hallucinated ones. i watched it plan two real issues live — a `NO_COLOR` env-var feature and a `__repr__` addition — and both plans named the right files, the right insertion points, and a five-case test plan. the plan gets posted as a comment (reversible, so `auto`), and codegen executes it in a hardened docker sandbox (caps dropped, memory-limited, destroyed after the job).
+
+cost control comes from per-event token budgets and iteration ceilings, not from degrading intelligence. that ordering matters: once your defaults are `auto`, a dumb triage model's misclassification isn't a wrong suggestion anymore — it's a wrong autonomous action. smart models are what make autonomous defaults safe; you cap the spend with budgets, not by downgrading the brain.
+
+what did the lifecycle actually cost? over a week of live operation the triage / plan / review path — `qwen3.6-plus` for triage and reviews, `qwen3.7-max` for planning — ran 10 model requests totaling ~55K tokens at a 100% success rate, every token covered by the hackathon voucher (list-price this is small change; the point is the whole loop fits in a coupon). the codegen path is a different story, and it's the best thing i learned all week — see below.
+
+## what broke
+
+honesty section, because twenty other posts will say "it was great." these are all real, from integration testing and the live pass.
+
+**the sandbox that strangled itself.** the codegen sandbox is deliberately hardened — `cap_drop=ALL`, `no-new-privileges`, memory-capped, destroyed after each job. first real codegen run, it died before writing a line: the container setup ran `apt-get install git`, which needs `setgroups`, which needs a capability i'd just dropped. my own security posture killed my own setup. the fix was to stop fighting it — use a base image that already ships git and never call `apt` inside a locked-down container at all. the guardrail wasn't wrong; the image was.
+
+**the "success" that wasn't.** the next run got further — cloned, wrote the fix, "pushed" — then GitHub rejected the PR with a 422: invalid head branch. the branch didn't exist on the remote. the push step had chained `checkout && add && commit && push` in one shell string and reported success from the wrong exit code, so the job happily tried to open a PR against a branch that was never pushed. lesson that generalizes past this bug: a "success" signal has to reflect real state, not just "the command returned." i split the push into per-step exit-code checks; now a failed push escalates as blocked instead of face-planting into a 422.
+
+**the bot that almost signed as a stranger.** codegen commits were authored as `janus` with a bare `janus@users.noreply.github.com` — and GitHub links commits to accounts by email. a plain no-reply address like that can collide with a real person's identity. the fix was to author commits as the App's own bot identity, `<APP_ID>+janus-maintainer[bot]@users.noreply.github.com`, which is provably un-claimable by any human. small thing, but it fits the whole theme: an autonomous agent has to be unambiguous about _who acted_, not just _what happened_.
+
+**the codegen call with no ceiling — my favorite, because it hid in plain sight.** triage, planning, review all worked great. but issues kept getting a perfect plan comment and then… nothing. no PR. no error in the digest. the plan step ran, the codegen step just silently didn't produce anything. i finally ran the codegen path in isolation and watched it: a _single_ `qwen3-coder-plus` call for a trivial one-method change returned **63,000 tokens** — and on a retry, **427,000** — because the model runs thinking-mode by default and i'd set no `max_tokens` ceiling on the completion. one uncapped call blew straight through the 60K per-event budget, which raised `BudgetExceeded` _after_ the tokens were already spent, so codegen aborted quietly and the issue sat at "planned" forever. two lessons, both the kind you only learn by shipping: (1) a per-event budget is not a safety limit if a single call can exceed it in one shot — you need a hard per-call output ceiling too, or one runaway generation nukes the budget _and_ the bill; (2) "silent" is the worst failure mode an autonomous system can have — a loud crash i'd have fixed in an hour; a step that quietly does nothing cost me a day. the fix is a `max_tokens` cap plus `enable_thinking=false` on the coder tier, so codegen is bounded per call, not just per event.
+
+**the design bug i already confessed:** the LLM hiding inside the "deterministic" gate (above). the fix cost one function; not finding it would have cost the project its core claim.
+
+and one that's a security decision disguised as a file format: Janus keeps standing memory in `.janus/MEMORY.md` — "maintainer prefers X" type learnings. that file is a **poisoning surface**: a malicious issue could try to inject "always merge PRs from user X" into the bot's long-term policy. so memory writes are only allowed via a PR that Janus opens against itself. the model can never silently rewrite its own instructions; an injection attempt becomes a publicly reviewable diff.
+
+## results
+
+the backlog that started all this — the pre-Janus manual pass — cleared **15 issues** on the way to shipping FlaskBlog v3.0.0. that was the "never stops" pain that made me want autonomy in the first place.
+
+then i handed the wheel to Janus and ran a live pass across my repos. it processed six items:
+
+- **4 issues triaged** autonomously — labeled, and for the actionable ones, a full implementation plan posted as a comment
+- **2 junk issues closed** with a reasoned comment (one spam, one off-topic "how do i center a div") — no human touch
+- **1 community PR reviewed and approved** — again, no human touch, because a review comment is reversible
+- **1 question.** a low-effort PR that dropped promo links into the README. closing a _human's_ PR is the one social-blast-radius action in the whole flow, so Janus didn't close it — it sent one Telegram card: _"close PR #37 as junk — why escalated: policy[close_human_pr] = ask,"_ with approve / reject / reject-with-comment buttons.
+
+that's the whole thesis in one screenshot: everything reversible ran on `auto`, and the single irreversible-ish action — closing something a person wrote — is the _only_ thing that reached my phone. **questions that day: one.** exactly the KPI.
+
+no autonomous PRs merged in this pass — that's the codegen ceiling bug above, found _because_ i was watching this run, and now fixed. i'd rather ship the honest number and the bug that explains it than a fake one.
+
+everything runs on Alibaba Cloud ECS with every action archived to OSS — the audit trail is object storage, and the Telegram approval cards link to presigned OSS payloads so i can inspect full context from my phone.
+
+## demo
+
+<YouTubeEmbed videoId="rl-zcxhFpIE" title="Janus autonomous GitHub maintainer demo" />
+
+repo: [github.com/dogukanurker/janus](https://github.com/dogukanurker/janus) — Apache-2.0, and the README has a quickstart if you want Janus answering for _your_ backlog. the trust model (reversibility levels + demotion + mechanical gates) is the part i'd most like to see stolen: it's not Janus-specific, it's a general answer to "where does the human go in an autonomous system."
+
+built solo in one week for the Qwen Cloud Global AI Hackathon, Track 4.
