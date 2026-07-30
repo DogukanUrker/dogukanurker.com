@@ -433,7 +433,7 @@ export function ProjectDetailsClient({
           <UnderlineLink href="https://github.com/dogukanurker">
             github
           </UnderlineLink>
-          <UnderlineLink href="https://twitter.com/dogukanurker">
+          <UnderlineLink href="https://x.com/dogukanurker">
             twitter
           </UnderlineLink>
           <UnderlineLink href="https://linkedin.com/in/dogukanurker">

@@ -630,7 +630,7 @@ export default function LandingPage() {
                   }
             }
           >
-            <UnderlineLink href="https://twitter.com/dogukanurker">
+            <UnderlineLink href="https://x.com/dogukanurker">
               twitter
             </UnderlineLink>
           </motion.span>

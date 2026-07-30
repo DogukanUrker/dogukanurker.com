@@ -203,8 +203,8 @@ export const contacts = [
   { label: "dogukanurker@icloud.com", href: "mailto:dogukanurker@icloud.com" },
   { label: "github.com/dogukanurker", href: "https://github.com/dogukanurker" },
   {
-    label: "twitter.com/dogukanurker",
-    href: "https://twitter.com/dogukanurker",
+    label: "x.com/dogukanurker",
+    href: "https://x.com/dogukanurker",
   },
   {
     label: "linkedin.com/in/dogukanurker",
