@@ -147,7 +147,7 @@ export const projects: Project[] = [
     name: "BenchKit",
     subtitle: "cli tool for benchmarking local llms",
     description:
-      "ran 30+ open-weight models from 9 families on a single rtx 3060 12gb and published a public humaneval leaderboard — built for people running llms at home on constrained gpus.",
+      "full terminal ui and headless runner for evaluating local llms across 15 benchmark suites, with live reasoning and loop diagnostics, detailed reports, and inference performance profiling — works with ollama and any openai-compatible server.",
     href: "https://github.com/dogukanurker/benchkit",
   },
   {
