@@ -142,7 +142,7 @@ Key choices to preserve:
   viewport edges. It is `aria-hidden`; an `sr-only` `<h1>` carries the real
   heading for accessibility.
 - The about paragraph uses an unusually **light variable weight (340)** and a
-  **narrow measure** (`max-w-[23ch]`), centered. This is the "literary" feel —
+  **narrow measure** (`max-w-[24ch]`), centered. This is the "literary" feel —
   keep the measure tight and the weight light.
 - Serif gets `tracking-tighter` at display sizes; sans UI text gets
   `tracking-wide` for links and `tracking-tight` for the name.
@@ -188,7 +188,7 @@ link with glyph.)
 - **Generous padding.** Page gutters `px-6` (mobile) → `px-10` (≥sm/md).
   Sections breathe with `py-24` and large vertical rhythm.
 - **Centered, narrow content.** Long-form text is centered with a tight measure
-  (`max-w-[23ch]` for the hero paragraph). Don't fill the width.
+  (`max-w-[24ch]` for the hero paragraph). Don't fill the width.
 - **No cards/shadows/borders** as a default. Content sits on the cream field.
   Hairlines (`--brand-border`) only when a divider is truly needed.
 - **Safe-area aware.** Bottom spacing respects the notch:
@@ -378,7 +378,7 @@ DISPLAY FONT Fraunces (serif, opsz, italic), fontOpticalSizing:auto, latin-ext
 UI FONT      Inter (sans)
 
 DISPLAY SIZE clamp() fluid, tracking-tighter, line-height 0.95
-BODY PROSE   Fraunces 340 weight, line-height 1.22, max-w-23ch, centered
+BODY PROSE   Fraunces 340 weight, line-height 1.22, max-w-24ch, centered
 UI TEXT      Inter text-sm, tracking-wide links / tracking-tight name
 
 EASING       expo  = cubic-bezier(0.16, 1, 0.3, 1)

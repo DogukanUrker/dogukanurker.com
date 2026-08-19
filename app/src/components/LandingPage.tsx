@@ -128,15 +128,16 @@ const words: WordItem[] = [
   { text: "in", isBold: true },
   { text: "public:", isBold: true },
   { text: "open-source" },
-  { text: "tools," },
-  { text: "a" },
-  { text: "local-llm" },
-  { text: "homelab," },
+  { text: "tools" },
   { text: "and" },
-  { text: "whatever" },
-  { text: "i'm" },
-  { text: "curious" },
-  { text: "about." },
+  { text: "local-llm" },
+  { text: "benchmarks," },
+  { text: "sharing" },
+  { text: "configs" },
+  { text: "and" },
+  { text: "findings" },
+  { text: "on" },
+  { text: "twitter." },
   { text: "coding", isItalic: true },
   { text: "since", isItalic: true },
   { text: "12,", isItalic: true },
@@ -546,7 +547,7 @@ export default function LandingPage() {
       >
         <motion.p
           ref={paragraphRef}
-          className="font-serif text-center max-w-[23ch]"
+          className="font-serif text-center max-w-[24ch]"
           style={
             {
               fontSize: "clamp(26px, 3.6vw, 54px)",

@@ -505,9 +505,9 @@ export default function CVPage() {
 
           <motion.div
             variants={fadeUp}
-            className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+            className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-stretch sm:justify-between"
           >
-            <div>
+            <div className="flex flex-col">
               <p className="text-base" style={{ color: "var(--brand-ink)" }}>
                 full-stack engineer
               </p>
@@ -517,12 +517,17 @@ export default function CVPage() {
               >
                 izmir, türkiye
               </p>
+              <div className="mt-2 sm:mt-auto">
+                <UnderlineLink href={contacts[0].href}>
+                  {contacts[0].label}
+                </UnderlineLink>
+              </div>
             </div>
             <nav
               aria-label="contact links"
               className="flex flex-col gap-1 sm:items-end"
             >
-              {contacts.map((c) => (
+              {contacts.slice(1).map((c) => (
                 <UnderlineLink key={c.href} href={c.href}>
                   {c.label}
                 </UnderlineLink>
