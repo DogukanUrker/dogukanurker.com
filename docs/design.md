@@ -281,6 +281,9 @@ const scrollSmooth = { stiffness: 100, damping: 30, restDelta: 0.001 };
   `0.8` of the section's scroll progress with a `0.2`-wide window per word.
   Scroll offset `["start 0.9", "start 0.25"]`, smoothed with a spring. Low-but-
   visible resting opacity (`0.12`) means upcoming words are ghosted, not hidden.
+- italic words in any word-by-word reveal get the `italic-room` class
+  (`globals.css`): extra side padding canceled by a negative margin. without
+  it safari clips italic letters that lean past their box (the top of "l").
 - **Footer:** each item fades `opacity 0 → 1` and lifts `y: 16 → 0`, staggered
   by start thresholds (`0`, `0.05`, `0.1`, `0.15`, `0.2`) across the footer's
   scroll progress (`offset ["start end", "end end"]`).
@@ -319,6 +322,10 @@ pointer-fine surfaces.
 
 - **Shape:** a `9×9px` dot, `--brand-ink`, fully rounded, `z-[999]`,
   `pointer-events-none`, `position: fixed`.
+- **Drawn big, scaled down:** the dot is drawn at `80px` and scaled to
+  `9/80` at rest (`46/80` on links, `70/80` on photos). safari stretches a
+  scaled-up layer like a picture, so growing a real 9px dot looked blurry
+  there. scaling a big dot down stays sharp in every browser.
 - **Blend:** `mix-blend-difference` — so it inverts against whatever it's over
   (dot on cream, light over ink).
 - **Follow:** position driven by a spring `{ stiffness: 750, damping: 44,

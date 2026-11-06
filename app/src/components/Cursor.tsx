@@ -23,6 +23,12 @@ const SPEED_MAX = 5000;
 const SCALE_MAX = 4;
 // how quickly (0-1 per frame) the scale decays back to 1x when the mouse slows.
 const DECAY = 0.08;
+// the dot looks 9px at rest but is drawn at 80px and scaled down. safari
+// stretches a scaled-up layer like a picture, so a 9px dot grown to link or
+// photo size looked blurry there. scaling a big dot down stays sharp. 80px
+// covers the 70px photo state plus a little spring overshoot.
+const DOT_SIZE = 9;
+const DRAWN_SIZE = 80;
 
 export function Cursor({ onEnable }: CursorProps) {
   const reduce = useReducedMotion();
@@ -53,9 +59,10 @@ export function Cursor({ onEnable }: CursorProps) {
     damping: 30,
   });
 
+  // s and v are multipliers of the 9px dot; convert to a scale of the 80px one
   const scale = useTransform(
     [scaleSpring, variantScaleSpring],
-    ([s, v]) => (s as number) * (v as number),
+    ([s, v]) => ((s as number) * (v as number) * DOT_SIZE) / DRAWN_SIZE,
   );
 
   useEffect(() => {
@@ -160,8 +167,8 @@ export function Cursor({ onEnable }: CursorProps) {
         backgroundColor: "var(--brand-ink)",
         translateX: "-50%",
         translateY: "-50%",
-        width: 9,
-        height: 9,
+        width: DRAWN_SIZE,
+        height: DRAWN_SIZE,
       }}
     />
   );
