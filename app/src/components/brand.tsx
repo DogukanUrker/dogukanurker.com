@@ -56,9 +56,12 @@ function SensityGlyph({ className }: GlyphProps) {
 // grows from the top, then drains from the top: "empty top" has its bottom
 // edge pinned to the top, "full" covers the whole gap, "empty bottom" has its
 // top edge pinned to the bottom. both empty shapes are invisible.
-const xGapEmptyTop = "M5.117 4.126L7.084 4.126L7.084 4.126L5.117 4.126Z";
-const xGapFull = "M5.117 4.126L7.084 4.126L18.916 19.77L17.083 19.77Z";
-const xGapEmptyBottom = "M17.083 19.77L18.916 19.77L18.916 19.77L17.083 19.77Z";
+// the shapes are 0.4 units bigger than the gap on every side, so they overlap
+// the solid ink around it. an exact fit leaves a thin anti-aliasing seam where
+// the two edges meet, and the x never looks fully filled.
+const xGapEmptyTop = "M4.717 3.726L7.484 3.726L7.484 3.726L4.717 3.726Z";
+const xGapFull = "M4.717 3.726L7.484 3.726L19.316 20.17L16.683 20.17Z";
+const xGapEmptyBottom = "M16.683 20.17L19.316 20.17L19.316 20.17L16.683 20.17Z";
 
 // the x (twitter) logo. path copied from the svg x.com itself serves, with
 // the viewBox cropped to the drawing so the height is the real logo height.
