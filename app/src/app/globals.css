@@ -159,3 +159,60 @@ body {
 .hljs-regexp {
   color: #8f3b76;
 }
+
+/* ── roll link: the standard text link (src/components/RollLink.tsx) ── */
+
+.roll-link {
+  transition:
+    color 200ms,
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* each letter is a small window with two copies stacked inside */
+.roll-char {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  white-space: pre;
+}
+
+.roll-char > span {
+  display: block;
+}
+
+.roll-char > span + span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+/* one roll: every copy slides up one line, letter by letter. RollLink adds
+   .is-rolling after a short hover (or on keyboard focus) and removes it when
+   the roll is done. keep the timing in sync with RollLink.tsx. */
+@keyframes roll-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.roll-link.is-rolling .roll-char > span {
+  animation: roll-up 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i) * 22ms);
+}
+
+/* spotlight: inside a group, the other links fade softly. the short delay
+   keeps a quick sweep across the links from flickering. */
+.roll-group:has(.roll-link:hover) .roll-link:not(:hover) {
+  opacity: 0.65;
+  transition-delay: 0ms, 90ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-link.is-rolling .roll-char > span {
+    animation: none;
+  }
+}

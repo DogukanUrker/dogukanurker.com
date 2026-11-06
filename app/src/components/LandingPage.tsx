@@ -10,7 +10,6 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   type Brand,
@@ -21,82 +20,7 @@ import {
 } from "@/components/brand";
 import { Cursor } from "@/components/Cursor";
 import { RoleLine } from "@/components/RoleLine";
-
-// ─── Shared underline-link ─────────────────────────────────────────────────
-
-interface UnderlineLinkProps {
-  href?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
-  className?: string;
-}
-
-function UnderlineLink({
-  href,
-  onClick,
-  children,
-  className = "",
-}: UnderlineLinkProps) {
-  const base =
-    "group relative inline-flex items-center text-sm tracking-wide " +
-    "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
-    "rounded-sm focus-visible:outline-none focus-visible:ring-2 " +
-    "focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 " +
-    "bg-transparent border-none p-0 cursor-pointer " +
-    className;
-
-  const underline = (
-    <span
-      aria-hidden
-      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full group-focus-visible:w-full"
-    />
-  );
-
-  if (onClick) {
-    return (
-      <button onClick={onClick} data-cursor="link" className={base}>
-        {children}
-        {underline}
-      </button>
-    );
-  }
-
-  if (!href) return null;
-
-  const isExternal = href.startsWith("http") || href.startsWith("//");
-  const isHash = href.startsWith("#");
-
-  if (isExternal) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cursor="link"
-        className={base}
-      >
-        {children}
-        {underline}
-      </a>
-    );
-  }
-
-  if (isHash) {
-    return (
-      <a href={href} data-cursor="link" className={base}>
-        {children}
-        {underline}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} data-cursor="link" className={base}>
-      {children}
-      {underline}
-    </Link>
-  );
-}
+import { RollLink } from "@/components/RollLink";
 
 // ─── Word reveal child component ───────────────────────────────────────────
 
@@ -537,11 +461,11 @@ export default function LandingPage() {
             </span>
           </div>
           <motion.div
-            className="flex items-center gap-6"
+            className="roll-group flex items-center gap-6"
             variants={navLinksVariants}
           >
-            <UnderlineLink onClick={scrollToAbout}>about</UnderlineLink>
-            <UnderlineLink href="/cv">resume</UnderlineLink>
+            <RollLink onClick={scrollToAbout}>about</RollLink>
+            <RollLink href="/cv">resume</RollLink>
           </motion.div>
           {/* mobile-only role subtitle - sits below the first row */}
           <div
@@ -649,7 +573,10 @@ export default function LandingPage() {
         >
           izmir, türkiye
         </motion.span>
-        <nav aria-label="social links" className="flex items-center gap-5">
+        <nav
+          aria-label="social links"
+          className="roll-group flex items-center gap-5"
+        >
           <motion.span
             style={
               shouldReduce
@@ -660,9 +587,7 @@ export default function LandingPage() {
                   }
             }
           >
-            <UnderlineLink href="mailto:dogukanurker@icloud.com">
-              mail
-            </UnderlineLink>
+            <RollLink href="mailto:dogukanurker@icloud.com">mail</RollLink>
           </motion.span>
           <motion.span
             style={
@@ -674,9 +599,7 @@ export default function LandingPage() {
                   }
             }
           >
-            <UnderlineLink href="https://github.com/dogukanurker">
-              github
-            </UnderlineLink>
+            <RollLink href="https://github.com/dogukanurker">github</RollLink>
           </motion.span>
           <motion.span
             style={
@@ -688,9 +611,7 @@ export default function LandingPage() {
                   }
             }
           >
-            <UnderlineLink href="https://x.com/dogukanurker">
-              twitter
-            </UnderlineLink>
+            <RollLink href="https://x.com/dogukanurker">twitter</RollLink>
           </motion.span>
           <motion.span
             style={
@@ -702,9 +623,9 @@ export default function LandingPage() {
                   }
             }
           >
-            <UnderlineLink href="https://linkedin.com/in/dogukanurker">
+            <RollLink href="https://linkedin.com/in/dogukanurker">
               linkedin
-            </UnderlineLink>
+            </RollLink>
           </motion.span>
         </nav>
       </footer>

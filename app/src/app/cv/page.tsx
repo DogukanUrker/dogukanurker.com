@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { type Brand, brands } from "@/components/brand";
 import { Cursor } from "@/components/Cursor";
 import { RoleLine } from "@/components/RoleLine";
+import { RollLink } from "@/components/RollLink";
 import {
   contacts,
   experience,
@@ -67,73 +68,6 @@ const wordItem: Variants = {
   hidden: { opacity: 0.12 },
   visible: { opacity: 1, transition: { duration: 0.5, ease: expo } },
 };
-
-// ─── Shared underline link ──────────────────────────────────────────────────
-
-interface UnderlineLinkProps {
-  href?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
-  className?: string;
-}
-
-function UnderlineLink({
-  href,
-  onClick,
-  children,
-  className = "",
-}: UnderlineLinkProps) {
-  const base =
-    "group relative inline-flex items-center text-sm tracking-wide " +
-    "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
-    "rounded-sm focus-visible:outline-none focus-visible:ring-2 " +
-    "focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 " +
-    "bg-transparent border-none p-0 cursor-pointer " +
-    className;
-
-  const underline = (
-    <span
-      aria-hidden
-      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full group-focus-visible:w-full"
-    />
-  );
-
-  if (onClick) {
-    return (
-      <button onClick={onClick} data-cursor="link" className={base}>
-        {children}
-        {underline}
-      </button>
-    );
-  }
-
-  if (!href) return null;
-
-  const isExternal = href.startsWith("http") || href.startsWith("//");
-  const isMail = href.startsWith("mailto:");
-
-  if (isExternal || isMail) {
-    return (
-      <a
-        href={href}
-        target={isMail ? undefined : "_blank"}
-        rel={isMail ? undefined : "noopener noreferrer"}
-        data-cursor="link"
-        className={base}
-      >
-        {children}
-        {underline}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} data-cursor="link" className={base}>
-      {children}
-      {underline}
-    </Link>
-  );
-}
 
 // ─── Company link in the intro: logo + brand hover color ────────────────────
 // uses the shared logos and colors from the landing page. no logo pulse here:
@@ -452,8 +386,8 @@ export default function CVPage() {
             <RoleLine />
           </span>
         </div>
-        <div className="flex items-center gap-6">
-          <UnderlineLink href="/">home</UnderlineLink>
+        <div className="roll-group flex items-center gap-6">
+          <RollLink href="/">home</RollLink>
           <DownloadButton />
         </div>
         {/* mobile role subtitle on a second row */}
@@ -503,19 +437,17 @@ export default function CVPage() {
                 izmir, türkiye
               </p>
               <div className="mt-2 sm:mt-auto">
-                <UnderlineLink href={contacts[0].href}>
-                  {contacts[0].label}
-                </UnderlineLink>
+                <RollLink href={contacts[0].href}>{contacts[0].label}</RollLink>
               </div>
             </div>
             <nav
               aria-label="contact links"
-              className="flex flex-col gap-1 sm:items-end"
+              className="roll-group flex flex-col gap-1 sm:items-end"
             >
               {contacts.slice(1).map((c) => (
-                <UnderlineLink key={c.href} href={c.href}>
+                <RollLink key={c.href} href={c.href}>
                   {c.label}
-                </UnderlineLink>
+                </RollLink>
               ))}
             </nav>
           </motion.div>
@@ -583,11 +515,9 @@ export default function CVPage() {
                   <HeadRow
                     title={
                       job.companyHref ? (
-                        <UnderlineLink href={job.companyHref}>
-                          <span style={{ color: "var(--brand-ink)" }}>
-                            {job.company}
-                          </span>
-                        </UnderlineLink>
+                        <RollLink href={job.companyHref} tone="ink">
+                          {job.company}
+                        </RollLink>
                       ) : (
                         job.company
                       )
@@ -642,11 +572,9 @@ export default function CVPage() {
                     <HeadRow
                       title={
                         project.href ? (
-                          <UnderlineLink href={project.href}>
-                            <span style={{ color: "var(--brand-ink)" }}>
-                              {project.name}
-                            </span>
-                          </UnderlineLink>
+                          <RollLink href={project.href} tone="ink">
+                            {project.name}
+                          </RollLink>
                         ) : (
                           project.name
                         )
@@ -733,19 +661,16 @@ export default function CVPage() {
         style={{ color: "var(--brand-muted)" }}
       >
         <span className="text-sm">izmir, türkiye</span>
-        <nav aria-label="social links" className="flex items-center gap-5">
-          <UnderlineLink href="mailto:dogukanurker@icloud.com">
-            mail
-          </UnderlineLink>
-          <UnderlineLink href="https://github.com/dogukanurker">
-            github
-          </UnderlineLink>
-          <UnderlineLink href="https://x.com/dogukanurker">
-            twitter
-          </UnderlineLink>
-          <UnderlineLink href="https://linkedin.com/in/dogukanurker">
+        <nav
+          aria-label="social links"
+          className="roll-group flex items-center gap-5"
+        >
+          <RollLink href="mailto:dogukanurker@icloud.com">mail</RollLink>
+          <RollLink href="https://github.com/dogukanurker">github</RollLink>
+          <RollLink href="https://x.com/dogukanurker">twitter</RollLink>
+          <RollLink href="https://linkedin.com/in/dogukanurker">
             linkedin
-          </UnderlineLink>
+          </RollLink>
         </nav>
       </footer>
     </main>

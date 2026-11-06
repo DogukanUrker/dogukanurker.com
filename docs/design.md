@@ -343,13 +343,31 @@ Tag interactive elements with `data-cursor="link"` (links/buttons) or
 
 ## 8. Interaction Patterns
 
-### Underline link (the standard link)
+### Roll link (the standard link)
 
+- one shared component, `RollLink` in `src/components/RollLink.tsx`, used for
+  every regular text link (nav, footer, cv, projects, donate). styles live in
+  `globals.css` under "roll link".
 - `text-sm tracking-wide`, color `--brand-muted` → `--brand-ink` on hover
-  (`transition-colors duration-200`).
-- Animated underline: a `1px` bar pinned at the baseline that grows
-  `width: 0 → 100%`, **left to right**, `duration-300 ease-out`, on hover **and**
-  focus-visible.
+  (`200ms`). `tone="ink"` keeps it ink, for titles in lists.
+- **letter roll:** each letter is a small window with two copies stacked. one
+  roll slides both up one line (`translateY(-100%)`, `500ms` expo), staggered
+  `22ms` per letter, so the word rolls left to right into a fresh copy of
+  itself.
+- **hover intent + play once:** the roll starts only after the pointer rests
+  `70ms` on the link (keyboard focus starts it right away), so a fast sweep
+  across links does nothing. once started it always finishes, even if the
+  pointer leaves, and it never rolls back: the rolled-in copy looks the same
+  as the original, so `RollLink` just drops `.is-rolling` at the end and the
+  reset is invisible. the timing lives in both `RollLink.tsx` and the
+  `roll-up` keyframes in `globals.css`; keep them in sync.
+- only plain text can roll; other children render as is. the letters are
+  `aria-hidden` and the link carries `aria-label` with the word, so screen
+  readers read it once.
+- **spotlight:** inside a `.roll-group` (each nav, footer and contact list),
+  hovering one link fades the others to `opacity: 0.65` over `600ms` with a
+  soft ease-out and a `90ms` delay, so a quick sweep never flickers.
+- reduced motion: no roll, the color change and spotlight stay.
 - Focus ring: `focus-visible:ring-2 ring-[--brand-ink] ring-offset-2`,
   `rounded-sm`, outline none. Always keyboard-accessible.
 - Works as `<a>`, `<button>` (onClick), Next `<Link>`, or hash link. External
@@ -471,7 +489,8 @@ LOGO PULSE   0.9s, peak at 35%, expo; brackets ±12 / beams scaleX 1.35 /
              x gap fills + drains downward, one-shot on hover/focus, always
              plays to the end
 
-LINKS        muted→ink, underline grows 0→100% L→R, focus ring ink offset-2
+LINKS        muted→ink + letter roll (RollLink), soft spotlight in groups,
+             focus ring ink offset-2
 IMAGES       grayscale→color + scale 1.04 on hover, duration-700
 COPY         all lowercase, first person, em dashes, no hype
 

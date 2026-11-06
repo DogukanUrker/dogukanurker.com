@@ -102,6 +102,7 @@ velocity-reactive cursor (`src/components/Cursor.tsx`). Use the `--brand-*` CSS
 variables, never hardcode colors (that link color is the only exception). Read
 `docs/design.md` before making visual changes. Shared brand pieces live in
 `src/components/brand.tsx` (company and x logos, company link config),
-`src/components/RoleLine.tsx` (the nav role line used on every page) and
+`src/components/RoleLine.tsx` (the nav role line used on every page),
+`src/components/RollLink.tsx` (the standard text link with the letter roll) and
 `src/lib/logos.ts` (raw logo path data, also used by the server-rendered share
 image `src/app/opengraph-image.tsx`).

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Cursor } from "@/components/Cursor";
 import { RoleLine } from "@/components/RoleLine";
+import { RollLink } from "@/components/RollLink";
 import type { Repo } from "@/lib/fetchRepos";
 
 // ─── Motion constants (matching landing/CV pages) ──────────────────────────
@@ -31,73 +32,6 @@ const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: expo } },
 };
-
-// ─── Shared UnderlineLink ───────────────────────────────────────────────────
-
-interface UnderlineLinkProps {
-  href?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
-  className?: string;
-}
-
-function UnderlineLink({
-  href,
-  onClick,
-  children,
-  className = "",
-}: UnderlineLinkProps) {
-  const base =
-    "group relative inline-flex items-center text-sm tracking-wide " +
-    "text-[var(--brand-muted)] hover:text-[var(--brand-ink)] transition-colors duration-200 " +
-    "rounded-sm focus-visible:outline-none focus-visible:ring-2 " +
-    "focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2 " +
-    "bg-transparent border-none p-0 cursor-pointer " +
-    className;
-
-  const underline = (
-    <span
-      aria-hidden
-      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--brand-ink)] transition-[width] duration-300 ease-out group-hover:w-full group-focus-visible:w-full"
-    />
-  );
-
-  if (onClick) {
-    return (
-      <button onClick={onClick} data-cursor="link" className={base}>
-        {children}
-        {underline}
-      </button>
-    );
-  }
-
-  if (!href) return null;
-
-  const isExternal = href.startsWith("http") || href.startsWith("//");
-  const isMail = href.startsWith("mailto:");
-
-  if (isExternal || isMail) {
-    return (
-      <a
-        href={href}
-        target={isMail ? undefined : "_blank"}
-        rel={isMail ? undefined : "noopener noreferrer"}
-        data-cursor="link"
-        className={base}
-      >
-        {children}
-        {underline}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} data-cursor="link" className={base}>
-      {children}
-      {underline}
-    </Link>
-  );
-}
 
 // ─── ProjectsClient ─────────────────────────────────────────────────────────
 
@@ -157,9 +91,9 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
             <RoleLine />
           </span>
         </div>
-        <div className="flex items-center gap-6">
-          <UnderlineLink href="/">home</UnderlineLink>
-          <UnderlineLink href="/cv">resume</UnderlineLink>
+        <div className="roll-group flex items-center gap-6">
+          <RollLink href="/">home</RollLink>
+          <RollLink href="/cv">resume</RollLink>
         </div>
         {/* mobile role subtitle on a second row */}
         <div
@@ -222,11 +156,9 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                   <div className="min-w-0">
                     <h2 className="text-base font-medium tracking-tight">
-                      <UnderlineLink href={`/${repo.name.toLowerCase()}`}>
-                        <span style={{ color: "var(--brand-ink)" }}>
-                          {repo.name.toLowerCase()}
-                        </span>
-                      </UnderlineLink>
+                      <RollLink href={`/${repo.name.toLowerCase()}`} tone="ink">
+                        {repo.name.toLowerCase()}
+                      </RollLink>
                     </h2>
                     {repo.language && (
                       <p
@@ -275,19 +207,16 @@ export function ProjectsClient({ repos }: ProjectsClientProps) {
         style={{ color: "var(--brand-muted)" }}
       >
         <span className="text-sm lowercase">izmir, türkiye</span>
-        <nav aria-label="social links" className="flex items-center gap-5">
-          <UnderlineLink href="mailto:dogukanurker@icloud.com">
-            mail
-          </UnderlineLink>
-          <UnderlineLink href="https://github.com/dogukanurker">
-            github
-          </UnderlineLink>
-          <UnderlineLink href="https://x.com/dogukanurker">
-            twitter
-          </UnderlineLink>
-          <UnderlineLink href="https://linkedin.com/in/dogukanurker">
+        <nav
+          aria-label="social links"
+          className="roll-group flex items-center gap-5"
+        >
+          <RollLink href="mailto:dogukanurker@icloud.com">mail</RollLink>
+          <RollLink href="https://github.com/dogukanurker">github</RollLink>
+          <RollLink href="https://x.com/dogukanurker">twitter</RollLink>
+          <RollLink href="https://linkedin.com/in/dogukanurker">
             linkedin
-          </UnderlineLink>
+          </RollLink>
         </nav>
       </footer>
     </main>
