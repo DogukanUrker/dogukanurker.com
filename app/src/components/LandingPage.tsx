@@ -3,6 +3,7 @@
 import {
   type MotionValue,
   motion,
+  useAnimate,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -11,7 +12,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  type Brand,
+  brands,
+  type LogoPulse,
+  XGlyph,
+  xPulse,
+} from "@/components/brand";
 import { Cursor } from "@/components/Cursor";
+import { RoleLine } from "@/components/RoleLine";
 
 // ─── Shared underline-link ─────────────────────────────────────────────────
 
@@ -95,57 +104,47 @@ interface WordItem {
   text: string;
   isBold?: boolean;
   isItalic?: boolean;
-  isLink?: boolean;
+  // company link with logo, brand color and logo pulse
+  brand?: Brand;
+  // the x (twitter) logo link. `text` becomes its aria-label.
+  isXLink?: boolean;
 }
 
+// every link is followed by a word, never by punctuation: a "," or "." right
+// after a logo looks messy.
 const words: WordItem[] = [
   { text: "i" },
   { text: "build" },
   { text: "detection" },
-  { text: "systems" },
   { text: "for" },
-  { text: "deepfakes", isBold: true },
-  { text: "&", isBold: true },
   { text: "ai-generated", isBold: true },
   { text: "media", isBold: true },
   { text: "at" },
-  { text: "sensity.ai", isLink: true },
-  { text: "—" },
-  { text: "owning" },
-  { text: "features" },
-  { text: "end" },
+  { text: "sensity-ai", brand: "sensity" },
+  { text: "and" },
+  { text: "take" },
+  { text: "it" },
+  { text: "from" },
+  { text: "idea" },
   { text: "to" },
-  { text: "end:" },
-  { text: "backend," },
-  { text: "frontend," },
-  { text: "tests," },
-  { text: "deploys." },
+  { text: "shipped." },
   { text: "off" },
   { text: "the" },
   { text: "clock" },
+  { text: "x (twitter)", isXLink: true },
+  { text: "is" },
+  { text: "where" },
   { text: "i" },
   { text: "build", isBold: true },
   { text: "in", isBold: true },
-  { text: "public:", isBold: true },
-  { text: "open-source" },
-  { text: "tools" },
-  { text: "and" },
-  { text: "local-llm" },
-  { text: "benchmarks," },
-  { text: "sharing" },
-  { text: "configs" },
-  { text: "and" },
-  { text: "findings" },
-  { text: "on" },
-  { text: "twitter." },
+  { text: "public.", isBold: true },
   { text: "coding", isItalic: true },
   { text: "since", isItalic: true },
   { text: "12,", isItalic: true },
   { text: "still", isItalic: true },
-  { text: "chasing", isItalic: true },
-  { text: "the", isItalic: true },
-  { text: "same", isItalic: true },
-  { text: "feeling.", isItalic: true },
+  // one token on purpose: it never splits, so the last line is never just
+  // "same feeling." (phones are too narrow for the width fix alone)
+  { text: "chasing the same feeling.", isItalic: true },
 ];
 
 interface WordProps {
@@ -178,39 +177,25 @@ function Word({ word, index, total, progress, shouldReduce }: WordProps) {
     element = <em style={{ color: "var(--brand-muted)" }}>{element}</em>;
   }
 
-  if (word.isLink) {
+  const revealOpacity = shouldReduce ? 1 : opacity;
+
+  if (word.brand) {
     element = (
-      <motion.a
-        href="https://sensity.ai"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cursor="link"
-        style={{ opacity: shouldReduce ? 1 : opacity }}
-        className="group relative inline-flex items-center gap-[0.15em] transition-colors duration-300 text-[var(--brand-ink)] hover:text-[#373CE0] font-semibold"
+      <BrandLink
+        brand={word.brand}
+        opacity={revealOpacity}
+        shouldReduce={shouldReduce}
       >
-        <svg
-          width="0.75em"
-          height="0.75em"
-          viewBox="0 0 200 200"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="inline-block relative top-[0.1em]"
-        >
-          <path
-            d="M122 130H71.5C70.67 130 70 129.33 70 128.5V77.9999C70 73.5799 73.58 69.9999 78 69.9999H128.5C129.33 69.9999 130 70.6699 130 71.4999V122C130 126.42 126.42 130 122 130Z"
-            fill="currentColor"
-          />
-          <path
-            d="M38 140H8C3.58 140 0 136.42 0 132V7.99994C0 3.57994 3.58 -6.10352e-05 8 -6.10352e-05H132C136.42 -6.10352e-05 140 3.57994 140 7.99994V37.9999C140 39.0999 139.1 39.9999 138 39.9999H44C41.79 39.9999 40 41.7899 40 43.9999V138C40 139.1 39.1 140 38 140Z"
-            fill="currentColor"
-          />
-          <path
-            d="M162 59.9999H192C196.42 59.9999 200 63.5799 200 67.9999V192C200 196.42 196.42 200 192 200H68C63.58 200 60 196.42 60 192V162C60 160.9 60.9 160 62 160H156C158.21 160 160 158.21 160 156V61.9999C160 60.8999 160.89 59.9999 162 59.9999Z"
-            fill="currentColor"
-          />
-        </svg>
-        <span>{word.text}</span>
-      </motion.a>
+        {word.text}
+      </BrandLink>
+    );
+  } else if (word.isXLink) {
+    element = (
+      <XLink
+        label={word.text}
+        opacity={revealOpacity}
+        shouldReduce={shouldReduce}
+      />
     );
   }
 
@@ -273,6 +258,83 @@ const portraitVariants = {
     transition: { duration: 1.4, ease: expo },
   },
 };
+
+// ─── Company + x links in the paragraph ───────────────────────────────────
+
+interface BrandLinkProps {
+  brand: Brand;
+  opacity: MotionValue<number> | number;
+  shouldReduce: boolean | null;
+  children: React.ReactNode;
+}
+
+// play a logo pulse once per hover or focus and always run it to the end.
+// new hovers are ignored while it runs, so leaving early never snaps the
+// logo back.
+function useLogoPulse(pulse: LogoPulse, shouldReduce: boolean | null) {
+  const [scope, animate] = useAnimate();
+  const isPulsing = useRef(false);
+
+  const playPulse = async () => {
+    if (shouldReduce || isPulsing.current) return;
+    isPulsing.current = true;
+    await pulse(animate);
+    isPulsing.current = false;
+  };
+
+  return { scope, playPulse };
+}
+
+function BrandLink({ brand, opacity, shouldReduce, children }: BrandLinkProps) {
+  const { href, hoverClass, paragraphGap, Glyph, pulse } = brands[brand];
+  const { scope, playPulse } = useLogoPulse(pulse, shouldReduce);
+
+  return (
+    <motion.a
+      ref={scope}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cursor="link"
+      onHoverStart={playPulse}
+      onFocus={playPulse}
+      style={{ opacity }}
+      className={`group relative inline-flex items-center transition-colors duration-300 text-[var(--brand-ink)] font-semibold ${paragraphGap} ${hoverClass}`}
+    >
+      <Glyph className="h-[0.75em] w-auto relative top-[0.1em]" />
+      <span>{children}</span>
+    </motion.a>
+  );
+}
+
+interface XLinkProps {
+  label: string;
+  opacity: MotionValue<number> | number;
+  shouldReduce: boolean | null;
+}
+
+// the x (twitter) link: logo only, ink at rest, x blue on hover, no
+// underline. the logo sits on the baseline like a capital letter.
+function XLink({ label, opacity, shouldReduce }: XLinkProps) {
+  const { scope, playPulse } = useLogoPulse(xPulse, shouldReduce);
+
+  return (
+    <motion.a
+      ref={scope}
+      href="https://x.com/dogukanurker"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cursor="link"
+      aria-label={label}
+      onHoverStart={playPulse}
+      onFocus={playPulse}
+      style={{ opacity }}
+      className="inline-block text-[var(--brand-ink)] hover:text-[#1D9BF0] transition-colors duration-300 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2"
+    >
+      <XGlyph className="h-[0.7em] w-auto align-baseline" />
+    </motion.a>
+  );
+}
 
 function HeroName() {
   const [isMobile, setIsMobile] = useState(true);
@@ -467,13 +529,10 @@ export default function LandingPage() {
               Doğukan Ürker
             </span>
             <span
-              className="hidden md:inline-flex items-center text-sm gap-1"
+              className="hidden md:inline-flex items-center text-sm gap-1.5"
               style={{ color: "var(--brand-muted)" }}
             >
-              <span>full-stack engineer @</span>
-              <UnderlineLink href="https://sensity.ai">
-                sensity.ai
-              </UnderlineLink>
+              <RoleLine />
             </span>
           </div>
           <motion.div
@@ -488,10 +547,7 @@ export default function LandingPage() {
             className="w-full mt-1 md:hidden flex items-center gap-1 text-xs tracking-wide leading-relaxed"
             style={{ color: "var(--brand-muted)" }}
           >
-            <span>full-stack engineer @</span>
-            <UnderlineLink href="https://sensity.ai" className="text-xs">
-              sensity.ai
-            </UnderlineLink>
+            <RoleLine compact />
           </div>
         </motion.nav>
 
@@ -547,7 +603,7 @@ export default function LandingPage() {
       >
         <motion.p
           ref={paragraphRef}
-          className="font-serif text-center max-w-[24ch]"
+          className="font-serif text-center max-w-[26ch] text-pretty"
           style={
             {
               fontSize: "clamp(26px, 3.6vw, 54px)",

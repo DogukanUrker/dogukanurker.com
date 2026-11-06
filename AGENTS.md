@@ -96,8 +96,13 @@ Used across the app (none committed):
 `docs/design.md` is the single source of truth for the brand. Any UI work must
 match it; the landing page (`src/components/LandingPage.tsx`) is the reference
 implementation. Key non-negotiables: warm cream "paper" background with near-black
-ink, **no dark mode**, monochrome with a single electric-blue accent (`#373CE0`)
-used sparingly, oversized serif display type, minimal boxes/borders/shadows,
-spring-physics motion, and the bespoke velocity-reactive cursor
-(`src/components/Cursor.tsx`). Use the `--brand-*` CSS variables, never hardcode
-colors. Read `docs/design.md` before making visual changes.
+ink, **no dark mode**, monochrome where the only color is the hover color of
+the links in the about paragraph (sensity blue `#373CE0`, x blue `#1D9BF0`),
+oversized serif display type, minimal boxes/borders/shadows, spring-physics
+motion, and the bespoke velocity-reactive cursor (`src/components/Cursor.tsx`). Use the `--brand-*` CSS variables, never
+hardcode colors (those link colors are the only exception). Read
+`docs/design.md` before making visual changes. Shared brand pieces live in
+`src/components/brand.tsx` (company and x logos, company link config),
+`src/components/RoleLine.tsx` (the nav role line used on every page) and
+`src/lib/logos.ts` (raw logo path data, also used by the server-rendered share
+image `src/app/opengraph-image.tsx`).

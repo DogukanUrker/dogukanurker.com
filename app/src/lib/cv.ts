@@ -1,32 +1,35 @@
 // Shared CV content + helpers. Isomorphic (no React, no node-only imports) so it
 // can be consumed by both the client page and the server-side PDF renderer.
 
+import type { Brand } from "@/components/brand";
+
 export const profile = {
   name: "Doğukan Ürker",
   role: "full-stack engineer",
   location: "izmir, türkiye",
 };
 
-// intro words — bold = ink emphasis, italic = muted serif, accent = sensity link
+// intro words. bold = ink emphasis, italic = muted serif, company = a company
+// link (logo + brand hover color on the page, a plain link in the pdf).
+// a company link is always followed by a word, never by punctuation.
 export interface Word {
   text: string;
   bold?: boolean;
   italic?: boolean;
-  accent?: boolean;
+  company?: { brand: Brand; href: string };
 }
 
 export const introWords: Word[] = [
   { text: "full-stack" },
   { text: "engineer" },
   { text: "at" },
-  { text: "sensity.ai", accent: true },
-  { text: "—" },
+  {
+    text: "Sensity AI",
+    company: { brand: "sensity", href: "https://www.sensity.ai" },
+  },
   { text: "building" },
   { text: "detection" },
-  { text: "systems" },
   { text: "for" },
-  { text: "deepfakes", bold: true },
-  { text: "&", bold: true },
   { text: "ai-generated", bold: true },
   { text: "media", bold: true },
   { text: "across" },
@@ -48,7 +51,7 @@ export const introWords: Word[] = [
   { text: "publish" },
   { text: "reproducible" },
   { text: "model" },
-  { text: "configs," },
+  { text: "configs" },
   { text: "and" },
   { text: "findings." },
   { text: "i" },
@@ -93,7 +96,7 @@ export const experience: Job[] = [
     companyHref: "https://www.sensity.ai",
     role: "full-stack engineer",
     period: "aug 2025 – present",
-    location: "remote (eu)",
+    location: "remote – amsterdam",
     bullets: [
       "ship full-stack features across FastAPI microservices and a React & Vue frontend",
       "help migrate legacy Django services onto the modern FastAPI stack",
@@ -106,7 +109,7 @@ export const experience: Job[] = [
     companyHref: "https://www.sensity.ai",
     role: "backend intern",
     period: "mar 2025 – aug 2025",
-    location: "remote (eu)",
+    location: "remote – amsterdam",
     bullets: [
       "five-month backend internship focused on FastAPI microservices; converted to full-time engineering",
     ],
@@ -116,7 +119,7 @@ export const experience: Job[] = [
     companyHref: "https://www.gdgoncampusyu.com/",
     role: "software team, core member",
     period: "sep 2024 – present",
-    location: "izmir",
+    location: "in person – izmir",
     bullets: [
       "co-lead a six-engineer software team; own architecture and task distribution alongside the team lead",
       "designed the monorepo from scratch: 4 FastAPI microservices (user, form, mail, event) and 3 React frontends",

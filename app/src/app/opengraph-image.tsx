@@ -1,9 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { sensityLogo } from "@/lib/logos";
 
 // ── Next.js file-based OG image metadata ──────────────────────────────────
-export const alt = "Doğukan Ürker | Full-Stack Engineer";
+export const alt = "Doğukan Ürker | engineer at Sensity AI";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +17,11 @@ const DIM = "#8a877e";
 const FIRST = "Doğukan";
 const LAST = "Ürker";
 const NAME = `${FIRST} ${LAST}`;
-const ROLE = "full-stack engineer @ sensity.ai";
+// role line, drawn like the nav: "engineer at [logo] sensity-ai"
+const ROLE_LEAD = "engineer at";
+const LOGO_HEIGHT = 18;
+// every character the role line uses, for the font subset below
+const ROLE_TEXT = `${ROLE_LEAD} sensity-ai`;
 const LOCATION = "izmir, türkiye";
 
 // Square portrait size (px). The photo is rendered as a square (no crop) to
@@ -28,7 +33,7 @@ const PHOTO_SIZE = 430;
 // Fetch a glyph-subset of upright Fraunces from Google Fonts. The `text`
 // param keeps the download tiny. Falls back to Georgia on error.
 async function loadFraunces(): Promise<ArrayBuffer | null> {
-  const subset = [NAME, ROLE, LOCATION].join(" ");
+  const subset = [NAME, ROLE_TEXT, LOCATION].join(" ");
   try {
     const css = await fetch(
       `https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500&display=block&text=${encodeURIComponent(subset)}`,
@@ -120,7 +125,36 @@ export default async function Image() {
 
         {/* role + location */}
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <span style={{ fontSize: 24, color: MUTED }}>{ROLE}</span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: 24,
+              color: MUTED,
+            }}
+          >
+            <span>{ROLE_LEAD}</span>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                color: INK,
+              }}
+            >
+              <svg
+                width={Math.round(LOGO_HEIGHT * sensityLogo.ratio)}
+                height={LOGO_HEIGHT}
+                viewBox={sensityLogo.viewBox}
+              >
+                <path d={sensityLogo.core} fill={INK} />
+                <path d={sensityLogo.topLeft} fill={INK} />
+                <path d={sensityLogo.bottomRight} fill={INK} />
+              </svg>
+              <span>sensity-ai</span>
+            </span>
+          </div>
           <span style={{ fontSize: 18, color: DIM, letterSpacing: "0.04em" }}>
             {LOCATION}
           </span>

@@ -23,9 +23,15 @@ const fraunces = Fraunces({
   axes: ["opsz"],
 });
 
+// shown in google results and link previews. the real company name here (not
+// the site's "sensity-ai" style) so searches for it match.
+const SHARE_TITLE = "Doğukan Ürker | engineer at Sensity AI";
+const DESCRIPTION =
+  "i build detection for ai-generated media at Sensity AI and take it from idea to shipped.";
+
 export const metadata: Metadata = {
   title: "Doğukan",
-  description: "Software engineer building modern web applications.",
+  description: DESCRIPTION,
   keywords: [
     "Doğukan Ürker",
     "software engineer",
@@ -39,10 +45,14 @@ export const metadata: Metadata = {
     "frontend",
     "backend",
     "web apps",
+    "Sensity AI",
+    "llms",
+    "llm evaluation",
+    "ai-generated media detection",
   ],
   openGraph: {
-    title: "Doğukan Ürker | Full-Stack Engineer",
-    description: "Software engineer building modern web applications.",
+    title: SHARE_TITLE,
+    description: DESCRIPTION,
     url: "https://dogukanurker.com",
     siteName: "Doğukan Ürker Portfolio",
     type: "website",
@@ -51,8 +61,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@dogukanurker",
-    title: "Doğukan Ürker | Full-Stack Engineer",
-    description: "Software engineer building modern web applications.",
+    title: SHARE_TITLE,
+    description: DESCRIPTION,
     // twitter:image is auto-generated from app/src/app/opengraph-image.tsx
   },
 };

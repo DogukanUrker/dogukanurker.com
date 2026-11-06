@@ -179,9 +179,9 @@ function Summary() {
   return (
     <Text style={s.summary}>
       {introWords.map((w, i) => {
-        if (w.accent) {
+        if (w.company) {
           return (
-            <Link key={i} src="https://sensity.ai" style={s.summaryLink}>
+            <Link key={i} src={w.company.href} style={s.summaryLink}>
               {w.text}{" "}
             </Link>
           );

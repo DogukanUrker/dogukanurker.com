@@ -24,9 +24,10 @@ Guiding principles, in priority order:
 2. **Typography is the interface.** Oversized serif display type is the hero
    element. There are almost no boxes, cards, borders, or shadows. Content sits
    directly on the cream field with generous air around it.
-3. **Monochrome, with one electric accent.** Photography is grayscale by
-   default. Color is rationed: a single electric blue (`#373CE0`) appears only
-   on the most important link.
+3. **Monochrome, with brand-colored links.** Photography is grayscale by
+   default. Color is rationed: it appears only as the hover color of the links
+   in the about paragraph, each in its own brand's color (sensity blue
+   `#373CE0`, x blue `#1D9BF0`).
 4. **Motion is physical, not decorative.** Everything enters with spring physics
    and reveals on scroll. Nothing blinks, bounces gratuitously, or loops. Motion
    communicates hierarchy and rewards scrolling.
@@ -42,7 +43,8 @@ If you have to choose between "more features" and "more silence," choose silence
 ## 2. Color Palette
 
 All colors are defined as CSS custom properties on `:root`. Use the variables,
-never hardcode hexes (except the accent blue, which is intentionally a one-off).
+never hardcode hexes (except the link hover colors below, which are
+intentionally one-offs).
 
 ```css
 :root {
@@ -64,15 +66,23 @@ never hardcode hexes (except the accent blue, which is intentionally a one-off).
 | `--brand-dim`          | `#8a877e` | Lowest emphasis — captions, code comments.                  |
 | `--brand-border`       | `#dcd8cd` | Hairlines and separators (kept extremely subtle).           |
 
-### Accent
+### Company colors
 
-```css
---accent-electric: #373CE0; /* the ONE color — used only on the primary brand link hover */
-```
+| Link         | Hover color | Source                                   |
+| ------------ | ----------- | ---------------------------------------- |
+| `sensity-ai` | `#373CE0`   | sensity's electric blue                  |
+| x logo       | `#1D9BF0`   | the blue x uses in its own ui            |
 
-- The accent is **scarce by design**. On the landing page it appears only as the
-  hover color of the `sensity.ai` link (which also carries a custom glyph).
-- Do not introduce additional accent colors. If a new surface ever needs a state
+- color is **scarce by design**. on the landing page it appears only as the
+  hover color of the links in the about paragraph (and the company links in
+  the nav). each link also carries its brand's logo glyph.
+- these hexes are hardcoded on purpose (literal tailwind classes in the
+  `brands` config in `src/components/brand.tsx`, and in `XLink` in
+  `LandingPage.tsx`), not css variables.
+- x's own brand toolkit says its logo should only be black or white. the blue
+  is a small, hover-only exception we chose on purpose, because black is too
+  close to our ink and white vanishes on cream.
+- do not introduce other accent colors. if a new surface ever needs a state
   color, keep it muted and earthy, never neon.
 
 ### Rules
@@ -133,6 +143,7 @@ for display type.
 | De-emphasis prose  | Fraunces *italic* | inherits                                             | 340    | —                | inherits    | muted  |
 | Nav name           | Inter    | `text-sm` (14px)                                              | `500` (`font-medium`) | `tracking-tight` | — | ink    |
 | Nav meta / links   | Inter    | `text-sm` (14px)                                              | 400    | `tracking-wide` (links) | — | muted → ink on hover |
+| Nav company links  | Inter    | inherits (`text-sm` desktop)                                  | 400    | `tracking-wide`  | -           | ink → company color on hover |
 | Footer text/links  | Inter    | `text-sm` (14px)                                              | 400    | `tracking-wide`  | —           | muted → ink on hover |
 | Mobile nav subrole | Inter    | `text-xs` (12px)                                              | 400    | `tracking-wide`  | `leading-relaxed` | muted |
 
@@ -142,7 +153,7 @@ Key choices to preserve:
   viewport edges. It is `aria-hidden`; an `sr-only` `<h1>` carries the real
   heading for accessibility.
 - The about paragraph uses an unusually **light variable weight (340)** and a
-  **narrow measure** (`max-w-[24ch]`), centered. This is the "literary" feel —
+  **narrow measure** (`max-w-[26ch]`), centered. This is the "literary" feel —
   keep the measure tight and the weight light.
 - Serif gets `tracking-tighter` at display sizes; sans UI text gets
   `tracking-wide` for links and `tracking-tight` for the name.
@@ -167,14 +178,16 @@ The words are part of the look. Match this exactly.
 
 Reference hero paragraph (the canonical voice):
 
-> i build detection systems for **deepfakes & ai-generated media** at
-> sensity.ai — owning features end to end: backend, frontend, tests, deploys.
-> off the clock i **build in public:** open-source tools, a local-llm homelab,
-> and whatever i'm curious about. *coding since 12, still chasing the same
-> feeling.*
+> i build detection for **ai-generated media** at sensity-ai and take it
+> from idea to shipped. off the clock [x logo] is where i **build in public.**
+> *coding since 12, still chasing the same feeling.*
 
-(Bold = `font-semibold` ink; italic = muted serif; the company name = accent
-link with glyph.)
+**a logo link is always followed by a word, never by punctuation.** a "," or
+"." right after a logo looks messy, so write the sentence around it (e.g.
+"sensity-ai and take it", "[x] is where").
+
+(bold = `font-semibold` ink; italic = muted serif; company names = links with
+their logo glyph and brand hover color.)
 
 ---
 
@@ -188,7 +201,15 @@ link with glyph.)
 - **Generous padding.** Page gutters `px-6` (mobile) → `px-10` (≥sm/md).
   Sections breathe with `py-24` and large vertical rhythm.
 - **Centered, narrow content.** Long-form text is centered with a tight measure
-  (`max-w-[24ch]` for the hero paragraph). Don't fill the width.
+  (`max-w-[26ch]` for the hero paragraph). Don't fill the width.
+- **No lonely last word.** the about paragraph uses `text-pretty`
+  (`text-wrap: pretty`), so the browser never leaves one word alone on the
+  last line. browsers without support just ignore it.
+- the measure is `26ch` (it was `24ch`) so the closing sentence ends on
+  "chasing the same feeling." on tablet and desktop. on phones the screen is
+  the limit, so "chasing the same feeling." is one word token that never
+  splits. if the copy changes, re-check the last line at phone and desktop
+  widths.
 - **No cards/shadows/borders** as a default. Content sits on the cream field.
   Hairlines (`--brand-border`) only when a divider is truly needed.
 - **Safe-area aware.** Bottom spacing respects the notch:
@@ -200,7 +221,16 @@ link with glyph.)
 - Translucent **frosted** background:
   `background: rgba(243,241,234,0.85)` + `backdrop-filter: blur(12px)`
   (with `-webkit-` prefix).
-- Left: name + role meta (`full-stack engineer @ sensity.ai`).
+- Left: name + role meta. desktop: `engineer at [logo] sensity-ai`. mobile:
+  `engineer [logo]`, logo only (the link has an `aria-label` with the company
+  name, and padding for a ~24px tap area).
+- company links in the nav: ink at rest → company color on hover, no
+  underline. logos are `0.85em` tall on desktop, `13px` on mobile. no logo
+  pulse in the nav: at this size the motion would be under 1px.
+- the role line is one shared component, `RoleLine` in
+  `src/components/RoleLine.tsx` (`<RoleLine />` on desktop,
+  `<RoleLine compact />` on mobile). every page's nav uses it, so a change
+  there updates the whole site.
 - Right: minimal text links (`about`, `resume`).
 - On mobile the role line wraps to a **second row** at `text-xs`.
 - `select-none` on chrome (nav, hero, footer) so UI text isn't accidentally
@@ -265,6 +295,25 @@ const scrollSmooth = { stiffness: 100, damping: 30, restDelta: 0.001 };
   state immediately, no transforms, no scroll-driven opacity. The custom cursor
   is disabled entirely.
 
+### 6.5 Company logo pulse (hover)
+
+- hovering or keyboard-focusing a company link plays a one-shot pulse of its
+  logo: `duration: 0.9`, rest → peak → rest with the peak at `35%`
+  (`times: [0, 0.35, 1]`), `expo` on each half.
+  - **sensity-ai (focus lock):** the two corner brackets move out diagonally by
+    `12` logo units (the logo is `200` wide) and snap back onto the center
+    square.
+  - **x (gap fill):** a fill shape inside the logo's thin gap animates its
+    path `d` from empty (pinned to the top) → full → empty (pinned to the
+    bottom), so the gap fills top to bottom, then drains top to bottom. all
+    paths use the same commands so they tween.
+- both share one hook (`useLogoPulse`) for the play-once logic.
+- the pulse always plays to the end. leaving early does not cut it, and new
+  hovers are ignored while it runs, so the logo never snaps back mid-pulse.
+  it is started with `useAnimate`, not `whileHover`, because `whileHover`
+  reverses as soon as the pointer leaves.
+- skipped when `prefers-reduced-motion` is set. the hover color still applies.
+
 ---
 
 ## 7. The Signature Cursor
@@ -311,10 +360,43 @@ Tag interactive elements with `data-cursor="link"` (links/buttons) or
   links get `target="_blank" rel="noopener noreferrer"`.
 - Carries `data-cursor="link"`.
 
-### Primary brand link (accent + glyph)
+### Company links (glyph + brand color + logo pulse)
 
-- The `sensity.ai` link is the one accent moment: ink → `#373CE0` on hover,
-  `font-semibold`, preceded by a small inline SVG glyph (`0.75em`), `gap-[0.15em]`.
+- `sensity-ai` in the about paragraph: ink → company color on hover
+  (`#373CE0`), `font-semibold`, preceded by the company's inline SVG glyph
+  (`0.75em` tall, `gap-[0.15em]`).
+- the logos and the company config (name, link, hover color, pulse) live in
+  `src/components/brand.tsx`. the same glyph components are used in the nav
+  (see Navigation), sized by a `className` prop.
+- copy rule: the link is always followed by a word, never punctuation (see
+  section 4).
+- on hover or focus the logo plays its pulse (see 6.5).
+
+### X link in prose
+
+- the x (twitter) link in the about paragraph is the x logo alone ("on [x]."
+  reads as "on x."). the username is not shown on purpose.
+- the original x logo, path copied from the svg x.com itself serves, with the
+  viewBox cropped to the drawing (`1.254 2.25 21.573 19.5`). `0.7em` tall and
+  sitting on the baseline like a capital letter, so it matches the tall
+  letters and the company logos.
+- ink at rest → x blue `#1D9BF0` on hover, no underline. on hover or focus
+  the thin gap inside the logo fills top to bottom, then drains top to bottom
+  (see 6.5).
+- `aria-label="x (twitter)"`, `data-cursor="link"`. like the company links,
+  it is always followed by a word ("[x] is where i build in public").
+
+### Share image + link text
+
+- the share image (`src/app/opengraph-image.tsx`, 1200×630) mirrors the
+  brand: stacked fraunces name, role line, location, square grayscale photo.
+- its role line is drawn like the nav: `engineer at [logo] sensity-ai`,
+  "engineer at" in muted, the company in ink with its logo.
+  logo path data comes from `src/lib/logos.ts`, because the image is rendered
+  on the server and can't use the client glyph components.
+- the text that search engines and link previews read (titles, descriptions,
+  image alt text) uses the real company name, **Sensity AI**, so searches
+  for it match. the visible site keeps the `sensity-ai` style.
 
 ### Imagery / portrait
 
@@ -372,13 +454,14 @@ TEXT         #16140d (ink)            never #000
 SECONDARY    #5c5a52 (muted)
 TERTIARY     #8a877e (dim)
 BORDER       #dcd8cd (hairline)
-ACCENT       #373CE0 (electric blue — one use only)
+LINK COLORS  #373CE0 sensity · #1D9BF0 x (hover only)
 
 DISPLAY FONT Fraunces (serif, opsz, italic), fontOpticalSizing:auto, latin-ext
 UI FONT      Inter (sans)
 
 DISPLAY SIZE clamp() fluid, tracking-tighter, line-height 0.95
-BODY PROSE   Fraunces 340 weight, line-height 1.22, max-w-24ch, centered
+BODY PROSE   Fraunces 340 weight, line-height 1.22, max-w-26ch, centered,
+             text-pretty
 UI TEXT      Inter text-sm, tracking-wide links / tracking-tight name
 
 EASING       expo  = cubic-bezier(0.16, 1, 0.3, 1)
@@ -389,14 +472,19 @@ SPRING       entrance: stiffness100 damping22 (no bounce)
 CURSOR       9px ink dot, mix-blend-difference, velocity-scaled to 4x,
              link→5.1x photo→7.8x via data-cursor; pointer-fine only
 
+LOGO PULSE   0.9s, peak at 35%, expo; brackets ±12 / beams scaleX 1.35 /
+             x gap fills + drains downward, one-shot on hover/focus, always
+             plays to the end
+
 LINKS        muted→ink, underline grows 0→100% L→R, focus ring ink offset-2
 IMAGES       grayscale→color + scale 1.04 on hover, duration-700
 COPY         all lowercase, first person, em dashes, no hype
 
 ALWAYS       respect prefers-reduced-motion · sr-only real headings ·
-             cream bg everywhere · one accent · silence over clutter
+             cream bg everywhere · color only on link hovers ·
+             silence over clutter
 ```
 
 ---
 
-*Identity owner: Doğukan Ürker · izmir, türkiye · full-stack engineer.*
+*Identity owner: Doğukan Ürker · izmir, türkiye · engineer.*

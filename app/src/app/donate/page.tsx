@@ -4,6 +4,7 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { Cursor } from "@/components/Cursor";
+import { RoleLine } from "@/components/RoleLine";
 
 // ─── Motion constants (shared with CV and landing page) ─────────────────────
 
@@ -325,11 +326,10 @@ export default function DonatePage() {
             Doğukan Ürker
           </Link>
           <span
-            className="hidden items-center gap-1 text-sm md:inline-flex"
+            className="hidden items-center gap-1.5 text-sm md:inline-flex"
             style={{ color: "var(--brand-muted)" }}
           >
-            <span>full-stack engineer @</span>
-            <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
+            <RoleLine />
           </span>
         </div>
         <div className="flex items-center gap-6">
@@ -341,10 +341,7 @@ export default function DonatePage() {
           className="mt-1 flex w-full items-center gap-1 text-xs leading-relaxed tracking-wide md:hidden"
           style={{ color: "var(--brand-muted)" }}
         >
-          <span>full-stack engineer @</span>
-          <UnderlineLink href="https://sensity.ai" className="text-xs">
-            sensity.ai
-          </UnderlineLink>
+          <RoleLine compact />
         </div>
       </motion.nav>
 

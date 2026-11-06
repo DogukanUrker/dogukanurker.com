@@ -8,11 +8,14 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { type Brand, brands } from "@/components/brand";
 import { Cursor } from "@/components/Cursor";
+import { RoleLine } from "@/components/RoleLine";
 import {
   contacts,
   experience,
   introWords,
+  profile,
   projects,
   type RepoStats,
   skills,
@@ -132,44 +135,30 @@ function UnderlineLink({
   );
 }
 
-// ─── Primary brand link: the one accent moment (sensity.ai) ─────────────────
+// ─── Company link in the intro: logo + brand hover color ────────────────────
+// uses the shared logos and colors from the landing page. no logo pulse here:
+// that stays the landing page's moment.
 
-function SensityLink({ className = "" }: { className?: string }) {
+function CompanyLink({
+  brand,
+  href,
+  children,
+}: {
+  brand: Brand;
+  href: string;
+  children: React.ReactNode;
+}) {
+  const { Glyph, hoverClass, paragraphGap } = brands[brand];
   return (
     <a
-      href="https://sensity.ai"
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       data-cursor="link"
-      className={
-        "group relative inline-flex items-center gap-[0.15em] font-semibold " +
-        "text-[var(--brand-ink)] hover:text-[#373CE0] transition-colors duration-300 " +
-        className
-      }
+      className={`group relative inline-flex items-center font-semibold text-[var(--brand-ink)] transition-colors duration-300 ${paragraphGap} ${hoverClass}`}
     >
-      <svg
-        width="0.75em"
-        height="0.75em"
-        viewBox="0 0 200 200"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="inline-block relative top-[0.08em]"
-        aria-hidden
-      >
-        <path
-          d="M122 130H71.5C70.67 130 70 129.33 70 128.5V77.9999C70 73.5799 73.58 69.9999 78 69.9999H128.5C129.33 69.9999 130 70.6699 130 71.4999V122C130 126.42 126.42 130 122 130Z"
-          fill="currentColor"
-        />
-        <path
-          d="M38 140H8C3.58 140 0 136.42 0 132V7.99994C0 3.57994 3.58 -6.10352e-05 8 -6.10352e-05H132C136.42 -6.10352e-05 140 3.57994 140 7.99994V37.9999C140 39.0999 139.1 39.9999 138 39.9999H44C41.79 39.9999 40 41.7899 40 43.9999V138C40 139.1 39.1 140 38 140Z"
-          fill="currentColor"
-        />
-        <path
-          d="M162 59.9999H192C196.42 59.9999 200 63.5799 200 67.9999V192C200 196.42 196.42 200 192 200H68C63.58 200 60 196.42 60 192V162C60 160.9 60.9 160 62 160H156C158.21 160 160 158.21 160 156V61.9999C160 60.8999 160.89 59.9999 162 59.9999Z"
-          fill="currentColor"
-        />
-      </svg>
-      <span>sensity.ai</span>
+      <Glyph className="h-[0.75em] w-auto relative top-[0.08em]" />
+      <span>{children}</span>
     </a>
   );
 }
@@ -457,11 +446,10 @@ export default function CVPage() {
             Doğukan Ürker
           </Link>
           <span
-            className="hidden items-center gap-1 text-sm md:inline-flex"
+            className="hidden items-center gap-1.5 text-sm md:inline-flex"
             style={{ color: "var(--brand-muted)" }}
           >
-            <span>full-stack engineer @</span>
-            <UnderlineLink href="https://sensity.ai">sensity.ai</UnderlineLink>
+            <RoleLine />
           </span>
         </div>
         <div className="flex items-center gap-6">
@@ -473,10 +461,7 @@ export default function CVPage() {
           className="mt-1 flex w-full items-center gap-1 text-xs leading-relaxed tracking-wide md:hidden"
           style={{ color: "var(--brand-muted)" }}
         >
-          <span>full-stack engineer @</span>
-          <UnderlineLink href="https://sensity.ai" className="text-xs">
-            sensity.ai
-          </UnderlineLink>
+          <RoleLine compact />
         </div>
       </motion.nav>
 
@@ -509,7 +494,7 @@ export default function CVPage() {
           >
             <div className="flex flex-col">
               <p className="text-base" style={{ color: "var(--brand-ink)" }}>
-                full-stack engineer
+                {profile.role}
               </p>
               <p
                 className="text-sm tracking-wide"
@@ -549,14 +534,19 @@ export default function CVPage() {
             }}
           >
             {introWords.map((w, i) => {
-              if (w.accent) {
+              if (w.company) {
                 return (
                   <span key={i}>
                     <motion.span
                       variants={shouldReduce ? undefined : wordItem}
                       className="inline-block align-baseline"
                     >
-                      <SensityLink />
+                      <CompanyLink
+                        brand={w.company.brand}
+                        href={w.company.href}
+                      >
+                        {w.text}
+                      </CompanyLink>
                     </motion.span>{" "}
                   </span>
                 );
