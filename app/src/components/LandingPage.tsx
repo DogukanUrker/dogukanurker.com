@@ -313,8 +313,9 @@ interface XLinkProps {
   shouldReduce: boolean | null;
 }
 
-// the x (twitter) link: logo only, ink at rest, x blue on hover, no
-// underline. the logo sits on the baseline like a capital letter.
+// the x (twitter) link: logo only, ink, no color change and no underline.
+// the logo sits on the baseline like a capital letter. the gap fill is the
+// hover feedback.
 function XLink({ label, opacity, shouldReduce }: XLinkProps) {
   const { scope, playPulse } = useLogoPulse(xPulse, shouldReduce);
 
@@ -329,7 +330,7 @@ function XLink({ label, opacity, shouldReduce }: XLinkProps) {
       onHoverStart={playPulse}
       onFocus={playPulse}
       style={{ opacity }}
-      className="inline-block text-[var(--brand-ink)] hover:text-[#1D9BF0] transition-colors duration-300 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2"
+      className="inline-block text-[var(--brand-ink)] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-ink)] focus-visible:ring-offset-2"
     >
       <XGlyph className="h-[0.7em] w-auto align-baseline" />
     </motion.a>

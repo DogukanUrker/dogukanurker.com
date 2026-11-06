@@ -24,10 +24,9 @@ Guiding principles, in priority order:
 2. **Typography is the interface.** Oversized serif display type is the hero
    element. There are almost no boxes, cards, borders, or shadows. Content sits
    directly on the cream field with generous air around it.
-3. **Monochrome, with brand-colored links.** Photography is grayscale by
-   default. Color is rationed: it appears only as the hover color of the links
-   in the about paragraph, each in its own brand's color (sensity blue
-   `#373CE0`, x blue `#1D9BF0`).
+3. **Monochrome, with one brand-colored link.** Photography is grayscale by
+   default. Color is rationed: it appears only as the hover color of the
+   sensity link, in sensity's own blue (`#373CE0`).
 4. **Motion is physical, not decorative.** Everything enters with spring physics
    and reveals on scroll. Nothing blinks, bounces gratuitously, or loops. Motion
    communicates hierarchy and rewards scrolling.
@@ -71,17 +70,14 @@ intentionally one-offs).
 | Link         | Hover color | Source                                   |
 | ------------ | ----------- | ---------------------------------------- |
 | `sensity-ai` | `#373CE0`   | sensity's electric blue                  |
-| x logo       | `#1D9BF0`   | the blue x uses in its own ui            |
 
-- color is **scarce by design**. on the landing page it appears only as the
-  hover color of the links in the about paragraph (and the company links in
-  the nav). each link also carries its brand's logo glyph.
-- these hexes are hardcoded on purpose (literal tailwind classes in the
-  `brands` config in `src/components/brand.tsx`, and in `XLink` in
-  `LandingPage.tsx`), not css variables.
-- x's own brand toolkit says its logo should only be black or white. the blue
-  is a small, hover-only exception we chose on purpose, because black is too
-  close to our ink and white vanishes on cream.
+- color is **scarce by design**. it appears only as the hover color of the
+  company link in the about paragraph and in the nav. each company link also
+  carries its logo glyph.
+- this hex is hardcoded on purpose (a literal tailwind class in the `brands`
+  config in `src/components/brand.tsx`), not a css variable.
+- the x logo link stays ink, also on hover, which matches x's own rule that its
+  logo is only black or white. its gap-fill animation is the hover feedback.
 - do not introduce other accent colors. if a new surface ever needs a state
   color, keep it muted and earthy, never neon.
 
@@ -380,9 +376,8 @@ Tag interactive elements with `data-cursor="link"` (links/buttons) or
   viewBox cropped to the drawing (`1.254 2.25 21.573 19.5`). `0.7em` tall and
   sitting on the baseline like a capital letter, so it matches the tall
   letters and the company logos.
-- ink at rest → x blue `#1D9BF0` on hover, no underline. on hover or focus
-  the thin gap inside the logo fills top to bottom, then drains top to bottom
-  (see 6.5).
+- ink, no color change and no underline. on hover or focus the thin gap
+  inside the logo fills top to bottom, then drains top to bottom (see 6.5).
 - `aria-label="x (twitter)"`, `data-cursor="link"`. like the company links,
   it is always followed by a word ("[x] is where i build in public").
 
@@ -454,7 +449,7 @@ TEXT         #16140d (ink)            never #000
 SECONDARY    #5c5a52 (muted)
 TERTIARY     #8a877e (dim)
 BORDER       #dcd8cd (hairline)
-LINK COLORS  #373CE0 sensity · #1D9BF0 x (hover only)
+LINK COLOR   #373CE0 sensity (hover only)
 
 DISPLAY FONT Fraunces (serif, opsz, italic), fontOpticalSizing:auto, latin-ext
 UI FONT      Inter (sans)
