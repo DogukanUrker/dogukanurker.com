@@ -319,7 +319,9 @@ export default function DonatePage() {
               let node: React.ReactNode = (
                 <motion.span
                   variants={shouldReduce ? undefined : wordItem}
-                  className="inline-block"
+                  className={
+                    w.italic ? "inline-block italic-room" : "inline-block"
+                  }
                 >
                   {w.text}
                 </motion.span>

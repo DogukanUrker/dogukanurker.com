@@ -87,7 +87,7 @@ function Word({ word, index, total, progress, shouldReduce }: WordProps) {
   const content = (
     <motion.span
       style={{ opacity: shouldReduce ? 1 : opacity }}
-      className="inline-block"
+      className={word.isItalic ? "inline-block italic-room" : "inline-block"}
     >
       {word.text}
     </motion.span>

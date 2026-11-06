@@ -160,6 +160,16 @@ body {
   color: #8f3b76;
 }
 
+/* ── italic room ──
+   italic serif letters lean past their own box (the top of an "l" or "f").
+   safari clips that overhang when a word box fades or moves on its own
+   layer (the word-by-word reveals), so italic reveal words get extra room.
+   the negative margin cancels the padding, so the layout does not move. */
+.italic-room {
+  padding-inline: 0.15em;
+  margin-inline: -0.15em;
+}
+
 /* ── roll link: the standard text link (src/components/RollLink.tsx) ── */
 
 .roll-link {
